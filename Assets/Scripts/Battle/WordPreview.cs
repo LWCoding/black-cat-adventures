@@ -26,11 +26,6 @@ public class WordPreview : MonoBehaviour
     [Header("Object Assignments")]
     [SerializeField] private Transform _letterParentTransform;
 
-    private readonly List<GameObject> _previewLetterTiles = new();
-    private readonly List<Tile> _currTiles = new();
-
-    private readonly float SPACE_BETWEEN_TILES = 0.1f;
-
     public Action OnLetterTilesChanged = null;  // Called whenever chosen letters have been modified
     public List<Tile> CurrentTiles => _currTiles;
     public string CurrentWord
@@ -45,6 +40,10 @@ public class WordPreview : MonoBehaviour
             return word.ToString();
         }
     }
+
+    private readonly List<GameObject> _previewLetterTiles = new();
+    private readonly List<Tile> _currTiles = new();
+    private readonly float SPACE_BETWEEN_TILES = 0.1f;
 
     /// <summary>
     /// Add a tile to the end of the list of chosen tiles.
