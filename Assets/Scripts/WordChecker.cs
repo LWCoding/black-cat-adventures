@@ -19,7 +19,7 @@ public class WordChecker
         string[] words = validWordsFile.text.Split('\n');
         foreach (string word in words)
         {
-            _validWords.Add(word);
+            _validWords.Add(word.Trim().ToLower());
         }
     }
 

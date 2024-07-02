@@ -61,7 +61,6 @@ public class WordPreview : MonoBehaviour
     /// </summary>
     public void RemoveTile(Tile tile)
     {
-        OnLetterTilesChanged.Invoke();
         int tileIdx = _currTiles.FindIndex((t) => t.TileIndex == tile.TileIndex);
         WordGrid.Instance.LetterTiles[tile.TileIndex].IsSelected = false;
         _currTiles.RemoveAt(tileIdx);
@@ -71,6 +70,7 @@ public class WordPreview : MonoBehaviour
         //    _currTiles.RemoveAt(tileIdx)
         //}
         UpdatePreviewLetters();
+        OnLetterTilesChanged.Invoke();
     }
 
     /// <summary>

@@ -10,7 +10,7 @@ public class SubmitButton : MonoBehaviour
     [SerializeField] protected TextMeshPro _letterText;
     [SerializeField] protected SpriteRenderer _bgRenderer;
 
-    private WordChecker _wordChecker = new();
+    private readonly WordChecker _wordChecker = new();  // Check if words are spelled right
 
     private void Start()
     {
