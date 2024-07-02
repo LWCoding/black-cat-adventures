@@ -57,18 +57,17 @@ public class WordPreview : MonoBehaviour
     }
 
     /// <summary>
-    /// Remove a specific tile from the list of chosen tiles.
+    /// Remove a specific tile from the list of preview tiles.
+    /// Gets rid of all of the tiles after it, if they exist.
     /// </summary>
     public void RemoveTile(Tile tile)
     {
         int tileIdx = _currTiles.FindIndex((t) => t.TileIndex == tile.TileIndex);
-        WordGrid.Instance.LetterTiles[tile.TileIndex].IsSelected = false;
-        _currTiles.RemoveAt(tileIdx);
-        // TODO: When we get rid of a letter, get rid of all letters after it
-        //while (_currTiles.Count >= tileIdx)
-        //{
-        //    _currTiles.RemoveAt(tileIdx)
-        //}
+        while (tileIdx < _currTiles.Count)
+        {
+            WordGrid.Instance.LetterTiles[_currTiles[tileIdx].TileIndex].IsSelected = false;
+            _currTiles.RemoveAt(tileIdx);
+        }
         UpdatePreviewLetters();
         OnLetterTilesChanged.Invoke();
     }
