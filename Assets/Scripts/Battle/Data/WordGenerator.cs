@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class WordChecker
+public class WordGenerator
 {
 
     private List<string> _validWords = new();
@@ -40,6 +40,24 @@ public class WordChecker
         if (lettersToCheck.Length < 3) return false;
         lettersToCheck = lettersToCheck.ToLower();
         return _validWords.Contains(lettersToCheck);
+    }
+
+    /// <summary>
+    /// Get a random letter based on chances from the Boggle game;
+    /// some characters are prioritized in weight above others.
+    /// </summary>
+    public Tile GetRandomTile(int tileIdx)
+    {
+        // All the characters from Boggle but stringed together
+        string chars = "AAEEGNABBJOOACHOPSAFFKPSAOOTTWCIMOTUDEILRXDELRVYDISTTYEEGHNWEEINSUEHRTVWEIOSSTELRTTYHIMNQUHLNNRZ";
+        char randomChar = chars[Random.Range(0, chars.Length)];
+        // Create a tile object
+        Tile t = new()
+        {
+            Letters = randomChar.ToString(),
+            TileIndex = tileIdx
+        };
+        return t;
     }
 
 }

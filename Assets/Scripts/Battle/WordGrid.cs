@@ -31,6 +31,8 @@ public class WordGrid : MonoBehaviour
     private readonly List<LetterTile> _letterTiles = new();  // Instantiated letters
     public List<LetterTile> LetterTiles => _letterTiles;
 
+    private WordGenerator _wordGenerator = new();
+
     private void Start()
     {
         InitializeBoard();
@@ -48,29 +50,11 @@ public class WordGrid : MonoBehaviour
             {
                 GameObject letter = Instantiate(_letterPrefab, _letterParentTransform, false);
                 letter.transform.position += new Vector3(SPACE_BETWEEN_TILES * r, -SPACE_BETWEEN_TILES * c);
-                letter.GetComponent<LetterTile>().InitializeTile(GetRandomTile(r * NUM_ROWS + c));
+                letter.GetComponent<LetterTile>().InitializeTile(_wordGenerator.GetRandomTile(r * NUM_ROWS + c));
 
                 _letterTiles.Add(letter.GetComponent<LetterTile>());
             }
         }
-    }
-
-    /// <summary>
-    /// Get a random letter based on chances from the Boggle game;
-    /// some characters are prioritized in weight above others.
-    /// </summary>
-    private Tile GetRandomTile(int tileIdx)
-    {
-        // All the characters from Boggle but stringed together
-        string chars = "AAEEGNABBJOOACHOPSAFFKPSAOOTTWCIMOTUDEILRXDELRVYDISTTYEEGHNWEEINSUEHRTVWEIOSSTELRTTYHIMNQUHLNNRZ";
-        char randomChar = chars[Random.Range(0, chars.Length)];
-        // Create a tile object
-        Tile t = new()
-        {
-            Letters = randomChar.ToString(),
-            TileIndex = tileIdx
-        };
-        return t;
     }
 
 }

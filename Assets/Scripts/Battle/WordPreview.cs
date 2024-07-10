@@ -41,6 +41,7 @@ public class WordPreview : MonoBehaviour
         }
     }
 
+    private WordGenerator _wordGenerator = new();
     private readonly List<GameObject> _previewLetterTiles = new();
     private readonly List<Tile> _currTiles = new();
     private readonly float SPACE_BETWEEN_TILES = 0.1f;
@@ -69,6 +70,20 @@ public class WordPreview : MonoBehaviour
         }
         UpdatePreviewLetters();
         OnLetterTilesChanged.Invoke();
+    }
+
+    /// <summary>
+    /// Remove all preview tiles currently showing at the top.
+    /// Refresh the tiles in the word grid to be different letters.
+    /// </summary>
+    public void ConsumeTiles()
+    {
+        for (int i = _currTiles.Count - 1; i >= 0; i--)
+        {
+            Tile t = _currTiles[i];
+            WordGrid.Instance.LetterTiles[t.TileIndex].InitializeTile(_wordGenerator.GetRandomTile(t.TileIndex));
+            RemoveTile(t);
+        }
     }
 
     /// <summary>

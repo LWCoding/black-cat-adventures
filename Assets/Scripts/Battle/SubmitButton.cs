@@ -11,7 +11,7 @@ public class SubmitButton : MonoBehaviour
     [SerializeField] protected SpriteRenderer _bgRenderer;
 
     private bool _isInteractable = false;
-    private readonly WordChecker _wordChecker = new();  // Check if words are spelled right
+    private readonly WordGenerator _wordChecker = new();  // Check if words are spelled right
 
     private void Awake()
     {
@@ -52,8 +52,23 @@ public class SubmitButton : MonoBehaviour
     private void OnMouseDown()
     {
         if (!_isInteractable) { return; }  // If not interactable, don't do anything
-        Debug.Log("Use word");
         LevelManager.Instance.DealDamageWithWord(WordPreview.Instance.CurrentWord);
+        WordPreview.Instance.ConsumeTiles();
+        LevelManager.Instance.SetState(new EnemyTurnState());
+        StartCoroutine(WaitThenPlayer());  // TODO: THIS IS A TEST, REMOVE THIS
+    }
+
+    /// <summary>
+    /// TODO: THIS IS A TEST REMOVE THIS
+    /// TODO: THIS IS A TEST REMOVE THIS
+    /// TODO: THIS IS A TEST REMOVE THIS
+    /// TODO: THIS IS A TEST REMOVE THIS
+    /// TODO: THIS IS A TEST REMOVE THIS
+    /// </summary>
+    private IEnumerator WaitThenPlayer()
+    {
+        yield return new WaitForSeconds(2);
+        LevelManager.Instance.SetState(new PlayerTurnState());
     }
 
 }
