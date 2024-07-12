@@ -12,7 +12,8 @@ public class EnemyTurnState : State
 
     public override void OnExitState()
     {
-        Debug.Log("No longer enemy.");
+        LevelManager.Instance.MakePlayerTakeDamage(4);
+        Debug.Log("Dealt damage. No longer enemy.");
     }
 
 }

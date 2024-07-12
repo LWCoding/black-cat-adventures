@@ -49,4 +49,13 @@ public class LevelManager : MonoBehaviour
         _enemyHealth.TakeDamage(damageDealt);
     }
 
+    /// <summary>
+    /// Take damage (as the player), given a specified
+    /// amount of damage.
+    /// </summary>
+    public void MakePlayerTakeDamage(int damage)
+    {
+        _playerHealth.TakeDamage(damage);
+    }
+
 }
