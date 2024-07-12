@@ -45,7 +45,10 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void DealDamageWithWord(string word)
     {
-        int damageDealt = word.Length;
+        int wordLength = word.Length;
+        // Algorithm to determine damage from word!
+        int damageDealt = (int)Mathf.Round(Mathf.Exp(wordLength * 0.6f));
+        // Make the enemy actually take the damage.
         _enemyHealth.TakeDamage(damageDealt);
     }
 

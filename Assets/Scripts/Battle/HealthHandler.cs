@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,8 +7,6 @@ using UnityEngine;
 public class HealthHandler : MonoBehaviour
 {
 
-    [Header("Properties")]
-    public int StartingHealth;
     [Header("Optional Properties")]
     public TextMeshPro TextToUpdate;
 
@@ -24,14 +23,19 @@ public class HealthHandler : MonoBehaviour
         }
     }
 
-    public bool IsDead => CurrentHealth <= 0;
+    public Action OnDeath = null;  // Called when this enemy hits zero health
 
     private int _currentHealth;
     private int _maxHealth;
 
-    private void Awake()
+    /// <summary>
+    /// Initialize this character's starting health to a
+    /// specified value.
+    /// </summary>
+    public void InitializeHealth(int startingHealth)
     {
-        CurrentHealth = StartingHealth;
+        _currentHealth = startingHealth;
+        _maxHealth = startingHealth;
     }
 
     /// <summary>
@@ -46,6 +50,7 @@ public class HealthHandler : MonoBehaviour
         if (CurrentHealth < 0)
         {
             CurrentHealth = 0;
+            OnDeath?.Invoke();
         }
     }
 

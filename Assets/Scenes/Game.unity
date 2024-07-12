@@ -541,6 +541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 526112013}
   - component: {fileID: 526112014}
+  - component: {fileID: 526112015}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -577,8 +578,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a856fac16593ab4d8138217dc249c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartingHealth: 100
   TextToUpdate: {fileID: 1981159308}
+--- !u!114 &526112015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526112012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f918362ad1cd449a4ea3f8ab20a6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyInfo: {fileID: 11400000, guid: cf3c52564997d0c4a8df4661d4e6f147, type: 2}
+  _nextEnemyObject: {fileID: 0}
+  _spriteRenderer: {fileID: 967537050}
+  _healthHandler: {fileID: 526112014}
 --- !u!1 &744788694
 GameObject:
   m_ObjectHideFlags: 0
@@ -1214,7 +1230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a856fac16593ab4d8138217dc249c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartingHealth: 100
   TextToUpdate: {fileID: 1481716343}
 --- !u!1 &1481716341
 GameObject:
