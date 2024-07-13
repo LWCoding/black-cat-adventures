@@ -18,6 +18,7 @@ public class CharacterHandler : MonoBehaviour
         }
         _spriteRenderer.sprite = charInfo.AliveSprite;
         _spriteRenderer.transform.localScale = charInfo.SpriteScale;
+        _spriteRenderer.transform.position += (Vector3)charInfo.SpriteOffset;
         _healthHandler.InitializeHealth(charInfo.StartingHealth);  // Initialize health
     }
 
