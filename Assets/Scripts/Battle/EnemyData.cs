@@ -2,15 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 [CreateAssetMenu(fileName = "New Enemy Data", menuName = "Enemy")]
-public class EnemyData : ScriptableObject
+public class EnemyData : CharacterData
 {
 
-    [Header("Enemy Properties")]
-    public int StartingHealth;
-    public Sprite AliveSprite;
-    public Sprite DeadSprite;
-    public Vector2 SpriteScale = new(1, 1);
+   
 
 }

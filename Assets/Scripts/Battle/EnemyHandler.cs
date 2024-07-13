@@ -2,32 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(HealthHandler))]
-public class EnemyHandler : MonoBehaviour
+public class EnemyHandler : CharacterHandler
 {
 
     [Header("Enemy Properties")]
     [SerializeField] private EnemyData _enemyInfo;
     [SerializeField] private GameObject _nextEnemyObject;  // If null, this is the last enemy
 
-    [Header("Object Assignments")]
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private HealthHandler _healthHandler;
-
     private void Awake()
     {
         InitializeInfo(_enemyInfo);
-    }
-
-    public void InitializeInfo(EnemyData enemyInfo)
-    {
-        if (enemyInfo == null)
-        {
-            Debug.LogError("EnemyHandler was not supplied valid information to initialize enemy!", this);
-        }
-        _spriteRenderer.sprite = _enemyInfo.AliveSprite;
-        _spriteRenderer.transform.localScale = _enemyInfo.SpriteScale;
-        _healthHandler.InitializeHealth(_enemyInfo.StartingHealth);  // Initialize health
     }
 
     private void Start()

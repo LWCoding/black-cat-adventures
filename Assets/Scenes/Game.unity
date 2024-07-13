@@ -591,10 +591,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f918362ad1cd449a4ea3f8ab20a6fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyInfo: {fileID: 11400000, guid: cf3c52564997d0c4a8df4661d4e6f147, type: 2}
-  _nextEnemyObject: {fileID: 0}
   _spriteRenderer: {fileID: 967537050}
   _healthHandler: {fileID: 526112014}
+  _enemyInfo: {fileID: 11400000, guid: cf3c52564997d0c4a8df4661d4e6f147, type: 2}
+  _nextEnemyObject: {fileID: 0}
 --- !u!1 &744788694
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,6 +1194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1477070312}
   - component: {fileID: 1477070313}
+  - component: {fileID: 1477070314}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1231,6 +1232,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextToUpdate: {fileID: 1481716343}
+--- !u!114 &1477070314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477070311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95158033d5117754da7c85e7b498fb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 1211275143}
+  _healthHandler: {fileID: 1477070313}
+  _playerInfo: {fileID: 11400000, guid: 03eab5b37b1bfe04aa669fdc44fe1602, type: 2}
 --- !u!1 &1481716341
 GameObject:
   m_ObjectHideFlags: 0
