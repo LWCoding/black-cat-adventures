@@ -34,7 +34,7 @@ public class HealthHandler : MonoBehaviour
     /// </summary>
     public void InitializeHealth(int startingHealth)
     {
-        _currentHealth = startingHealth;
+        CurrentHealth = startingHealth;
         _maxHealth = startingHealth;
     }
 

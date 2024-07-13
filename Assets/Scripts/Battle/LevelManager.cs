@@ -28,6 +28,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
+        _playerHealth.InitializeHealth(50);  // Initialize player health to static value
         SetState(new PlayerTurnState()); // Start off as player turn
     }
 
