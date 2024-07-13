@@ -26,6 +26,7 @@ public class EnemyHandler : MonoBehaviour
             Debug.LogError("EnemyHandler was not supplied valid information to initialize enemy!", this);
         }
         _spriteRenderer.sprite = _enemyInfo.AliveSprite;
+        _spriteRenderer.transform.localScale = _enemyInfo.SpriteScale;
         _healthHandler.InitializeHealth(_enemyInfo.StartingHealth);  // Initialize health
     }
 

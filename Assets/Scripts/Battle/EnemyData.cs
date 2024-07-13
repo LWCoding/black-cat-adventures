@@ -11,5 +11,6 @@ public class EnemyData : ScriptableObject
     public int StartingHealth;
     public Sprite AliveSprite;
     public Sprite DeadSprite;
+    public Vector2 SpriteScale = new(1, 1);
 
 }

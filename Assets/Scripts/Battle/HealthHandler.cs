@@ -42,12 +42,13 @@ public class HealthHandler : MonoBehaviour
     /// Makes this character take a certain amount of damage.
     /// Caps damage dealt if it goes below zero.
     /// Does not allow for negative taken to be taken.
+    /// If health reaches zero, invokes OnDeath() function.
     /// </summary>
     public void TakeDamage(int damageTaken)
     {
         if (damageTaken < 0) { return; }
         CurrentHealth -= damageTaken;
-        if (CurrentHealth < 0)
+        if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
             OnDeath?.Invoke();
