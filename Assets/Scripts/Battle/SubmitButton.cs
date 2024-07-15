@@ -52,23 +52,9 @@ public class SubmitButton : MonoBehaviour
     private void OnMouseDown()
     {
         if (!_isInteractable) { return; }  // If not interactable, don't do anything
-        LevelManager.Instance.DealDamageWithWord(WordPreview.Instance.CurrentWord);
+        if (LevelManager.Instance.CurrentState is not PlayerTurnState) { return; }
+        LevelManager.Instance.RenderPlayerDamage();
         WordPreview.Instance.ConsumeTiles();
-        LevelManager.Instance.SetState(new EnemyTurnState());
-        StartCoroutine(WaitThenPlayer());  // TODO: THIS IS A TEST, REMOVE THIS
-    }
-
-    /// <summary>
-    /// TODO: THIS IS A TEST REMOVE THIS
-    /// TODO: THIS IS A TEST REMOVE THIS
-    /// TODO: THIS IS A TEST REMOVE THIS
-    /// TODO: THIS IS A TEST REMOVE THIS
-    /// TODO: THIS IS A TEST REMOVE THIS
-    /// </summary>
-    private IEnumerator WaitThenPlayer()
-    {
-        yield return new WaitForSeconds(2);
-        LevelManager.Instance.SetState(new PlayerTurnState());
     }
 
 }

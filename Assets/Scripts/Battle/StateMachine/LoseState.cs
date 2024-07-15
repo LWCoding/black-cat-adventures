@@ -2,18 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyTurnState : State
+public class LoseState : State
 {
-
     public override void OnEnterState()
     {
-        LevelManager.Instance.RenderEnemyDamage();
-        Debug.Log("Enemy turn!");
+        throw new System.NotImplementedException();
     }
 
     public override void OnExitState()
     {
-        Debug.Log("Dealt damage. No longer enemy.");
+        throw new System.NotImplementedException();
     }
-
 }

@@ -28,6 +28,8 @@ public class HealthHandler : MonoBehaviour
     private int _currentHealth;
     private int _maxHealth;
 
+    public bool IsDead() => _currentHealth == 0;
+
     /// <summary>
     /// Initialize this character's starting health to a
     /// specified value.

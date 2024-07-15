@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyTurnState : State
+/// <summary>
+/// This state is purely a placeholder while other
+/// things are being animated.
+/// </summary>
+public class WaitState : State
 {
 
     public override void OnEnterState()
     {
-        LevelManager.Instance.RenderEnemyDamage();
-        Debug.Log("Enemy turn!");
+        
     }
 
     public override void OnExitState()
     {
-        Debug.Log("Dealt damage. No longer enemy.");
+        
     }
 
 }

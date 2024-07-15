@@ -1,33 +1,51 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHandler : CharacterHandler
-{
-
-    [Header("Player Properties")]
-    [SerializeField] private PlayerData _playerInfo;
-
-    private void Awake()
-    {
-        InitializeInfo(_playerInfo);
-    }
-
+{ 
     private void Start()
     {
-        //if (_nextEnemyObject != null)
-        //{
-        //    // If there's a "next" enemy to render, transition to it
-        //    _healthHandler.OnDeath += TransitionToNextEnemy;
-        //}
-        //else
-        //{
-        //    // Or else, the player has defeated all enemies in this level
-        //    _healthHandler.OnDeath += () =>
-        //    {
-        //        Debug.Log("All enemies defeated!");
-        //    };
-        //}
+        LevelManager.Instance.OnPlayerAttack += RenderAttack;
+        _healthHandler.OnDeath += () =>
+        {
+            LevelManager.Instance.SetState(new LoseState());
+        };
+    }
+
+    protected override void RenderAttack()
+    {
+        if (_healthHandler.IsDead()) { return; }
+        StartCoroutine(RenderAttackCoroutine(() =>
+        {
+            if (LevelManager.Instance.CurrentState is PlayerTurnState)
+            {
+                LevelManager.Instance.SetState(new EnemyTurnState());
+            }
+        }));
+    }
+
+    protected override IEnumerator RenderAttackCoroutine(Action codeToRunAfter)
+    {
+        Vector3 startingPos = transform.position;
+        SetSprite(_charData.AttackSprite);
+        for (int i = 0; i < 10; i++)
+        {
+            transform.position += new Vector3(0.15f, 0, 0);
+            yield return new WaitForSeconds(0.01f);
+        }
+        yield return new WaitForSeconds(0.1f);
+        for (int i = 0; i < 10; i++)
+        {
+            transform.position -= new Vector3(0.15f, 0, 0);
+            yield return new WaitForSeconds(0.01f);
+        }
+        transform.position = startingPos;
+        SetSprite(_charData.AliveSprite);
+        yield return new WaitForSeconds(0.2f);
+
+        codeToRunAfter.Invoke();
     }
 
 }

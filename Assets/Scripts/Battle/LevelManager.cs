@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -24,6 +25,8 @@ public class LevelManager : MonoBehaviour
 
     public State CurrentState;
 
+    public Action OnPlayerAttack = null;
+    public Action OnEnemyAttack = null;
     public Action<State> OnStateChanged = null;  // Parameter is the state to transition to
 
     private void Start()
@@ -40,25 +43,34 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Deal damage (as the player) to the enemy using a
-    /// specific word.
+    /// Render a new enemy.
     /// </summary>
-    public void DealDamageWithWord(string word)
+    public void SetNewEnemy(HealthHandler enemyHealthHandler)
     {
-        int wordLength = word.Length;
+        _enemyHealth = enemyHealthHandler;
+    }
+
+    /// <summary>
+    /// Deal damage (as the player) to the enemy.
+    /// </summary>
+    public void RenderPlayerDamage()
+    {
+        OnPlayerAttack?.Invoke();
+        int wordLength = WordPreview.Instance.CurrentWord.Length;
         // Algorithm to determine damage from word!
-        int damageDealt = (int)Mathf.Round(Mathf.Exp(wordLength * 0.6f));
+        int damageDealt = (int)Mathf.Round(Mathf.Exp(wordLength * 0.4f));
         // Make the enemy actually take the damage.
         _enemyHealth.TakeDamage(damageDealt);
     }
 
     /// <summary>
-    /// Take damage (as the player), given a specified
-    /// amount of damage.
+    /// Render damage (as the enemy) to the player.
     /// </summary>
-    public void MakePlayerTakeDamage(int damage)
+    public void RenderEnemyDamage()
     {
-        _playerHealth.TakeDamage(damage);
+        OnEnemyAttack?.Invoke();
+        // Make the player actually take the damage.
+        _playerHealth.TakeDamage(4);
     }
 
 }
