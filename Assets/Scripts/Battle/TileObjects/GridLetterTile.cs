@@ -7,6 +7,10 @@ using UnityEngine;
 public class GridLetterTile : LetterTile
 {
 
+    [Header("Audio Assignments")]
+    [SerializeField] private AudioClip _clickSFX;
+    [SerializeField] private float _clickSFXVolume;
+
     private Animator _animator;
 
     private void Awake()
@@ -48,6 +52,7 @@ public class GridLetterTile : LetterTile
     {
         if (IsSelected) return;
         if (LevelManager.Instance.CurrentState is not PlayerTurnState) return;
+        AudioManager.Instance.PlayOneShot(_clickSFX, _clickSFXVolume);
         WordPreview.Instance.AppendTile(_tile);
         OnMouseExit();
         IsSelected = true;  // Set this letter to selected

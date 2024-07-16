@@ -108,8 +108,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4292467161
+  m_fontColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -244,8 +244,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: a9f16b06cba85694ca1a88b35d9349e3, type: 3}
+  m_Color: {r: 1, g: 0.8666667, b: 0.8666667, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -350,6 +350,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _letterText: {fileID: 2141098369725024387}
   _bgRenderer: {fileID: 3150224158153316516}
+  _clickSFX: {fileID: 8300000, guid: 596f42c4714840342901dac3b7edc1d3, type: 3}
+  _clickSFXVolume: 1
 --- !u!95 &8307941416200611989
 Animator:
   serializedVersion: 5
