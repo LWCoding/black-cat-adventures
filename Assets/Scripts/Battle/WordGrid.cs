@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class WordGrid : MonoBehaviour
@@ -48,6 +49,18 @@ public class WordGrid : MonoBehaviour
 
                 _letterTiles.Add(letter.GetComponent<LetterTile>());
             }
+        }
+    }
+
+    /// <summary>
+    /// Shuffles the letters of each tile on the board.
+    /// Requires the board to be initialized first.
+    /// </summary>
+    public void ShuffleBoard()
+    {
+        foreach (LetterTile letterTile in _letterTiles)
+        {
+            letterTile.RandomizeTile();
         }
     }
 

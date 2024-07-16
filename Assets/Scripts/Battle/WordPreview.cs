@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
 using UnityEngine;
 
 public class WordPreview : MonoBehaviour
@@ -9,21 +10,11 @@ public class WordPreview : MonoBehaviour
 
     public static WordPreview Instance;
 
-    #region Singleton Logic
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(this);
-        }
-        Instance = this;
-    }
-    #endregion
-
     [Header("Prefab Assignments")]
     [SerializeField] private GameObject _previewLetterPrefab;
 
     [Header("Object Assignments")]
+    [SerializeField] private TextMeshPro _feedbackText;
     [SerializeField] private Transform _letterParentTransform;
 
     public Action OnLetterTilesChanged = null;  // Called whenever chosen letters have been modified
@@ -45,6 +36,40 @@ public class WordPreview : MonoBehaviour
     private readonly List<GameObject> _previewLetterTiles = new();
     private readonly List<Tile> _currTiles = new();
     private readonly float SPACE_BETWEEN_TILES = 0.1f;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(this);
+        }
+        Instance = this;
+        _feedbackText.enabled = false;
+
+        // Edit the feedback text based on # of letters in word, if valid
+        OnLetterTilesChanged += () =>
+        {
+            _feedbackText.enabled = false;
+            if (!_wordGenerator.IsValidWord(CurrentWord) || CurrentTiles.Count < 5) return;
+            _feedbackText.enabled = true;
+            if (CurrentTiles.Count >= 8)
+            {
+                _feedbackText.text = "Spectacular!";
+            } 
+            else if (CurrentTiles.Count >= 7) 
+            { 
+                _feedbackText.text = "Amazing!";
+            } 
+            else if (CurrentTiles.Count >= 6)
+            {
+                _feedbackText.text = "Great!";
+            }
+            else if (CurrentTiles.Count >= 5)
+            {
+                _feedbackText.text = "Good!";
+            }
+        };
+    }
 
     /// <summary>
     /// Add a tile to the end of the list of chosen tiles.

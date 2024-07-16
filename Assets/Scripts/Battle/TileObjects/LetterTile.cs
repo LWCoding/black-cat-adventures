@@ -26,18 +26,30 @@ public abstract class LetterTile : MonoBehaviour
     protected bool IsVisibilityLocked = false;  // If true, visibility cannot be changed
     protected Tile _tile;
 
+    private WordGenerator _wordGenerator = new();
+
     private void Start()
     {
         IsSelected = false;
     }
 
     /// <summary>
-    /// Changes the visual appeal of this object to appear like a Tile.
+    /// Initializes this tile object to a specified tile. Saves the tile index.
     /// </summary>
     public void InitializeTile(Tile tile)
     {
         _tile = tile;
         _letterText.text = tile.Letters;
+    }
+
+    /// <summary>
+    /// Randomly gets a tile using the WordGenerator class and sets this tile to
+    /// appear like that tile. Must be initialized first.
+    /// </summary>
+    public void RandomizeTile()
+    {
+        Tile newTile = _wordGenerator.GetRandomTile(_tile.TileIndex);
+        InitializeTile(newTile);
     }
 
     /// <summary>
