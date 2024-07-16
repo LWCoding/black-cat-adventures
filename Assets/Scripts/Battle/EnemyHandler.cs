@@ -12,7 +12,7 @@ public class EnemyHandler : CharacterHandler
     [Header("Optional Dialogue Assignments")]
     public List<DialogueInfo> DialogueToPlayOnMeet = new();
 
-    private const float TIME_TO_ANIMATE_NEXT_ENEMY_IN = 1.1f;  // Animation time between enemies
+    private const float TIME_TO_ANIMATE_NEXT_ENEMY_IN = 1.3f;  // Animation time between enemies
 
     private void Start()
     {
@@ -106,7 +106,7 @@ public class EnemyHandler : CharacterHandler
         {
             _spriteRenderer.color -= new Color(0, 0, 0, 0.04f);
             HealthHandler.TextToUpdate.color -= new Color(0, 0, 0, 0.04f);
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(0.03f);
         }
     }
 

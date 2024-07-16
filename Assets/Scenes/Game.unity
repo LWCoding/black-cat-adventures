@@ -948,7 +948,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.7283019, g: 0.6619607, b: 0.61974365, a: 1}
+  m_Color: {r: 0.63522005, g: 0.5175788, b: 0.44145793, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1137,6 +1137,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 109445379}
     m_Modifications:
+    - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
+      propertyPath: DialogueToPlayOnMeet.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
+      propertyPath: DialogueToPlayOnMeet.Array.data[0].Text
+      value: Wait, I was here already. What's going on?
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
+      propertyPath: DialogueToPlayOnMeet.Array.data[0].Speaker
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
+      propertyPath: DialogueToPlayOnMeet.Array.data[0].Duration
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5679498944273742369, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21.8
