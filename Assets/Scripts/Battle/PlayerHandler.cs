@@ -17,9 +17,10 @@ public class PlayerHandler : CharacterHandler
     protected override void RenderAttack()
     {
         if (HealthHandler.IsDead()) { return; }
+        LevelManager.Instance.SetState(new WaitState());
         StartCoroutine(RenderAttackCoroutine(() =>
         {
-            if (LevelManager.Instance.CurrentState is PlayerTurnState)
+            if (LevelManager.Instance.CurrentState is WaitState)
             {
                 LevelManager.Instance.SetState(new EnemyTurnState());
             }

@@ -59,7 +59,8 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator RenderDialogueCoroutine(List<DialogueInfo> diList)
     {
-        State _previousState = CurrentState;
+        bool wasStalled = false;
+        State previousState = CurrentState;
 
         while (diList.Count > 0)
         {
@@ -67,6 +68,7 @@ public class LevelManager : MonoBehaviour
             diList.RemoveAt(0);
             if (di.ShouldStallState)
             {
+                wasStalled = true;
                 SetState(new WaitState());
             }
             if (di.Speaker == DialogueFaction.PLAYER)
@@ -85,8 +87,11 @@ public class LevelManager : MonoBehaviour
             yield return new WaitUntil(() => dialogueFinished);
         }
 
-        // Or else, hide the dialogue box when we hit the end
-        SetState(_previousState);
+        // If the dialogue was stalled, restore the state at the end
+        if (wasStalled)
+        {
+            SetState(previousState);
+        }
     }
 
     /// <summary>

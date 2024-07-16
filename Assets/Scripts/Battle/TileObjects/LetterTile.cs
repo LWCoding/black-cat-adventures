@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class LetterTile : MonoBehaviour
@@ -22,6 +23,7 @@ public abstract class LetterTile : MonoBehaviour
         }
     }
 
+    protected bool IsVisibilityLocked = false;  // If true, visibility cannot be changed
     protected Tile _tile;
 
     private void Start()
@@ -44,8 +46,9 @@ public abstract class LetterTile : MonoBehaviour
     /// isVisible = true -> Tile looks like it is interactable
     /// isVisible = false -> Tile looks like it isn't interactable
     /// </summary>
-    private void ToggleVisibility(bool isVisible)
+    protected void ToggleVisibility(bool isVisible)
     {
+        if (IsVisibilityLocked) { return; }
         Color bgColor = _bgRenderer.color;
         Color letterColor = _letterText.color;
         _bgRenderer.color = new Color(bgColor.r, bgColor.g, bgColor.b, isVisible ? 1 : 0.3f);
