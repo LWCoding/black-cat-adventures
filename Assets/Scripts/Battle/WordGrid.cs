@@ -7,17 +7,6 @@ public class WordGrid : MonoBehaviour
 
     public static WordGrid Instance;
 
-    #region Singleton Logic
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(this);
-        }
-        Instance = this;
-    }
-    #endregion
-
     [Header("Prefab Assignments")]
     [SerializeField] private GameObject _letterPrefab;
     [Header("Object Assignments")]
@@ -33,8 +22,13 @@ public class WordGrid : MonoBehaviour
 
     private WordGenerator _wordGenerator = new();
 
-    private void Start()
+    private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(this);
+        }
+        Instance = this;
         InitializeBoard();
     }
 

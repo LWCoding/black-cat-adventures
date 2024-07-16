@@ -11,12 +11,12 @@ public class WaitState : State
 
     public override void OnEnterState()
     {
-        Debug.Log("Waiting state...");
+
     }
 
     public override void OnExitState()
     {
-        Debug.Log("Exit waiting state!");
+
     }
 
 }
