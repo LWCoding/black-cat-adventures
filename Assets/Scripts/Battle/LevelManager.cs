@@ -20,8 +20,9 @@ public class LevelManager : MonoBehaviour
     }
     #endregion
 
-    [SerializeField] private HealthHandler _playerHealth;
-    [SerializeField] private HealthHandler _enemyHealth;
+    [Header("Object Assignments")]
+    [SerializeField] private PlayerHandler _playerHandler;
+    [SerializeField] private EnemyHandler _currEnemyHandler;
 
     public State CurrentState;
 
@@ -32,6 +33,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         SetState(new PlayerTurnState()); // Start off as player turn
+        SetNewEnemy(_currEnemyHandler);
     }
 
     public void SetState(State s)
@@ -44,10 +46,47 @@ public class LevelManager : MonoBehaviour
 
     /// <summary>
     /// Render a new enemy.
+    /// Queues any dialogue to be played if applicable.
     /// </summary>
-    public void SetNewEnemy(HealthHandler enemyHealthHandler)
+    public void SetNewEnemy(EnemyHandler newEnemyHandler)
     {
-        _enemyHealth = enemyHealthHandler;
+        _currEnemyHandler = newEnemyHandler;
+        if (newEnemyHandler.DialogueToPlayOnMeet.Count > 0)
+        {
+            StartCoroutine(RenderDialogueCoroutine(newEnemyHandler.DialogueToPlayOnMeet));
+        }
+    }
+
+    private IEnumerator RenderDialogueCoroutine(List<DialogueInfo> diList)
+    {
+        State _previousState = CurrentState;
+
+        while (diList.Count > 0)
+        {
+            DialogueInfo di = diList[0];
+            diList.RemoveAt(0);
+            if (di.ShouldStallState)
+            {
+                SetState(new WaitState());
+            }
+            if (di.Speaker == DialogueFaction.PLAYER)
+            {
+                _playerHandler.SayDialogue(di);
+            }
+            else if (di.Speaker == DialogueFaction.ENEMY)
+            {
+                _currEnemyHandler.SayDialogue(di);
+            }
+            // Wait until the dialogue is finished, before the next one
+            bool dialogueFinished = false;
+            DialogueBoxHandler.OnDialogueComplete = () => {
+                dialogueFinished = true; 
+            };
+            yield return new WaitUntil(() => dialogueFinished);
+        }
+
+        // Or else, hide the dialogue box when we hit the end
+        SetState(_previousState);
     }
 
     /// <summary>
@@ -60,7 +99,7 @@ public class LevelManager : MonoBehaviour
         // Algorithm to determine damage from word!
         int damageDealt = (int)Mathf.Round(Mathf.Exp(wordLength * 0.4f));
         // Make the enemy actually take the damage.
-        _enemyHealth.TakeDamage(damageDealt);
+        _currEnemyHandler.HealthHandler.TakeDamage(damageDealt);
     }
 
     /// <summary>
@@ -70,7 +109,7 @@ public class LevelManager : MonoBehaviour
     {
         OnEnemyAttack?.Invoke();
         // Make the player actually take the damage.
-        _playerHealth.TakeDamage(4);
+        _playerHandler.HealthHandler.TakeDamage(4);
     }
 
 }

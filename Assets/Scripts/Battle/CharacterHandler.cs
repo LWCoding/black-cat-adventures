@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(HealthHandler))]
@@ -9,15 +10,17 @@ public abstract class CharacterHandler : MonoBehaviour
 
     [Header("Object Assignments")]
     [SerializeField] protected SpriteRenderer _spriteRenderer;
-    [SerializeField] protected HealthHandler _healthHandler;
+    public HealthHandler HealthHandler;
     [Header("Character Properties")]
     [SerializeField] protected CharacterData _charData;
+    [Header("Optional Assignments")]
+    [SerializeField] private DialogueBoxHandler _dBoxHandler; 
 
     private void Awake()
     {
         InitializeInfo(_charData);
         // Set the character's sprite to be dead when reaching zero health.
-        _healthHandler.OnDeath += () =>
+        HealthHandler.OnDeath += () =>
         {
             SetSprite(_charData.DeadSprite);
         };
@@ -30,8 +33,17 @@ public abstract class CharacterHandler : MonoBehaviour
             Debug.LogError("CharacterHandler was not supplied valid information to initialize enemy!", this);
         }
         _spriteRenderer.transform.localScale = charInfo.SpriteScale;
-        _healthHandler.InitializeHealth(charInfo.StartingHealth);  // Initialize health
+        HealthHandler.InitializeHealth(charInfo.StartingHealth);  // Initialize health
         SetSprite(charInfo.AliveSprite);
+    }
+
+    /// <summary>
+    /// Queues dialogue if a dialogue box handler was assigned.
+    /// If not, does nothing.
+    /// </summary>
+    public void SayDialogue(DialogueInfo di)
+    {
+        _dBoxHandler.SayDialogue(di);
     }
 
     /// <summary>

@@ -8,7 +8,7 @@ public class PlayerHandler : CharacterHandler
     private void Start()
     {
         LevelManager.Instance.OnPlayerAttack += RenderAttack;
-        _healthHandler.OnDeath += () =>
+        HealthHandler.OnDeath += () =>
         {
             LevelManager.Instance.SetState(new LoseState());
         };
@@ -16,7 +16,7 @@ public class PlayerHandler : CharacterHandler
 
     protected override void RenderAttack()
     {
-        if (_healthHandler.IsDead()) { return; }
+        if (HealthHandler.IsDead()) { return; }
         StartCoroutine(RenderAttackCoroutine(() =>
         {
             if (LevelManager.Instance.CurrentState is PlayerTurnState)

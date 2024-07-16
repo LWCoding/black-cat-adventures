@@ -7,17 +7,20 @@ public class EnemyHandler : CharacterHandler
 {
 
     [Header("Enemy Properties")]
-    [SerializeField] private GameObject _nextEnemyObject;  // If null, this is the last enemy
+    [SerializeField] private EnemyHandler _nextEnemyHandler;  // If null, this is the last enemy
 
-    private const float TIME_TO_ANIMATE_NEXT_ENEMY_IN = 1.4f;  // Animation time between enemies
+    [Header("Optional Dialogue Assignments")]
+    public List<DialogueInfo> DialogueToPlayOnMeet = new();
+
+    private const float TIME_TO_ANIMATE_NEXT_ENEMY_IN = 1.1f;  // Animation time between enemies
 
     private void Start()
     {
         LevelManager.Instance.OnEnemyAttack += RenderAttack;
-        if (_nextEnemyObject != null)
+        if (_nextEnemyHandler != null)
         {
             // If there's a "next" enemy to render, transition to it
-            _healthHandler.OnDeath += () =>
+            HealthHandler.OnDeath += () =>
             {
                 StartCoroutine(FadeAwayCoroutine());
                 TransitionToNextEnemy();
@@ -26,7 +29,7 @@ public class EnemyHandler : CharacterHandler
         } else
         {
             // Or else, the player has defeated all enemies in this level
-            _healthHandler.OnDeath += () =>
+            HealthHandler.OnDeath += () =>
             {
                 StartCoroutine(FadeAwayCoroutine());
                 LevelManager.Instance.SetState(new WinState());
@@ -36,7 +39,7 @@ public class EnemyHandler : CharacterHandler
 
     protected override void RenderAttack()
     {
-        if (_healthHandler.IsDead()) { return; }
+        if (HealthHandler.IsDead()) { return; }
         StartCoroutine(RenderAttackCoroutine(() =>
         {
             if (LevelManager.Instance.CurrentState is EnemyTurnState) {
@@ -77,20 +80,19 @@ public class EnemyHandler : CharacterHandler
 
     private IEnumerator TransitionToNextEnemyCoroutine()
     {
-        _nextEnemyObject.SetActive(true);
+        _nextEnemyHandler.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         float currTime = 0f;
         float timeToWait = TIME_TO_ANIMATE_NEXT_ENEMY_IN;
-        Vector3 startPos = _nextEnemyObject.transform.position;
+        Vector3 startPos = _nextEnemyHandler.transform.position;
         while (currTime < timeToWait)
         {
-            _nextEnemyObject.transform.position = Vector3.Lerp(startPos, transform.position, currTime / timeToWait);
-            Debug.Log(currTime / timeToWait);
+            _nextEnemyHandler.transform.position = Vector3.Lerp(startPos, transform.position, currTime / timeToWait);
             currTime += Time.deltaTime; 
             yield return null;
         }
         yield return new WaitForSeconds(0.1f);
-        LevelManager.Instance.SetNewEnemy(_nextEnemyObject.GetComponent<HealthHandler>());
+        LevelManager.Instance.SetNewEnemy(_nextEnemyHandler);
         LevelManager.Instance.SetState(new PlayerTurnState());
         gameObject.SetActive(false);
     }
@@ -103,7 +105,7 @@ public class EnemyHandler : CharacterHandler
         for (int i = 0; i < 25; i++)
         {
             _spriteRenderer.color -= new Color(0, 0, 0, 0.04f);
-            _healthHandler.TextToUpdate.color -= new Color(0, 0, 0, 0.04f);
+            HealthHandler.TextToUpdate.color -= new Color(0, 0, 0, 0.04f);
             yield return new WaitForSeconds(0.02f);
         }
     }
