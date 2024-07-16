@@ -45,7 +45,7 @@ public class SubmitButton : MonoBehaviour
         _isInteractable = isInteractable;
         Color bgColor = _bgRenderer.color;
         Color letterColor = _letterText.color;
-        _bgRenderer.color = new Color(bgColor.r, bgColor.g, bgColor.b, isInteractable ? 1 : 0.3f);
+        _bgRenderer.color = new Color(bgColor.r, bgColor.g, bgColor.b, isInteractable ? 1 : 0.2f);
         _letterText.color = new Color(letterColor.r, letterColor.g, letterColor.b, isInteractable ? 1 : 0.3f);
     }
 
