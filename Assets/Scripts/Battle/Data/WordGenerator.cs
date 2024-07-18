@@ -43,13 +43,30 @@ public class WordGenerator
     }
 
     /// <summary>
-    /// Get a random letter based on chances from the Boggle game;
+    /// Get a random letter based on modified changes from Boggle;
     /// some characters are prioritized in weight above others.
     /// </summary>
     public Tile GetRandomTile(int tileIdx)
     {
+        // Modified characters from Boggle but stringed together
+        string chars = "AAAAAABBCCDDDEEEEEEEEEFFGGHHHHHIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRSSSSSSTTTTTTTTTUUUVVWWWXYYYZ";
+        char randomChar = chars[Random.Range(0, chars.Length)];
+        // Create a tile object
+        Tile t = new()
+        {
+            Letters = randomChar.ToString(),
+            TileIndex = tileIdx
+        };
+        return t;
+    }
+
+    /// <summary>
+    /// Get a random vowel. Skewed chance for certain letters.
+    /// </summary>
+    public Tile GetRandomVowel(int tileIdx)
+    {
         // All the characters from Boggle but stringed together
-        string chars = "AAEEGNABBJOOACHOPSAFFKPSAOOTTWCIMOTUDEILRXDELRVYDISTTYEEGHNWEEINSUEHRTVWEIOSSTELRTTYHIMNQUHLNNRZ";
+        string chars = "AAEEIIOU";
         char randomChar = chars[Random.Range(0, chars.Length)];
         // Create a tile object
         Tile t = new()

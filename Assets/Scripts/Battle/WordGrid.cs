@@ -36,18 +36,33 @@ public class WordGrid : MonoBehaviour
     /// <summary>
     /// Initializes a board of letters based on the
     /// number of rows and columns.
+    /// 
+    /// Guarantees some vowels for a possible board.
     /// </summary>
     public void InitializeBoard()
     {
+        int vowelCount = 0;
         for (int r = 0; r < NUM_ROWS; r++)
         {
             for (int c = 0; c < NUM_COLUMNS; c++)
             {
                 GameObject letter = Instantiate(_letterPrefab, _letterParentTransform, false);
                 letter.transform.position += new Vector3(SPACE_BETWEEN_TILES * r, -SPACE_BETWEEN_TILES * c);
-                letter.GetComponent<LetterTile>().InitializeTile(_wordGenerator.GetRandomTile(r * NUM_ROWS + c));
+
+                Tile generatedTile = _wordGenerator.GetRandomTile(r * NUM_ROWS + c);
+                letter.GetComponent<LetterTile>().InitializeTile(generatedTile);
+                if (generatedTile.IsVowel()) vowelCount++;
 
                 _letterTiles.Add(letter.GetComponent<LetterTile>());
+            }
+        }
+        
+        // If we have two vowels or less, guarantee a few more
+        if (vowelCount <= 2)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                _letterTiles[i].RandomizeTile();
             }
         }
     }

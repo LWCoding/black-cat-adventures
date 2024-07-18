@@ -53,6 +53,16 @@ public abstract class LetterTile : MonoBehaviour
     }
 
     /// <summary>
+    /// Randomly gets a vowel using the WordGenerator class and sets this tile to
+    /// appear like that tile. Must be initialized first.
+    /// </summary>
+    public void RandomizeVowel()
+    {
+        Tile newTile = _wordGenerator.GetRandomVowel(_tile.TileIndex);
+        InitializeTile(newTile);
+    }
+
+    /// <summary>
     /// Toggle whether this tile looks like it's been clicked or not.
     /// 
     /// isVisible = true -> Tile looks like it is interactable
