@@ -57,13 +57,11 @@ public class WordGrid : MonoBehaviour
             }
         }
         
-        // If we have two vowels or less, guarantee a few more
-        if (vowelCount <= 2)
+        // Guarantee at least three vowels
+        while (vowelCount <= 2)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                _letterTiles[i].RandomizeTile();
-            }
+            int randomIdx = Random.Range(0, NUM_ROWS * NUM_COLUMNS);
+            _letterTiles[randomIdx].RandomizeTile();
         }
     }
 
