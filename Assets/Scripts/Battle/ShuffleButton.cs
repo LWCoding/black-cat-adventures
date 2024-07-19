@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,15 +7,25 @@ using UnityEngine;
 public class ShuffleButton : MonoBehaviour
 {
 
+    public static ShuffleButton Instance;
+    public static bool UnlockedShuffleButton = false;
+
     [Header("Object Assignments")]
     [SerializeField] private WordGrid _wordGrid;
     [SerializeField] private TextMeshPro _letterText;
     [SerializeField] private SpriteRenderer _bgRenderer;
 
     private bool _isInteractable = false;
-    
+
+    public static Action OnClickButton = null;
+
     private void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(this);
+        }
+        Instance = this;
         ToggleInteractability(false);  // Start off with the button uninteractable
     }
 
@@ -32,6 +43,11 @@ public class ShuffleButton : MonoBehaviour
                 ToggleInteractability(false);
             }
         };
+        // If we haven't unlocked this yet, hide it
+        if (!UnlockedShuffleButton)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -53,6 +69,7 @@ public class ShuffleButton : MonoBehaviour
     {
         if (!_isInteractable) { return; }  // If not interactable, don't do anything
         if (LevelManager.Instance.CurrentState is not PlayerTurnState) { return; }
+        OnClickButton?.Invoke();
         StartCoroutine(ShuffleGridCoroutine());
     }
 

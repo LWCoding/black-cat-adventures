@@ -62,6 +62,13 @@ public abstract class LetterTile : MonoBehaviour
         InitializeTile(newTile);
     }
 
+    public void SetTileText(string letters)
+    {
+        Tile newTile = _wordGenerator.GetRandomTile(_tile.TileIndex);
+        newTile.Letters = letters;
+        InitializeTile(newTile);
+    }
+
     /// <summary>
     /// Toggle whether this tile looks like it's been clicked or not.
     /// 

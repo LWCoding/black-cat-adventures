@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class SubmitButton : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class SubmitButton : MonoBehaviour
 
     private bool _isInteractable = false;
     private readonly WordGenerator _wordChecker = new();  // Check if words are spelled right
+
+    public static Action OnClickButton = null;
 
     private void Awake()
     {
@@ -53,6 +56,7 @@ public class SubmitButton : MonoBehaviour
     {
         if (!_isInteractable) { return; }  // If not interactable, don't do anything
         if (LevelManager.Instance.CurrentState is not PlayerTurnState) { return; }
+        OnClickButton?.Invoke();
         LevelManager.Instance.RenderPlayerDamage();
         WordPreview.Instance.ConsumeTiles();
     }
