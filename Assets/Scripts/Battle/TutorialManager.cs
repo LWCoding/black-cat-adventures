@@ -90,15 +90,17 @@ public class TutorialManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Set the letters to "Q" after they've been submitted.
+    /// Make the tiles useless after they've been submitted.
     /// Wait a frame before doing this to override properly.
     /// </summary>
     private IEnumerator WaitThenRenderTilesUseless()
     {
         yield return new WaitForEndOfFrame();
-        WordGrid.Instance.LetterTiles[4].SetTileText("Q");
-        WordGrid.Instance.LetterTiles[13].SetTileText("Q");
-        WordGrid.Instance.LetterTiles[3].SetTileText("Q");
+        // Initialize board with bad tiles... again!
+        for (int i = 0; i < WordGrid.Instance.LetterTiles.Count; i++)
+        {
+            WordGrid.Instance.LetterTiles[i].SetTileText("Q");
+        }
     }
 
 }
