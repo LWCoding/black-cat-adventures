@@ -112,6 +112,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void RenderEnemyDamage()
     {
+        if (_currEnemyHandler.HealthHandler.IsDead()) { return; }  // If dead, don't render!
         OnEnemyAttack?.Invoke();
         // Make the player actually take the damage.
         _playerHandler.HealthHandler.TakeDamage(4);

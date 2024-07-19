@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &466824592409864438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3026212962981214488}
+  m_Layer: 0
+  m_Name: Falling Text Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3026212962981214488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466824592409864438}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.13, y: 1.04, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5679498944273742369}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2562977210344541403
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +318,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3562384217587314728}
+  - {fileID: 3026212962981214488}
   - {fileID: 673390570407185252}
   - {fileID: 2597158011478640633}
   m_Father: {fileID: 0}
@@ -303,6 +335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a856fac16593ab4d8138217dc249c12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fallingTextPrefab: {fileID: 2837713338246960663, guid: d0ffab03dbf389e4fba75c9543f57531, type: 3}
+  _fallingTextSpawnpoint: {fileID: 3026212962981214488}
   TextToUpdate: {fileID: 772381420442782231}
   FillBarToUpdate: {fileID: 0}
 --- !u!114 &3112551711344366463

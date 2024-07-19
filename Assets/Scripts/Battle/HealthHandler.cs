@@ -7,6 +7,10 @@ using UnityEngine;
 public class HealthHandler : MonoBehaviour
 {
 
+    [Header("Prefab Assignments")]
+    [SerializeField] private GameObject _fallingTextPrefab;
+    [Header("Object Assignments")]
+    [SerializeField] private Transform _fallingTextSpawnpoint;
     [Header("Optional Properties")]
     public TextMeshPro TextToUpdate;  // If there's text, update text to match the health
     public Transform FillBarToUpdate;  // If there's a bar, scale it from 0 (dead) to 1 (alive)
@@ -47,6 +51,7 @@ public class HealthHandler : MonoBehaviour
 
     /// <summary>
     /// Makes this character take a certain amount of damage.
+    /// Spawns a falling text object to show the damage taken.
     /// Caps damage dealt if it goes below zero.
     /// Does not allow for negative taken to be taken.
     /// If health reaches zero, invokes OnDeath() function.
@@ -55,6 +60,10 @@ public class HealthHandler : MonoBehaviour
     {
         if (damageTaken < 0) { return; }
         CurrentHealth -= damageTaken;
+        // Spawn a falling text prefab to emphasize damage taken
+        GameObject fallingText = Instantiate(_fallingTextPrefab, _fallingTextSpawnpoint);
+        fallingText.GetComponent<FallingText>().Initialize("-" + damageTaken.ToString(), new Color(1, 0.05f, 0.05f));
+        // Cap health at zero
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
