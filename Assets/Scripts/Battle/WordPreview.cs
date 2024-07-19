@@ -146,4 +146,13 @@ public class WordPreview : MonoBehaviour
         }
     }
 
+    public void ToggleTilesFromIndex(int idx, bool isVisible)
+    {
+        int tilesIdx = CurrentTiles.FindIndex((t) => t.TileIndex == idx);
+        for (; tilesIdx < _currTiles.Count; tilesIdx++)
+        {
+            _previewLetterTiles[tilesIdx].GetComponent<PreviewLetterTile>().ToggleVisibility(isVisible);
+        }
+    }
+
 }

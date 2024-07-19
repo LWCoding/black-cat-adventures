@@ -68,7 +68,7 @@ public abstract class LetterTile : MonoBehaviour
     /// isVisible = true -> Tile looks like it is interactable
     /// isVisible = false -> Tile looks like it isn't interactable
     /// </summary>
-    protected void ToggleVisibility(bool isVisible)
+    public void ToggleVisibility(bool isVisible)
     {
         if (IsVisibilityLocked) { return; }
         Color bgColor = _bgRenderer.color;
