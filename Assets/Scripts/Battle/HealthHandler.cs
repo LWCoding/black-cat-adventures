@@ -8,7 +8,8 @@ public class HealthHandler : MonoBehaviour
 {
 
     [Header("Optional Properties")]
-    public TextMeshPro TextToUpdate;
+    public TextMeshPro TextToUpdate;  // If there's text, update text to match the health
+    public Transform FillBarToUpdate;  // If there's a bar, scale it from 0 (dead) to 1 (alive)
 
     public int CurrentHealth
     {
@@ -18,7 +19,11 @@ public class HealthHandler : MonoBehaviour
             _currentHealth = value;
             if (TextToUpdate != null)
             {
-                TextToUpdate.text = value.ToString();
+                TextToUpdate.text = value.ToString() + "/" + _maxHealth.ToString();
+            }
+            if (FillBarToUpdate != null)
+            {
+                FillBarToUpdate.localScale = new Vector3((float)_currentHealth / _maxHealth, FillBarToUpdate.localScale.y);
             }
         }
     }
@@ -36,8 +41,8 @@ public class HealthHandler : MonoBehaviour
     /// </summary>
     public void InitializeHealth(int startingHealth)
     {
-        CurrentHealth = startingHealth;
         _maxHealth = startingHealth;
+        CurrentHealth = startingHealth;
     }
 
     /// <summary>

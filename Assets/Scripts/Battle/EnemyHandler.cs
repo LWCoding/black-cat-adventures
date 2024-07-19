@@ -105,7 +105,10 @@ public class EnemyHandler : CharacterHandler
         for (int i = 0; i < 25; i++)
         {
             _spriteRenderer.color -= new Color(0, 0, 0, 0.04f);
-            HealthHandler.TextToUpdate.color -= new Color(0, 0, 0, 0.04f);
+            if (HealthHandler.TextToUpdate != null)
+            {
+                HealthHandler.TextToUpdate.color -= new Color(0, 0, 0, 0.04f);
+            }
             yield return new WaitForSeconds(0.03f);
         }
     }

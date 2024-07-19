@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a2d9a3c4c30aa43a8ab19db1c1d30d, type: 3}
   m_Name: Jack
   m_EditorClassIdentifier: 
-  StartingHealth: 50
+  StartingHealth: 25
   AliveSprite:
     Sprite: {fileID: 21300000, guid: dc51e796f0ed55642a5851225b7dcce7, type: 3}
-    Offset: {x: 0.6, y: 0.7}
+    Offset: {x: 0.6, y: 0.8}
   AttackSprite:
     Sprite: {fileID: 21300000, guid: 35d3a8f41ef5a264b8ee5538ee0554d8, type: 3}
-    Offset: {x: 0.6, y: 0.7}
+    Offset: {x: 0.6, y: 0.8}
   DeadSprite:
     Sprite: {fileID: 21300000, guid: 1c52390621af1624f86e06e7e1bfe3bb, type: 3}
-    Offset: {x: 0, y: 0.1}
+    Offset: {x: 0, y: 0.3}
   SpriteScale: {x: 0.8, y: 0.8}
