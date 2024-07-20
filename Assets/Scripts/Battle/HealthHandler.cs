@@ -11,9 +11,13 @@ public class HealthHandler : MonoBehaviour
     [SerializeField] private GameObject _fallingTextPrefab;
     [Header("Object Assignments")]
     [SerializeField] private Transform _fallingTextSpawnpoint;
+    [Header("Audio Assignments")]
+    [SerializeField] private AudioClip _takeDamageSFX;
     [Header("Optional Properties")]
     public TextMeshPro TextToUpdate;  // If there's text, update text to match the health
     public Transform FillBarToUpdate;  // If there's a bar, scale it from 0 (dead) to 1 (alive)
+
+    private float _lastSoundPlayed = 0;
 
     public int CurrentHealth
     {
@@ -60,6 +64,12 @@ public class HealthHandler : MonoBehaviour
     {
         if (damageTaken < 0) { return; }
         CurrentHealth -= damageTaken;
+        // Play damage sound if not too recently played 
+        if (Time.time - _lastSoundPlayed > 0.25f)
+        {
+            AudioManager.Instance.PlayOneShot(_takeDamageSFX);
+            _lastSoundPlayed = Time.time;
+        }
         // Spawn a falling text prefab to emphasize damage taken
         GameObject fallingText = Instantiate(_fallingTextPrefab, _fallingTextSpawnpoint);
         fallingText.GetComponent<FallingText>().Initialize("-" + damageTaken.ToString(), new Color(1, 0.02f, 0.02f));

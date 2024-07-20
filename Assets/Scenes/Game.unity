@@ -866,10 +866,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1377439466573852872, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
 --- !u!4 &146524997 stripped
 Transform:
@@ -960,6 +957,7 @@ MonoBehaviour:
   _wordGrid: {fileID: 744788696}
   _letterText: {fileID: 2024217243}
   _bgRenderer: {fileID: 860937578}
+  _shuffleSFX: {fileID: 8300000, guid: 6ea7a31309d576144b91371b02d8255b, type: 3}
 --- !u!114 &169735942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -986,6 +984,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fallingTextPrefab: {fileID: 0}
   _fallingTextSpawnpoint: {fileID: 0}
+  _takeDamageSFX: {fileID: 0}
   TextToUpdate: {fileID: 0}
   FillBarToUpdate: {fileID: 0}
 --- !u!1 &238760731 stripped
@@ -2051,10 +2050,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 59210563864585795, guid: 4a578763431c6e0438a34b0d8d4921b0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a578763431c6e0438a34b0d8d4921b0, type: 3}
 --- !u!4 &1194303914 stripped
 Transform:
@@ -2412,6 +2408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fallingTextPrefab: {fileID: 2837713338246960663, guid: d0ffab03dbf389e4fba75c9543f57531, type: 3}
   _fallingTextSpawnpoint: {fileID: 538051675}
+  _takeDamageSFX: {fileID: 8300000, guid: d481294c8ed7c0d4baacc2feb610020b, type: 3}
   TextToUpdate: {fileID: 1481716343}
   FillBarToUpdate: {fileID: 0}
 --- !u!114 &1477070314
@@ -3311,7 +3308,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Shuffle
+  m_text: 'Scramble
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -15,6 +15,8 @@ public class ShuffleButton : MonoBehaviour
     [SerializeField] private WordGrid _wordGrid;
     [SerializeField] private TextMeshPro _letterText;
     [SerializeField] private SpriteRenderer _bgRenderer;
+    [Header("Audio Assignments")]
+    [SerializeField] private AudioClip _shuffleSFX;
 
     private PointerCursorOnHover _pointerCursorOnHover;
     private bool _isInteractable = false;
@@ -76,6 +78,7 @@ public class ShuffleButton : MonoBehaviour
         if (LevelManager.Instance.CurrentState is not PlayerTurnState) { return; }
         OnClickButton?.Invoke();
         StartCoroutine(ShuffleGridCoroutine());
+        AudioManager.Instance.PlayOneShot(_shuffleSFX);
     }
 
     /// <summary>

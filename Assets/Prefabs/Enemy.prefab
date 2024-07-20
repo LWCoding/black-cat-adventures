@@ -337,6 +337,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fallingTextPrefab: {fileID: 2837713338246960663, guid: d0ffab03dbf389e4fba75c9543f57531, type: 3}
   _fallingTextSpawnpoint: {fileID: 3026212962981214488}
+  _takeDamageSFX: {fileID: 8300000, guid: d481294c8ed7c0d4baacc2feb610020b, type: 3}
   TextToUpdate: {fileID: 772381420442782231}
   FillBarToUpdate: {fileID: 0}
 --- !u!114 &3112551711344366463
