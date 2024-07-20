@@ -15,3 +15,4 @@ MonoBehaviour:
   TreasureName: None
   TreasureDescription: There is no treasure in this slot
   TreasureIcon: {fileID: 0}
+  Type: 0

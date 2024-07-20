@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -8,11 +9,11 @@ public class TreasureItem : MonoBehaviour
 
     [Header("Object Assignments")]
     [SerializeField] private SpriteRenderer _iconRenderer;
+    [SerializeField] private TextMeshPro _tooltipText;
     [Header("Treasure Properties")]
     public TreasureData TreasureData;
 
     private Animator _animator;
-    private int _savedIdx;
 
     private void Awake()
     {
@@ -23,10 +24,10 @@ public class TreasureItem : MonoBehaviour
     /// Store an index into this treasure item, so that it can properly
     /// select itself. Also registers all of the treasure stats.
     /// </summary>
-    public void Initialize(int assignedIdx)
+    public void Initialize()
     {
-        _savedIdx = assignedIdx;
         _iconRenderer.sprite = TreasureData.TreasureIcon;
+        _tooltipText.text = "<b>" + TreasureData.TreasureName + "</b>:\n" + TreasureData.TreasureDescription;
         switch (TreasureData.Type)
         {
             case TreasureType.CAT_PAW:
@@ -36,11 +37,17 @@ public class TreasureItem : MonoBehaviour
                 };
                 break;
         }
+        OnMouseExit();
     }
 
-    public void OnMouseOver()
+    public void OnMouseEnter()
     {
-        TreasureSection.Instance.SelectTreasure(_savedIdx);
+        EnableTreasure();
+    }
+
+    public void OnMouseExit()
+    {
+        DisableTreasure();
     }
 
     /// <summary>

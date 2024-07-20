@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,7 +13,8 @@ public class TreasureSection : MonoBehaviour
 
     [Header("Object Assignments")]
     [SerializeField] private List<TreasureItem> _treasureObjects;
-    [SerializeField] private TextMeshPro _treasureDesc;
+
+    public Action OnTreasureSelected = null;
 
     private void Awake()
     {
@@ -31,25 +33,11 @@ public class TreasureSection : MonoBehaviour
             gameObject.SetActive(false);
             return;
         }
-        // Select the first treasure item, and initialize all items
-        SelectTreasure(0);
-        int idx = 0;
+        // Initialize all items inside
         foreach (TreasureItem item in _treasureObjects)
         {
-            item.Initialize(idx++);
+            item.Initialize();
         }
-    }
-
-    public void SelectTreasure(int idx)
-    {
-        if (idx < 0 || idx >= _treasureObjects.Count) { return; }
-        for (int i = 0; i < _treasureObjects.Count; i++)
-        {
-            if (i == idx) { continue; }
-            _treasureObjects[i].DisableTreasure();
-        }
-        _treasureObjects[idx].EnableTreasure();
-        _treasureDesc.text = "<b>" + _treasureObjects[idx].TreasureData.TreasureName + "</b>\n\n" + _treasureObjects[idx].TreasureData.TreasureDescription;
     }
 
 }
