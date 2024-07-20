@@ -83,7 +83,12 @@ public class TutorialManager : MonoBehaviour
                 case 3:
                     _enemyTooltipObject.SetActive(false);
                     break;
-            } 
+            }
+            // If treasure is unlocked, hide tooltip when damage is dealt
+            if (TreasureSection.UnlockedTreasureSection)
+            {
+                _treasureTooltipObject.SetActive(false);
+            }
         };
         // When a word is shuffled, hide the tooltip
         ShuffleButton.OnClickButton += () =>
@@ -96,11 +101,6 @@ public class TutorialManager : MonoBehaviour
             TreasureSection.UnlockedTreasureSection = true;
             TreasureSection.Instance.gameObject.SetActive(true);
             _treasureTooltipObject.SetActive(true);
-        };
-        // When a treasure item is hovered, hide treasure tooltip
-        TreasureSection.Instance.OnTreasureSelected += () =>
-        {
-            _treasureTooltipObject.SetActive(false);
         };
     }
     
