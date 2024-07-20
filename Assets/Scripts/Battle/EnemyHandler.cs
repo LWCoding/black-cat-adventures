@@ -7,19 +7,19 @@ public class EnemyHandler : CharacterHandler
 {
 
     [Header("Enemy Properties")]
-    [SerializeField] private EnemyHandler _nextEnemyHandler;  // If null, this is the last enemy
+    [SerializeField] private GameObject _nextBattleObject;  // If null, this is the last enemy
+    [SerializeField] private float _timeToNextObject = 1.3f;
 
     [Header("Optional Dialogue Assignments")]
     public List<DialogueInfo> DialogueToPlayOnMeet = new();
 
-    private const float TIME_TO_ANIMATE_NEXT_ENEMY_IN = 1.3f;  // Animation time between enemies
 
     private void Start()
     {
         LevelManager.Instance.OnEnemyAttack += RenderAttack;
-        if (_nextEnemyHandler != null)
+        if (_nextBattleObject != null)
         {
-            // If there's a "next" enemy to render, transition to it
+            // If there's a "next" object to render, transition to it
             HealthHandler.OnDeath += () =>
             {
                 StartCoroutine(FadeAwayCoroutine());
@@ -80,20 +80,24 @@ public class EnemyHandler : CharacterHandler
 
     private IEnumerator TransitionToNextEnemyCoroutine()
     {
-        _nextEnemyHandler.gameObject.SetActive(true);
+        _nextBattleObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         float currTime = 0f;
-        float timeToWait = TIME_TO_ANIMATE_NEXT_ENEMY_IN;
-        Vector3 startPos = _nextEnemyHandler.transform.position;
+        float timeToWait = _timeToNextObject;
+        Vector3 startPos = _nextBattleObject.transform.position;
         while (currTime < timeToWait)
         {
-            _nextEnemyHandler.transform.position = Vector3.Lerp(startPos, transform.position, currTime / timeToWait);
+            _nextBattleObject.transform.position = Vector3.Lerp(startPos, transform.position, currTime / timeToWait);
             currTime += Time.deltaTime; 
             yield return null;
         }
         yield return new WaitForSeconds(0.1f);
-        LevelManager.Instance.SetNewEnemy(_nextEnemyHandler);
-        LevelManager.Instance.SetState(new PlayerTurnState());
+        // If this is an enemy object, register the enemy and make it the player's turn
+        if (_nextBattleObject.TryGetComponent(out EnemyHandler enemyHandler))
+        {
+            LevelManager.Instance.SetNewEnemy(enemyHandler);
+            LevelManager.Instance.SetState(new PlayerTurnState());
+        }
         gameObject.SetActive(false);
     }
 

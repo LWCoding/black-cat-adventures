@@ -83,6 +83,8 @@ public class ShuffleButton : MonoBehaviour
     /// </summary>
     private IEnumerator ShuffleGridCoroutine()
     {
+        // Make sure all tiles in the preview are erased
+        WordPreview.Instance.EraseTiles();
         // Set state to wait state, and shuffle the board
         LevelManager.Instance.SetState(new WaitState());
         for (int i = 0; i < 5; i++)

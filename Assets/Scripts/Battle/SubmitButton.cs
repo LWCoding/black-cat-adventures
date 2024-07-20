@@ -61,7 +61,7 @@ public class SubmitButton : MonoBehaviour
     {
         if (!_isInteractable) { return; }  // If not interactable, don't do anything
         if (LevelManager.Instance.CurrentState is not PlayerTurnState) { return; }
-        OnClickButton?.Invoke();
+        OnClickButton?.Invoke(); 
         LevelManager.Instance.RenderPlayerDamage();
         WordPreview.Instance.ConsumeTiles();
     }

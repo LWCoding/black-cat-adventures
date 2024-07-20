@@ -45,9 +45,10 @@ public class TutorialManager : MonoBehaviour
         {
             WordGrid.Instance.LetterTiles[i].SetTileText("Q");
         }
-        WordGrid.Instance.LetterTiles[4].SetTileText("C");
-        WordGrid.Instance.LetterTiles[13].SetTileText("A");
-        WordGrid.Instance.LetterTiles[3].SetTileText("T");
+        WordGrid.Instance.LetterTiles[0].SetTileText("P");
+        WordGrid.Instance.LetterTiles[6].SetTileText("L");
+        WordGrid.Instance.LetterTiles[9].SetTileText("A");
+        WordGrid.Instance.LetterTiles[15].SetTileText("Y");
 
         // During the player's turn, spawn tooltip
         LevelManager.Instance.OnStateChanged += (state) =>
