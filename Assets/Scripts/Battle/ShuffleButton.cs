@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(HealthHandler))]
 [RequireComponent(typeof(PointerCursorOnHover))]
 public class ShuffleButton : MonoBehaviour
 {
