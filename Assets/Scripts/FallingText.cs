@@ -7,12 +7,34 @@ using UnityEngine;
 public class FallingText : MonoBehaviour
 {
 
+    private static float LastFallingTextSpawnTime = 0;  // Tracks the last time a text was spawned
+
+    private const float TIME_BETWEEN_TEXT_SPAWNS = 0.2f;  // Delay between spawned texts in quick succession
+
     [Header("Object Assignments")]
     [SerializeField] private TextMeshPro _text;
 
     public void Initialize(string text, Color textColor)
     {
         _text.text = text;
+        _text.color = new Color(textColor.r, textColor.g, textColor.b, 1);
+        StartCoroutine(WaitMyTurnCoroutine());
+    }
+
+    /// <summary>
+    /// Makes this sprite wait until a different text object has not
+    /// been animated for a certain amount of time.
+    /// </summary>
+    private IEnumerator WaitMyTurnCoroutine()
+    {
+        Color textColor = _text.color;
+        _text.color = new Color(textColor.r, textColor.g, textColor.b, 0);  // Initially hide
+        while (Time.time - LastFallingTextSpawnTime < TIME_BETWEEN_TEXT_SPAWNS)
+        {
+            yield return null;
+        }
+        LastFallingTextSpawnTime = Time.time;
+        // If we hit this point, it's my turn to run!
         _text.color = new Color(textColor.r, textColor.g, textColor.b, 1);
         StartCoroutine(MoveDownCoroutine());
         StartCoroutine(FadeTextCoroutine());

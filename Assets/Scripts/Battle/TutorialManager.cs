@@ -13,6 +13,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject _boardTooltipObject;
     [SerializeField] private GameObject _shuffleTooltipObject;
     [SerializeField] private GameObject _enemyTooltipObject;
+    [SerializeField] private GameObject _treasureTooltipObject;
 
     private int _playerTurnTracker = 0;  // Increments by one each time the player's turn arrives
 
@@ -26,6 +27,7 @@ public class TutorialManager : MonoBehaviour
         _boardTooltipObject.SetActive(false);
         _shuffleTooltipObject.SetActive(false);
         _enemyTooltipObject.SetActive(false);
+        _treasureTooltipObject.SetActive(false);
     }
 
     private void Start()
@@ -82,11 +84,23 @@ public class TutorialManager : MonoBehaviour
                     _enemyTooltipObject.SetActive(false);
                     break;
             } 
+            // When treasure is unlocked, hide the tooltip after attacking once
+            if (TreasureSection.UnlockedTreasureSection)
+            {
+                _treasureTooltipObject.SetActive(false);
+            }
         };
         // When a word is shuffled, hide the tooltip
         ShuffleButton.OnClickButton += () =>
         {
             _shuffleTooltipObject.SetActive(false);
+        };
+        // When an enemy is defeated, show treasure
+        LevelManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath += () =>
+        {
+            TreasureSection.UnlockedTreasureSection = true;
+            TreasureSection.Instance.gameObject.SetActive(true);
+            _treasureTooltipObject.SetActive(true);
         };
     }
     

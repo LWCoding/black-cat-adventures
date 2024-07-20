@@ -13,7 +13,6 @@ public class EnemyHandler : CharacterHandler
     [Header("Optional Dialogue Assignments")]
     public List<DialogueInfo> DialogueToPlayOnMeet = new();
 
-
     private void Start()
     {
         LevelManager.Instance.OnEnemyAttack += RenderAttack;

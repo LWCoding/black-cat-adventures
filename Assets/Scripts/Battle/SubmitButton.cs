@@ -61,8 +61,12 @@ public class SubmitButton : MonoBehaviour
     {
         if (!_isInteractable) { return; }  // If not interactable, don't do anything
         if (LevelManager.Instance.CurrentState is not PlayerTurnState) { return; }
-        OnClickButton?.Invoke(); 
-        LevelManager.Instance.RenderPlayerDamage();
+        OnClickButton?.Invoke();
+        // Algorithm to determine damage from word!
+        int wordLength = WordPreview.Instance.CurrentWord.Length;
+        int damageDealt = (int)Mathf.Round(Mathf.Exp(wordLength * 0.4f));
+        LevelManager.Instance.DealDamageToEnemy(damageDealt);
+        LevelManager.Instance.OnPlayerAttack?.Invoke();
         WordPreview.Instance.ConsumeTiles();
     }
 

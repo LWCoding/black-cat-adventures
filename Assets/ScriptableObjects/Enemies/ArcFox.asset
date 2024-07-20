@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
   m_Name: ArcFox
   m_EditorClassIdentifier: 
-  StartingHealth: 10
+  StartingHealth: 20
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 2109d13289b5c9945b27d27327242279, type: 3}
     Offset: {x: 0.8, y: 1}

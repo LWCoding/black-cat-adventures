@@ -21,8 +21,8 @@ public class LevelManager : MonoBehaviour
     #endregion
 
     [Header("Object Assignments")]
-    [SerializeField] private PlayerHandler _playerHandler;
-    [SerializeField] private EnemyHandler _currEnemyHandler;
+    public PlayerHandler PlayerHandler;
+    public EnemyHandler CurrEnemyHandler;
 
     public State CurrentState;
 
@@ -33,7 +33,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         SetState(new PlayerTurnState()); // Start off as player turn
-        SetNewEnemy(_currEnemyHandler);
+        SetNewEnemy(CurrEnemyHandler);
     }
 
     public void SetState(State s)
@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void SetNewEnemy(EnemyHandler newEnemyHandler)
     {
-        _currEnemyHandler = newEnemyHandler;
+        CurrEnemyHandler = newEnemyHandler;
         if (newEnemyHandler.DialogueToPlayOnMeet.Count > 0)
         {
             StartCoroutine(RenderDialogueCoroutine(newEnemyHandler.DialogueToPlayOnMeet));
@@ -73,11 +73,11 @@ public class LevelManager : MonoBehaviour
             }
             if (di.Speaker == DialogueFaction.PLAYER)
             {
-                _playerHandler.SayDialogue(di);
+                PlayerHandler.SayDialogue(di);
             }
             else if (di.Speaker == DialogueFaction.ENEMY)
             {
-                _currEnemyHandler.SayDialogue(di);
+                CurrEnemyHandler.SayDialogue(di);
             }
             // Wait until the dialogue is finished, before the next one
             bool dialogueFinished = false;
@@ -97,25 +97,19 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Deal damage (as the player) to the enemy.
     /// </summary>
-    public void RenderPlayerDamage()
+    public void DealDamageToEnemy(int damage)
     {
-        OnPlayerAttack?.Invoke();
-        int wordLength = WordPreview.Instance.CurrentWord.Length;
-        // Algorithm to determine damage from word!
-        int damageDealt = (int)Mathf.Round(Mathf.Exp(wordLength * 0.4f));
         // Make the enemy actually take the damage.
-        _currEnemyHandler.HealthHandler.TakeDamage(damageDealt);
+        CurrEnemyHandler.HealthHandler.TakeDamage(damage);
     }
 
     /// <summary>
     /// Render damage (as the enemy) to the player.
     /// </summary>
-    public void RenderEnemyDamage()
+    public void DealDamageToPlayer(int damage)
     {
-        if (_currEnemyHandler.HealthHandler.IsDead()) { return; }  // If dead, don't render!
-        OnEnemyAttack?.Invoke();
         // Make the player actually take the damage.
-        _playerHandler.HealthHandler.TakeDamage(4);
+        PlayerHandler.HealthHandler.TakeDamage(damage);
     }
 
 }
