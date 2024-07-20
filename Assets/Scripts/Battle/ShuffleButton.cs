@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(HealthHandler))]
+[RequireComponent(typeof(PointerCursorOnHover))]
 public class ShuffleButton : MonoBehaviour
 {
 
@@ -15,6 +17,7 @@ public class ShuffleButton : MonoBehaviour
     [SerializeField] private TextMeshPro _letterText;
     [SerializeField] private SpriteRenderer _bgRenderer;
 
+    private PointerCursorOnHover _pointerCursorOnHover;
     private bool _isInteractable = false;
 
     public static Action OnClickButton = null;
@@ -26,6 +29,7 @@ public class ShuffleButton : MonoBehaviour
             Destroy(this);
         }
         Instance = this;
+        _pointerCursorOnHover = GetComponent<PointerCursorOnHover>();
         ToggleInteractability(false);  // Start off with the button uninteractable
     }
 
@@ -63,6 +67,8 @@ public class ShuffleButton : MonoBehaviour
         Color letterColor = _letterText.color;
         _bgRenderer.color = new Color(bgColor.r, bgColor.g, bgColor.b, isInteractable ? 1 : 0.2f);
         _letterText.color = new Color(letterColor.r, letterColor.g, letterColor.b, isInteractable ? 1 : 0.3f);
+        // Toggle cursor activation based on interactability
+        _pointerCursorOnHover.IsEnabled = isInteractable;
     }
 
     private void OnMouseDown()

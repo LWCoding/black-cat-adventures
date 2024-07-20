@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 54262479}
   - component: {fileID: 54262482}
   - component: {fileID: 54262480}
+  - component: {fileID: 54262483}
   - component: {fileID: 54262481}
   m_Layer: 0
   m_Name: SCRIPTS
@@ -326,6 +327,20 @@ MonoBehaviour:
   _boardTooltipObject: {fileID: 1396235202}
   _shuffleTooltipObject: {fileID: 1666339451}
   _enemyTooltipObject: {fileID: 238760731}
+--- !u!114 &54262483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54262477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a90a4ef9d888c61498034b1c5ae63f15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BasicCursorSprite: {fileID: 2800000, guid: df4b12dcdced83c4c85f3ffcc2ebb13b, type: 3}
+  SelectCursorSprite: {fileID: 2800000, guid: d7c83118715ee5747b3764fe58dc5415, type: 3}
 --- !u!1 &108603816
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,6 +620,7 @@ GameObject:
   - component: {fileID: 125378428}
   - component: {fileID: 125378429}
   - component: {fileID: 125378430}
+  - component: {fileID: 125378431}
   m_Layer: 0
   m_Name: Submit Button
   m_TagString: Untagged
@@ -670,6 +686,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &125378431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125378427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c9b81eb314b1d4c9d9980c5e02cc06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &169735938
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,6 +709,7 @@ GameObject:
   - component: {fileID: 169735939}
   - component: {fileID: 169735941}
   - component: {fileID: 169735940}
+  - component: {fileID: 169735942}
   m_Layer: 0
   m_Name: Shuffle Button
   m_TagString: Untagged
@@ -747,6 +776,18 @@ MonoBehaviour:
   _wordGrid: {fileID: 744788696}
   _letterText: {fileID: 2024217243}
   _bgRenderer: {fileID: 860937578}
+--- !u!114 &169735942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169735938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c9b81eb314b1d4c9d9980c5e02cc06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &238760731 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6748022944440307023, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}

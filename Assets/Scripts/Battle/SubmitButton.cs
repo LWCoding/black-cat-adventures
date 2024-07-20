@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 
+[RequireComponent(typeof(PointerCursorOnHover))]
 public class SubmitButton : MonoBehaviour
 {
 
@@ -11,6 +12,7 @@ public class SubmitButton : MonoBehaviour
     [SerializeField] protected TextMeshPro _letterText;
     [SerializeField] protected SpriteRenderer _bgRenderer;
 
+    private PointerCursorOnHover _pointerCursorOnHover;
     private bool _isInteractable = false;
     private readonly WordGenerator _wordChecker = new();  // Check if words are spelled right
 
@@ -18,6 +20,7 @@ public class SubmitButton : MonoBehaviour
 
     private void Awake()
     {
+        _pointerCursorOnHover = GetComponent<PointerCursorOnHover>();
         ToggleInteractability(false);  // Start off with the button uninteractable
     }
 
@@ -50,6 +53,8 @@ public class SubmitButton : MonoBehaviour
         Color letterColor = _letterText.color;
         _bgRenderer.color = new Color(bgColor.r, bgColor.g, bgColor.b, isInteractable ? 1 : 0.2f);
         _letterText.color = new Color(letterColor.r, letterColor.g, letterColor.b, isInteractable ? 1 : 0.3f);
+        // Toggle cursor activation based on interactability
+        _pointerCursorOnHover.IsEnabled = isInteractable;
     }
 
     private void OnMouseDown()
