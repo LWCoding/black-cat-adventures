@@ -112,6 +112,19 @@ public class WordPreview : MonoBehaviour
     }
 
     /// <summary>
+    /// Remove all preview tiles currently showing at the top.
+    /// Do not initialize new tiles.
+    /// </summary>
+    public void EraseTiles()
+    {
+        for (int i = _currTiles.Count - 1; i >= 0; i--)
+        {
+            Tile t = _currTiles[i];
+            RemoveTile(t);
+        }
+    }
+
+    /// <summary>
     /// Update the preview letters to represent the currently 
     /// chosen letters.
     /// </summary>

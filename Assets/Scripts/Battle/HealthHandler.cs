@@ -62,7 +62,7 @@ public class HealthHandler : MonoBehaviour
         CurrentHealth -= damageTaken;
         // Spawn a falling text prefab to emphasize damage taken
         GameObject fallingText = Instantiate(_fallingTextPrefab, _fallingTextSpawnpoint);
-        fallingText.GetComponent<FallingText>().Initialize("-" + damageTaken.ToString(), new Color(1, 0.05f, 0.05f));
+        fallingText.GetComponent<FallingText>().Initialize("-" + damageTaken.ToString(), new Color(1, 0.02f, 0.02f));
         // Cap health at zero
         if (CurrentHealth <= 0)
         {
