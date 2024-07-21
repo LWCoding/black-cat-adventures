@@ -109,7 +109,6 @@ public class WordPreview : MonoBehaviour
             WordGrid.Instance.LetterTiles[t.TileIndex].InitializeTile(_wordGenerator.GetRandomTile(t.TileIndex));
             RemoveTile(t);
         }
-        OnLetterTilesChanged.Invoke();
     }
 
     /// <summary>
@@ -123,7 +122,6 @@ public class WordPreview : MonoBehaviour
             Tile t = _currTiles[i];
             RemoveTile(t);
         }
-        OnLetterTilesChanged.Invoke();
     }
 
     /// <summary>

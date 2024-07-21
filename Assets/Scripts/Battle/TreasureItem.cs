@@ -43,7 +43,6 @@ public class TreasureItem : MonoBehaviour
                 {
                     if (_wordGenerator.IsProfaneWord(WordPreview.Instance.CurrentWord))
                     {
-                        Debug.Log("profane");
                         StartCoroutine(RunNextFrameCoroutine(() =>
                         {
                             WordPreview.Instance.FeedbackText.enabled = true;
