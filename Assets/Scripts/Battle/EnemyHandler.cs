@@ -13,6 +13,9 @@ public class EnemyHandler : CharacterHandler
     [Header("Optional Dialogue Assignments")]
     public List<DialogueInfo> DialogueToPlayOnMeet = new();
 
+    [Header("Enemy Status")]
+    public bool IsFightable = true;  // If false, then turn doesn't switch to player after meeting
+
     private void Start()
     {
         LevelManager.Instance.OnEnemyAttack += RenderAttack;
@@ -91,11 +94,15 @@ public class EnemyHandler : CharacterHandler
             yield return null;
         }
         yield return new WaitForSeconds(0.1f);
-        // If this is an enemy object, register the enemy and make it the player's turn
+        // If this is an enemy object, register the enemy
         if (_nextBattleObject.TryGetComponent(out EnemyHandler enemyHandler))
         {
+            // If the enemy is fightable, set the state to be the player's
+            if (enemyHandler.IsFightable)
+            {
+                LevelManager.Instance.SetState(new PlayerTurnState());
+            }
             LevelManager.Instance.SetNewEnemy(enemyHandler);
-            LevelManager.Instance.SetState(new PlayerTurnState());
         }
         gameObject.SetActive(false);
     }
@@ -112,7 +119,7 @@ public class EnemyHandler : CharacterHandler
             {
                 HealthHandler.TextToUpdate.color -= new Color(0, 0, 0, 0.04f);
             }
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.06f);
         }
     }
 

@@ -7,19 +7,25 @@ public class WordGenerator
 {
 
     private List<string> _validWords = new();
+    private List<string> _profaneWords = new();
 
     /// <summary>
-    /// This function goes through the file provided in
-    /// a specified file and adds each word to the set
-    /// `validWords`.
+    /// This function goes through provided files and
+    /// caches all of the information inside of lists.
     /// </summary>
-    private void AssembleValidWords()
+    private void AssembleWords()
     {
         TextAsset validWordsFile = Resources.Load<TextAsset>("EnglishWords");
         string[] words = validWordsFile.text.Split('\n');
         foreach (string word in words)
         {
             _validWords.Add(word.Trim().ToLower());
+        }
+        TextAsset profaneWordsFile = Resources.Load<TextAsset>("ProfaneWords");
+        words = profaneWordsFile.text.Split('\n');
+        foreach (string word in words)
+        {
+            _profaneWords.Add(word.Trim().ToLower());
         }
     }
 
@@ -35,11 +41,26 @@ public class WordGenerator
         // If we don't have valid words, load these in once
         if (_validWords.Count == 0)
         {
-            AssembleValidWords();
+            AssembleWords();
         }
         if (lettersToCheck.Length < 3) return false;
         lettersToCheck = lettersToCheck.ToLower();
         return _validWords.Contains(lettersToCheck);
+    }
+
+    /// <summary>
+    /// Given a word, returns True if it's profane, and
+    /// False if it's not. Ignores case sensitivity.
+    /// </summary>
+    public bool IsProfaneWord(string lettersToCheck)
+    {
+        // If we don't have words, load these in once
+        if (_profaneWords.Count == 0)
+        {
+            AssembleWords();
+        }
+        lettersToCheck = lettersToCheck.ToLower();
+        return _profaneWords.Contains(lettersToCheck);
     }
 
     /// <summary>

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum TreasureType
 {
-    NONE = 0, CAT_PAW = 1
+    NONE = 0, CAT_PAW = 1, DUCT_TAPE = 2
 }
 
 [CreateAssetMenu(fileName = "New Treasure", menuName = "Treasure")]

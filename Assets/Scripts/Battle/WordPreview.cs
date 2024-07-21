@@ -14,7 +14,7 @@ public class WordPreview : MonoBehaviour
     [SerializeField] private GameObject _previewLetterPrefab;
 
     [Header("Object Assignments")]
-    [SerializeField] private TextMeshPro _feedbackText;
+    public TextMeshPro FeedbackText;
     [SerializeField] private Transform _letterParentTransform;
 
     public Action OnLetterTilesChanged = null;  // Called whenever chosen letters have been modified
@@ -44,29 +44,29 @@ public class WordPreview : MonoBehaviour
             Destroy(this);
         }
         Instance = this;
-        _feedbackText.enabled = false;
+        FeedbackText.enabled = false;
 
         // Edit the feedback text based on # of letters in word, if valid
         OnLetterTilesChanged += () =>
         {
-            _feedbackText.enabled = false;
+            FeedbackText.enabled = false;
             if (!_wordGenerator.IsValidWord(CurrentWord) || CurrentTiles.Count < 5) return;
-            _feedbackText.enabled = true;
+            FeedbackText.enabled = true;
             if (CurrentTiles.Count >= 8)
             {
-                _feedbackText.text = "Spectacular!";
+                FeedbackText.text = "Spectacular!";
             } 
             else if (CurrentTiles.Count >= 7) 
             { 
-                _feedbackText.text = "Amazing!";
+                FeedbackText.text = "Amazing!";
             } 
             else if (CurrentTiles.Count >= 6)
             {
-                _feedbackText.text = "Great!";
+                FeedbackText.text = "Great!";
             }
             else if (CurrentTiles.Count >= 5)
             {
-                _feedbackText.text = "Good!";
+                FeedbackText.text = "Good!";
             }
         };
     }
@@ -109,6 +109,7 @@ public class WordPreview : MonoBehaviour
             WordGrid.Instance.LetterTiles[t.TileIndex].InitializeTile(_wordGenerator.GetRandomTile(t.TileIndex));
             RemoveTile(t);
         }
+        OnLetterTilesChanged.Invoke();
     }
 
     /// <summary>
@@ -122,6 +123,7 @@ public class WordPreview : MonoBehaviour
             Tile t = _currTiles[i];
             RemoveTile(t);
         }
+        OnLetterTilesChanged.Invoke();
     }
 
     /// <summary>

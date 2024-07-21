@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
+  m_Name: Ryan
+  m_EditorClassIdentifier: 
+  StartingHealth: 30
+  AliveSprite:
+    Sprite: {fileID: 21300000, guid: 87f8a1d40cd62ee4a800f3ea086116a0, type: 3}
+    Offset: {x: 0.5, y: 0.8}
+  AttackSprite:
+    Sprite: {fileID: 21300000, guid: 87f8a1d40cd62ee4a800f3ea086116a0, type: 3}
+    Offset: {x: 0.5, y: 0.8}
+  DeadSprite:
+    Sprite: {fileID: 21300000, guid: 068abd77b0800414b96ea1638613226d, type: 3}
+    Offset: {x: 0.5, y: 0.8}
+  SpriteScale: {x: 0.8, y: 0.8}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,6 +15,7 @@ public class TreasureItem : MonoBehaviour
     public TreasureData TreasureData;
 
     private Animator _animator;
+    private WordGenerator _wordGenerator = new();
 
     private void Awake()
     {
@@ -34,6 +36,27 @@ public class TreasureItem : MonoBehaviour
                 LevelManager.Instance.OnPlayerAttack += () =>
                 {
                     LevelManager.Instance.DealDamageToEnemy(1);
+                };
+                break;
+            case TreasureType.DUCT_TAPE:
+                WordPreview.Instance.OnLetterTilesChanged += () =>
+                {
+                    if (_wordGenerator.IsProfaneWord(WordPreview.Instance.CurrentWord))
+                    {
+                        Debug.Log("profane");
+                        StartCoroutine(RunNextFrameCoroutine(() =>
+                        {
+                            WordPreview.Instance.FeedbackText.enabled = true;
+                            WordPreview.Instance.FeedbackText.text = "Profane!";
+                        }));
+                    }
+                };
+                LevelManager.Instance.OnPlayerAttack += () =>
+                {
+                    if (_wordGenerator.IsProfaneWord(WordPreview.Instance.CurrentWord))
+                    {
+                        LevelManager.Instance.DealDamageToEnemy(WordPreview.Instance.CurrentWord.Length);
+                    }
                 };
                 break;
         }
@@ -64,6 +87,16 @@ public class TreasureItem : MonoBehaviour
     public void DisableTreasure()
     {
         _animator.Play("Unselected");
+    }
+
+    /// <summary>
+    /// Run specific code after the next frame, to avoid
+    /// conflicts that occur due to priority.
+    /// </summary>
+    private IEnumerator RunNextFrameCoroutine(Action codeToRunAfter)
+    {
+        yield return new WaitForEndOfFrame();
+        codeToRunAfter.Invoke();
     }
 
 }
