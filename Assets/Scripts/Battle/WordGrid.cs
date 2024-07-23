@@ -84,7 +84,6 @@ public class WordGrid : MonoBehaviour
             if (letterOccur[generatedLetter] == 3)
             {
                 blacklistedLetters.Append(generatedLetter);
-                Debug.Log(blacklistedLetters);
             }
 
             // Set the tile to the created tile, disregarding the tile index
