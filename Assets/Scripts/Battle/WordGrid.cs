@@ -92,10 +92,10 @@ public class WordGrid : MonoBehaviour
         }
 
         // Guarantee at least three vowels
-        while (vowelCount <= 2)
+        for (int i = 0; i < 3 - vowelCount; i++)
         {
             int randomIdx = Random.Range(0, NUM_ROWS * NUM_COLUMNS);
-            _letterTiles[randomIdx].RandomizeTile();
+            _letterTiles[randomIdx].RandomizeVowel();
         }
     }
 
