@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
@@ -34,14 +35,11 @@ public class WordGrid : MonoBehaviour
     }
 
     /// <summary>
-    /// Initializes a board of letters based on the
-    /// number of rows and columns.
-    /// 
-    /// Guarantees some vowels for a possible board.
+    /// Initializes a board of letter objects based on the
+    /// number of rows and columns. Then, shuffles the board.
     /// </summary>
     public void InitializeBoard()
     {
-        int vowelCount = 0;
         for (int r = 0; r < NUM_ROWS; r++)
         {
             for (int c = 0; c < NUM_COLUMNS; c++)
@@ -49,20 +47,18 @@ public class WordGrid : MonoBehaviour
                 GameObject letter = Instantiate(_letterPrefab, _letterParentTransform, false);
                 letter.transform.position += new Vector3(SPACE_BETWEEN_TILES * r, -SPACE_BETWEEN_TILES * c);
 
-                Tile generatedTile = _wordGenerator.GetRandomTile(r * NUM_ROWS + c);
-                letter.GetComponent<LetterTile>().InitializeTile(generatedTile);
-                if (generatedTile.IsVowel()) vowelCount++;
+                Tile newTile = new()
+                {
+                    Letters = "A",
+                    TileIndex = r * NUM_ROWS + c
+                };
 
+                letter.GetComponent<LetterTile>().InitializeTile(newTile);
                 _letterTiles.Add(letter.GetComponent<LetterTile>());
             }
         }
-        
-        // Guarantee at least three vowels
-        while (vowelCount <= 2)
-        {
-            int randomIdx = Random.Range(0, NUM_ROWS * NUM_COLUMNS);
-            _letterTiles[randomIdx].RandomizeTile();
-        }
+
+        ShuffleBoard();  // Shuffle the board after making the objects
     }
 
     /// <summary>
@@ -71,9 +67,36 @@ public class WordGrid : MonoBehaviour
     /// </summary>
     public void ShuffleBoard()
     {
-        foreach (LetterTile letterTile in _letterTiles)
+        int vowelCount = 0;
+        Dictionary<string, int> letterOccur = new();
+        StringBuilder blacklistedLetters = new();  // Letters that occur >3 tiles shouldn't be added anymore
+
+        for (int i = 0; i < _letterTiles.Count; i++) {
+            LetterTile letter = _letterTiles[i];
+
+            // Get a random letter that's not blacklisted; add one to its occurrences
+            string generatedLetter = _wordGenerator.GetRandomLetter(blacklistedLetters.ToString());
+            if (!letterOccur.ContainsKey(generatedLetter))
+            {
+                letterOccur[generatedLetter] = 0;
+            }
+            letterOccur[generatedLetter]++;
+            if (letterOccur[generatedLetter] == 3)
+            {
+                blacklistedLetters.Append(generatedLetter);
+                Debug.Log(blacklistedLetters);
+            }
+
+            // Set the tile to the created tile, disregarding the tile index
+            letter.SetTileText(generatedLetter);
+            if (_wordGenerator.IsVowel(generatedLetter)) vowelCount++;  // Add one to vowel count if we made a vowel
+        }
+
+        // Guarantee at least three vowels
+        while (vowelCount <= 2)
         {
-            letterTile.RandomizeTile();
+            int randomIdx = Random.Range(0, NUM_ROWS * NUM_COLUMNS);
+            _letterTiles[randomIdx].RandomizeTile();
         }
     }
 

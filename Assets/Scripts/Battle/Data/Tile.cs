@@ -9,6 +9,4 @@ public class Tile
     public string Letters;
     public int TileIndex;
 
-    public bool IsVowel() => "aeiou".Contains(Letters.ToLower());
-
 }

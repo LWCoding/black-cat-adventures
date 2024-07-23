@@ -1,6 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class WordGenerator
@@ -64,14 +63,13 @@ public class WordGenerator
     }
 
     /// <summary>
-    /// Get a random letter based on modified changes from Boggle;
-    /// some characters are prioritized in weight above others.
+    /// Generate a tile object given a tile index and an optional
+    /// string of banned letters.
     /// </summary>
-    public Tile GetRandomTile(int tileIdx)
+    public Tile GetRandomTile(int tileIdx, string bannedLetters = "")
     {
         // Modified characters from Boggle but stringed together
-        string chars = "AAAAAABBCCDDDEEEEEEEEEFFGGHHHHHIIIIIIJKLLLLMMNNNNNNOOOOOOOPPQRRRRRSSSSSSTTTTTTTTTUUUVVWWWXYYYZ";
-        char randomChar = chars[Random.Range(0, chars.Length)];
+        string randomChar = GetRandomLetter(bannedLetters);
         // Create a tile object
         Tile t = new()
         {
@@ -79,6 +77,29 @@ public class WordGenerator
             TileIndex = tileIdx
         };
         return t;
+    }
+
+    /// <summary>
+    /// Get a random letter based on modified changes from Boggle;
+    /// optionally, you can provide letters (in a string) to blacklist
+    /// from being generated.
+    /// </summary>
+    public string GetRandomLetter(string bannedLetters = "")
+    {
+        // Modified characters from Boggle but stringed together
+        string chars = "AAAAABBCCDDDEEEEEEEEFFGGHHHHHIIIIIIJKLLLLMMNNNNNOOOOOOPPQRRRRRSSSSSSTTTTTTTUUUVVWWWXYYYZ";
+        string availableChars = new(chars.Where(c => !bannedLetters.Contains(c)).ToArray());
+
+        // If no available characters left, just return a random character
+        if (availableChars == "")
+        {
+            return chars[Random.Range(0, chars.Length)].ToString();
+        }
+
+        // Pick a random character from the available characters
+        char randomChar = availableChars[Random.Range(0, availableChars.Length)];
+        // TODO: If I want to, add some letters that translate to character pairs (e.g., 1 -> ER)
+        return randomChar.ToString();
     }
 
     /// <summary>
@@ -97,5 +118,11 @@ public class WordGenerator
         };
         return t;
     }
+
+    /// <summary>
+    /// Given a string (ideally a character), returns True if it
+    /// is a vowel, else False.
+    /// </summary>
+    public bool IsVowel(string s) => "aeiou".Contains(s.ToLower());
 
 }
