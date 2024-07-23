@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class State
 {
 
-
     public abstract void OnEnterState();
     public abstract void OnExitState();
 

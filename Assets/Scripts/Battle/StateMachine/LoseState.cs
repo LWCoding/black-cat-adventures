@@ -6,7 +6,7 @@ public class LoseState : State
 {
     public override void OnEnterState()
     {
-        throw new System.NotImplementedException();
+        LevelManager.Instance.ReloadCurrentLevel(1);
     }
 
     public override void OnExitState()

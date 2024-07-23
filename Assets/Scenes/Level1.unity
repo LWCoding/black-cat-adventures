@@ -1690,6 +1690,10 @@ PrefabInstance:
       propertyPath: DialogueToPlayOnMeet.Array.data[0].Duration
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
+      propertyPath: DialogueToPlayOnMeet.Array.data[0].ShouldWinStateAfter
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5679498944273742369, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 29.8

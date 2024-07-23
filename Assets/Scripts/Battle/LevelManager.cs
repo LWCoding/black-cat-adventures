@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -85,6 +86,11 @@ public class LevelManager : MonoBehaviour
                 dialogueFinished = true; 
             };
             yield return new WaitUntil(() => dialogueFinished);
+            // If we should win after this dialogue, do that 
+            if (di.ShouldWinStateAfter)
+            {
+                SetState(new WinState());
+            }
         }
 
         // If the dialogue was stalled, restore the state at the end
@@ -111,5 +117,15 @@ public class LevelManager : MonoBehaviour
         // Make the player actually take the damage.
         PlayerHandler.HealthHandler.TakeDamage(damage);
     }
+
+    /// <summary>
+    /// Load the current scene *again* after a certain delay.
+    /// </summary>
+    public void ReloadCurrentLevel(int delayInSecs)
+    {
+        Invoke(nameof(LoadLevel), delayInSecs);
+    }
+
+    private void LoadLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
 }

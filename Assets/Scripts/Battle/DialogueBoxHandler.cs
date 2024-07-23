@@ -16,6 +16,7 @@ public struct DialogueInfo
     public float Duration;
     public DialogueFaction Speaker;
     public bool ShouldStallState;  // True = state will be switched to WaitState, False = return
+    public bool ShouldWinStateAfter;  // True = state will be switched to WinState, False = continue as normal
 }
 
 public class DialogueBoxHandler : MonoBehaviour
