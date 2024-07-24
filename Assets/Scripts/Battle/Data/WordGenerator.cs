@@ -71,11 +71,7 @@ public class WordGenerator
         // Modified characters from Boggle but stringed together
         string randomChar = GetRandomLetter(bannedLetters);
         // Create a tile object
-        Tile t = new()
-        {
-            Letters = randomChar.ToString(),
-            TileIndex = tileIdx
-        };
+        Tile t = new(randomChar.ToString(), tileIdx);
         return t;
     }
 
@@ -111,11 +107,7 @@ public class WordGenerator
         string chars = "AAEEIIOU";
         char randomChar = chars[Random.Range(0, chars.Length)];
         // Create a tile object
-        Tile t = new()
-        {
-            Letters = randomChar.ToString(),
-            TileIndex = tileIdx
-        };
+        Tile t = new(randomChar.ToString(), tileIdx);
         return t;
     }
 
