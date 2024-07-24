@@ -112,6 +112,31 @@ public class WordGenerator
     }
 
     /// <summary>
+    /// Given a list of tiles, calculates the number of damage it
+    /// would deal in total.
+    /// </summary>
+    public int CalculateDamage(List<Tile> tiles)
+    {
+        float total = 0;
+        foreach (Tile tile in tiles)
+        {
+            switch (tile.DamageType)
+            {
+                case TileDamage.LOW:
+                    total += 1;
+                    break;
+                case TileDamage.MEDIUM:
+                    total += 1.4f;
+                    break;
+                case TileDamage.HIGH:
+                    total += 1.8f;
+                    break;
+            }
+        }
+        return (int)Mathf.Round(Mathf.Exp(total * 0.4f));
+    }
+
+    /// <summary>
     /// Given a string (ideally a character), returns True if it
     /// is a vowel, else False.
     /// </summary>

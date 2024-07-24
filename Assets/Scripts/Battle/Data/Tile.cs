@@ -25,7 +25,7 @@ public class Tile
             {
                 DamageType = TileDamage.HIGH;
             }
-            else if ("BCDFGLMPUVWY".Contains(value))
+            else if ("BCFGMPV".Contains(value))
             {
                 DamageType = TileDamage.MEDIUM;
             }

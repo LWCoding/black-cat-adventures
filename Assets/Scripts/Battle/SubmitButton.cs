@@ -14,7 +14,7 @@ public class SubmitButton : MonoBehaviour
 
     private PointerCursorOnHover _pointerCursorOnHover;
     private bool _isInteractable = false;
-    private readonly WordGenerator _wordChecker = new();  // Check if words are spelled right
+    private readonly WordGenerator _wordGenerator = new(); 
 
     public static Action OnClickButton = null;
 
@@ -29,7 +29,7 @@ public class SubmitButton : MonoBehaviour
         // If the currently spelled word is valid, button is interactable, else no
         WordPreview.Instance.OnLetterTilesChanged += () =>
         {
-            if (_wordChecker.IsValidWord(WordPreview.Instance.CurrentWord))
+            if (_wordGenerator.IsValidWord(WordPreview.Instance.CurrentWord))
             {
                 ToggleInteractability(true);
             }
@@ -64,7 +64,7 @@ public class SubmitButton : MonoBehaviour
         OnClickButton?.Invoke();
         // Algorithm to determine damage from word!
         int wordLength = WordPreview.Instance.CurrentWord.Length;
-        int damageDealt = (int)Mathf.Round(Mathf.Exp(wordLength * 0.4f));
+        int damageDealt = _wordGenerator.CalculateDamage(WordPreview.Instance.CurrentTiles);
         LevelManager.Instance.DealDamageToEnemy(damageDealt);
         LevelManager.Instance.OnPlayerAttack?.Invoke();
         WordPreview.Instance.ConsumeTiles();
