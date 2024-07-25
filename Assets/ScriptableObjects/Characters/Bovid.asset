@@ -23,3 +23,7 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 064b132d759233745bb5d38705c4eb5c, type: 3}
     Offset: {x: 0.7, y: 0.9}
   SpriteScale: {x: 0.85, y: 0.85}
+  Attacks:
+  - AttackName: Roughhoofing
+    Damage: 5
+    AnimType: 0

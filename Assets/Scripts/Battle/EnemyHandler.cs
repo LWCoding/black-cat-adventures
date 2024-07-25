@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyHandler : CharacterHandler
 {
@@ -53,20 +54,40 @@ public class EnemyHandler : CharacterHandler
     protected override IEnumerator RenderAttackCoroutine(Action codeToRunAfter)
     {
         Vector3 startingPos = transform.position;
-        SetSprite(_charData.AttackSprite);
-        for (int i = 0; i < 10; i++)
+        List<EnemyAttack> possibleAttacks = ((EnemyData)_charData).Attacks;
+
+        // If no possible attacks are available, return early
+        if (possibleAttacks.Count == 0)
         {
-            transform.position -= new Vector3(0.15f, 0, 0);
-            yield return new WaitForSeconds(0.01f);
+            codeToRunAfter.Invoke();
+            yield break;
         }
-        yield return new WaitForSeconds(0.1f);
-        for (int i = 0; i < 10; i++)
+
+        EnemyAttack chosenAttack = possibleAttacks[Random.Range(0, possibleAttacks.Count)];
+
+        // Perform an animation depending on the type
+        switch (chosenAttack.AnimType)
         {
-            transform.position += new Vector3(0.15f, 0, 0);
-            yield return new WaitForSeconds(0.01f);
+            case AttackAnimation.DEFAULT:
+                SetSprite(_charData.AttackSprite);
+                for (int i = 0; i < 10; i++)
+                {
+                    transform.position -= new Vector3(0.15f, 0, 0);
+                    yield return new WaitForSeconds(0.01f);
+                }
+                yield return new WaitForSeconds(0.1f);
+                for (int i = 0; i < 10; i++)
+                {
+                    transform.position += new Vector3(0.15f, 0, 0);
+                    yield return new WaitForSeconds(0.01f);
+                }
+                SetSprite(_charData.AliveSprite);
+                break;
+            default:
+                break;
         }
+
         transform.position = startingPos;
-        SetSprite(_charData.AliveSprite);
         yield return new WaitForSeconds(0.2f);
 
         codeToRunAfter.Invoke();
