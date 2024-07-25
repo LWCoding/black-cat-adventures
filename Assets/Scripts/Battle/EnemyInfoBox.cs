@@ -25,6 +25,10 @@ public class EnemyInfoBox : MonoBehaviour
     /// </summary>
     public void SetInfo(List<EnemyInfo> infos)
     {
+        for (int i = _instantiatedAttacks.Count - 1; i >= 0; i--)
+        {
+            Destroy(_instantiatedAttacks[i]);
+        }
         _instantiatedAttacks.Clear();
         // Instantiate an instance for each piece of info
         for (int i = 0; i < infos.Count; i++)

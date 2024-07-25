@@ -24,6 +24,8 @@ MonoBehaviour:
     Offset: {x: 0, y: 0.8}
   SpriteScale: {x: 0.85, y: 0.85}
   Attacks:
-  - AttackName: Batter Up!
+  - IconSprite: {fileID: 21300000, guid: 47c438c5e6b3d9745bb3d9f7b27634fd, type: 3}
+    AttackName: Batter Up!
+    _attackDescription: Swings at you, dealing %d damage.
     Damage: 4
     AnimType: 0

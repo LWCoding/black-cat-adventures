@@ -2157,7 +2157,7 @@ Transform:
   m_GameObject: {fileID: 1175602621}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.61, z: 0}
+  m_LocalPosition: {x: 0, y: 1.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2256,7 +2256,7 @@ PrefabInstance:
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: _charData
       value: 
-      objectReference: {fileID: 11400000, guid: 0896d40ddce7cbd47a2cbc28c8ccc552, type: 2}
+      objectReference: {fileID: 11400000, guid: 5ab7e1749fb18b548bbad7d85ec52d75, type: 2}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: _nextBattleObject
       value: 
@@ -2267,11 +2267,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[0].Text
-      value: ...Who're you? You messed with the wrong group!
+      value: Get outta' here!
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[1].Text
@@ -2287,7 +2287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[0].Duration
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[1].Duration
@@ -2295,7 +2295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[0].ShouldStallState
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[1].ShouldStallState

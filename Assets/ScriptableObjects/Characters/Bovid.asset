@@ -24,6 +24,8 @@ MonoBehaviour:
     Offset: {x: 0.7, y: 0.9}
   SpriteScale: {x: 0.85, y: 0.85}
   Attacks:
-  - AttackName: Roughhoofing
+  - IconSprite: {fileID: 21300000, guid: 94dc8143aaee5804486cebd93c161ed5, type: 3}
+    AttackName: Roughhoofing
+    _attackDescription: Takes a few jabs at you, dealing %d damage.
     Damage: 5
     AnimType: 0

@@ -88,7 +88,7 @@ public class EnemyHandler : CharacterHandler
                 {
                     Speaker = DialogueFaction.ENEMY,
                     Text = "...",
-                    Duration = 2
+                    Duration = 1f
                 });
                 yield return new WaitForSeconds(2);
                 break;
@@ -149,7 +149,7 @@ public class EnemyHandler : CharacterHandler
             {
                 HealthHandler.TextToUpdate.color -= new Color(0, 0, 0, 0.04f);
             }
-            yield return new WaitForSeconds(0.06f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 

@@ -24,13 +24,8 @@ MonoBehaviour:
     Offset: {x: 0.6, y: 1}
   SpriteScale: {x: 0.9, y: 0.9}
   Attacks:
-  - IconSprite: {fileID: 0}
+  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Stare
-    _attackDescription: 
+    _attackDescription: Does nothing.
     Damage: 0
     AnimType: 2
-  - IconSprite: {fileID: 0}
-    AttackName: Attack :3
-    _attackDescription: Attacks the playwr or splstihms
-    Damage: 2
-    AnimType: 0
