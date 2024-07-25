@@ -9,7 +9,6 @@ public class EnemyTurnState : State
     {
         if (LevelManager.Instance.CurrEnemyHandler.HealthHandler.IsDead()) { return; }  // If dead, don't render!
         LevelManager.Instance.OnEnemyAttack?.Invoke();
-        LevelManager.Instance.DealDamageToPlayer(4);
     }
 
     public override void OnExitState()

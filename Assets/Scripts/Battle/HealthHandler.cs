@@ -62,7 +62,7 @@ public class HealthHandler : MonoBehaviour
     /// </summary>
     public void TakeDamage(int damageTaken)
     {
-        if (damageTaken < 0) { return; }
+        if (damageTaken <= 0) { return; }
         CurrentHealth -= damageTaken;
         // Play damage sound if not too recently played 
         if (Time.time - _lastSoundPlayed > 0.25f)

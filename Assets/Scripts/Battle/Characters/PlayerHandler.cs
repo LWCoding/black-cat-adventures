@@ -31,18 +31,22 @@ public class PlayerHandler : CharacterHandler
     {
         Vector3 startingPos = transform.position;
         SetSprite(CharData.AttackSprite);
-        for (int i = 0; i < 10; i++)
+        float timeToWait = 0.1f;
+        Vector3 targetPos = startingPos + new Vector3(1.5f, 0);
+        while (timeToWait > 0) 
         {
-            transform.position += new Vector3(0.15f, 0, 0);
-            yield return new WaitForSeconds(0.01f);
+            timeToWait -= Time.deltaTime;
+            transform.position = Vector3.Lerp(startingPos, targetPos, (0.1f - timeToWait) * 10);
+            yield return null;
         }
         yield return new WaitForSeconds(0.1f);
-        for (int i = 0; i < 10; i++)
+        timeToWait = 0.1f;
+        while (timeToWait > 0)
         {
-            transform.position -= new Vector3(0.15f, 0, 0);
-            yield return new WaitForSeconds(0.01f);
+            timeToWait -= Time.deltaTime;
+            transform.position = Vector3.Lerp(targetPos, startingPos, (0.1f - timeToWait) * 10);
+            yield return null;
         }
-        transform.position = startingPos;
         SetSprite(CharData.AliveSprite);
         yield return new WaitForSeconds(0.2f);
 

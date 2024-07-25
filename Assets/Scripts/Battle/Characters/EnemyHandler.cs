@@ -70,19 +70,26 @@ public class EnemyHandler : CharacterHandler
         {
             case AttackAnimation.DEFAULT:
                 SetSprite(CharData.AttackSprite);
-                for (int i = 0; i < 10; i++)
+                float timeToWait = 0.1f;
+                Vector3 targetPos = startingPos - new Vector3(1.5f, 0);
+                while (timeToWait > 0)
                 {
-                    transform.position -= new Vector3(0.15f, 0, 0);
-                    yield return new WaitForSeconds(0.01f);
+                    timeToWait -= Time.deltaTime;
+                    transform.position = Vector3.Lerp(startingPos, targetPos, (0.1f - timeToWait) * 10);
+                    yield return null;
                 }
+                LevelManager.Instance.DealDamageToPlayer(chosenAttack.Damage);
                 yield return new WaitForSeconds(0.1f);
-                for (int i = 0; i < 10; i++)
+                timeToWait = 0.1f;
+                while (timeToWait > 0)
                 {
-                    transform.position += new Vector3(0.15f, 0, 0);
-                    yield return new WaitForSeconds(0.01f);
+                    timeToWait -= Time.deltaTime;
+                    transform.position = Vector3.Lerp(targetPos, startingPos, (0.1f - timeToWait) * 10);
+                    yield return null;
                 }
                 SetSprite(CharData.AliveSprite);
                 break;
+
             case AttackAnimation.SAY_NOTHING:
                 SayDialogue(new DialogueInfo()
                 {
@@ -90,8 +97,10 @@ public class EnemyHandler : CharacterHandler
                     Text = "...",
                     Duration = 1f
                 });
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(1.2f);
+                LevelManager.Instance.DealDamageToPlayer(chosenAttack.Damage);
                 break;
+
             default:
                 break;
         }
