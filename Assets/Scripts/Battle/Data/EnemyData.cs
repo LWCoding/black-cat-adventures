@@ -11,9 +11,14 @@ public enum AttackAnimation
 public struct EnemyAttack
 {
 
+    public Sprite IconSprite;
     public string AttackName;
+    [SerializeField] private string _attackDescription;
     public int Damage;
     public AttackAnimation AnimType;
+
+    // Replace %d instances with damage number
+    public string AttackDescription => _attackDescription.Replace("%d", Damage.ToString());
 
 }
 

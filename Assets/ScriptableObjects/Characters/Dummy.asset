@@ -24,6 +24,13 @@ MonoBehaviour:
     Offset: {x: 0.6, y: 1}
   SpriteScale: {x: 0.9, y: 0.9}
   Attacks:
-  - AttackName: Stare
+  - IconSprite: {fileID: 0}
+    AttackName: Stare
+    _attackDescription: 
     Damage: 0
     AnimType: 2
+  - IconSprite: {fileID: 0}
+    AttackName: Attack :3
+    _attackDescription: Attacks the playwr or splstihms
+    Damage: 2
+    AnimType: 0

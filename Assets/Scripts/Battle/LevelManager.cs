@@ -24,6 +24,7 @@ public class LevelManager : MonoBehaviour
     [Header("Object Assignments")]
     public PlayerHandler PlayerHandler;
     public EnemyHandler CurrEnemyHandler;
+    [SerializeField] private EnemyInfoBox _enemyInfoBox;
 
     public State CurrentState;
 
@@ -46,12 +47,25 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Render a new enemy.
-    /// Queues any dialogue to be played if applicable.
+    /// Render a new enemy, updating any UI if needed.
+    /// Also queues any dialogue to be played if applicable.
     /// </summary>
     public void SetNewEnemy(EnemyHandler newEnemyHandler)
     {
         CurrEnemyHandler = newEnemyHandler;
+        List<EnemyInfo> enemyInfos = new();
+        // Compile all attacks to load UI
+        foreach (EnemyAttack attack in ((EnemyData)(newEnemyHandler.CharData)).Attacks)
+        {
+            enemyInfos.Add(new EnemyInfo()
+            {
+                Name = attack.AttackName,
+                Description = attack.AttackDescription,
+                InfoSprite = attack.IconSprite
+            });
+        }
+        _enemyInfoBox.SetInfo(enemyInfos);
+        // If there's any dialogue to play, play it!
         if (newEnemyHandler.DialogueToPlayOnMeet.Count > 0)
         {
             StartCoroutine(RenderDialogueCoroutine(newEnemyHandler.DialogueToPlayOnMeet));

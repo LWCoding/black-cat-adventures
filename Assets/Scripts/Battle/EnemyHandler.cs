@@ -54,7 +54,7 @@ public class EnemyHandler : CharacterHandler
     protected override IEnumerator RenderAttackCoroutine(Action codeToRunAfter)
     {
         Vector3 startingPos = transform.position;
-        List<EnemyAttack> possibleAttacks = ((EnemyData)_charData).Attacks;
+        List<EnemyAttack> possibleAttacks = ((EnemyData)CharData).Attacks;
 
         // If no possible attacks are available, return early
         if (possibleAttacks.Count == 0)
@@ -69,7 +69,7 @@ public class EnemyHandler : CharacterHandler
         switch (chosenAttack.AnimType)
         {
             case AttackAnimation.DEFAULT:
-                SetSprite(_charData.AttackSprite);
+                SetSprite(CharData.AttackSprite);
                 for (int i = 0; i < 10; i++)
                 {
                     transform.position -= new Vector3(0.15f, 0, 0);
@@ -81,7 +81,7 @@ public class EnemyHandler : CharacterHandler
                     transform.position += new Vector3(0.15f, 0, 0);
                     yield return new WaitForSeconds(0.01f);
                 }
-                SetSprite(_charData.AliveSprite);
+                SetSprite(CharData.AliveSprite);
                 break;
             case AttackAnimation.SAY_NOTHING:
                 SayDialogue(new DialogueInfo()
@@ -89,7 +89,7 @@ public class EnemyHandler : CharacterHandler
                     Speaker = DialogueFaction.ENEMY,
                     Text = "...",
                     Duration = 2
-                }) ;
+                });
                 yield return new WaitForSeconds(2);
                 break;
             default:

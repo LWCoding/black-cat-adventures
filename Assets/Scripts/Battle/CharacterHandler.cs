@@ -12,9 +12,18 @@ public abstract class CharacterHandler : MonoBehaviour
     [SerializeField] protected SpriteRenderer _spriteRenderer;
     public HealthHandler HealthHandler;
     [Header("Character Properties")]
-    [SerializeField] protected CharacterData _charData;
+    [SerializeField] private CharacterData _charData;
     [Header("Optional Assignments")]
     [SerializeField] private DialogueBoxHandler _dBoxHandler; 
+
+    public CharacterData CharData
+    {
+        get => _charData;
+        protected set
+        {
+            _charData = value;
+        }
+    }
 
     private void Awake()
     {
