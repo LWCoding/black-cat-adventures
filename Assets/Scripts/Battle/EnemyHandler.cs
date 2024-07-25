@@ -83,6 +83,15 @@ public class EnemyHandler : CharacterHandler
                 }
                 SetSprite(_charData.AliveSprite);
                 break;
+            case AttackAnimation.SAY_NOTHING:
+                SayDialogue(new DialogueInfo()
+                {
+                    Speaker = DialogueFaction.ENEMY,
+                    Text = "...",
+                    Duration = 2
+                }) ;
+                yield return new WaitForSeconds(2);
+                break;
             default:
                 break;
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum AttackAnimation
 {
-    DEFAULT = 0, NONE = 1
+    DEFAULT = 0, NONE = 1, SAY_NOTHING = 2
 }
 
 [System.Serializable]

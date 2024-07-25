@@ -919,7 +919,7 @@ GameObject:
   m_Component:
   - component: {fileID: 240218983}
   m_Layer: 0
-  m_Name: EnemyInfo
+  m_Name: Enemy Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3580,11 +3580,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[0].Text
-      value: You're not supposed to be here.
+      value: Hello? What are you?
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[1].Text
-      value: Get out of here, or I'll make you!!!
+      value: ...
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[2].Text
@@ -3592,7 +3592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[0].Speaker
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[1].Speaker
@@ -3624,7 +3624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[1].ShouldStallState
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3562384217587314728, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: m_LocalPosition.y
