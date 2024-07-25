@@ -159,9 +159,14 @@ public class WordPreview : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Makes all of the preview tiles from a specific index toggle
+    /// visibility. Returns early if no preview tiles are found.
+    /// </summary>
     public void ToggleTilesFromIndex(int idx, bool isVisible)
     {
         int tilesIdx = CurrentTiles.FindIndex((t) => t.TileIndex == idx);
+        if (tilesIdx == -1) { return; }
         for (; tilesIdx < _currTiles.Count; tilesIdx++)
         {
             _previewLetterTiles[tilesIdx].GetComponent<PreviewLetterTile>().ToggleVisibility(isVisible);
