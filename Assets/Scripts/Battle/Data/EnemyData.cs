@@ -26,6 +26,8 @@ public struct EnemyAttack
 public class EnemyData : CharacterData
 {
 
+    [Header("Enemy-Specific Information")]
+    [TextArea(2, 3)] public string EnemyDescription;
     public List<EnemyAttack> Attacks = new();
 
 }

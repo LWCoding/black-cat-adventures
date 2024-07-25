@@ -23,7 +23,10 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 068abd77b0800414b96ea1638613226d, type: 3}
     Offset: {x: 0.5, y: 0.8}
   SpriteScale: {x: 0.8, y: 0.8}
+  EnemyDescription: 
   Attacks:
-  - AttackName: Wooden Justice
+  - IconSprite: {fileID: 0}
+    AttackName: Wooden Justice
+    _attackDescription: Full-force smacks you, dealing %d damage.
     Damage: 6
     AnimType: 0

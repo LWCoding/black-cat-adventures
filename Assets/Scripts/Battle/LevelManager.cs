@@ -53,18 +53,7 @@ public class LevelManager : MonoBehaviour
     public void SetNewEnemy(EnemyHandler newEnemyHandler)
     {
         CurrEnemyHandler = newEnemyHandler;
-        List<EnemyInfo> enemyInfos = new();
-        // Compile all attacks to load UI
-        foreach (EnemyAttack attack in ((EnemyData)(newEnemyHandler.CharData)).Attacks)
-        {
-            enemyInfos.Add(new EnemyInfo()
-            {
-                Name = attack.AttackName,
-                Description = attack.AttackDescription,
-                InfoSprite = attack.IconSprite
-            });
-        }
-        _enemyInfoBox.SetInfo(enemyInfos);
+        _enemyInfoBox.SetInfo((EnemyData)(newEnemyHandler.CharData));
         // If there's any dialogue to play, play it!
         if (newEnemyHandler.DialogueToPlayOnMeet.Count > 0)
         {

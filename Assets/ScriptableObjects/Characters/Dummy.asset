@@ -23,6 +23,7 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: a98949ac6b7a94d43b5b39a854fcc574, type: 3}
     Offset: {x: 0.6, y: 1}
   SpriteScale: {x: 0.9, y: 0.9}
+  EnemyDescription: A dummy lost along the side of the road... how did it get here?
   Attacks:
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Stare

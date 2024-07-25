@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public struct EnemyInfo
 {
@@ -16,20 +18,32 @@ public class EnemyInfoBox : MonoBehaviour
     [SerializeField] private GameObject _infoPrefab;
     [Header("Object Assignments")]
     [SerializeField] private Transform _attackContainer;
+    [SerializeField] private TextMeshPro _enemyDescText;
 
     private readonly List<GameObject> _instantiatedAttacks = new();
 
     /// <summary>
-    /// Given an EnemyInfo struct (defined above), refreshes the info
-    /// box and creates an object for each piece of information.
+    /// Given an Enemy's data, sets the info box's description to
+    /// match the enemy and creates an info prefab for each attack.
     /// </summary>
-    public void SetInfo(List<EnemyInfo> infos)
+    public void SetInfo(EnemyData enemyData)
     {
         for (int i = _instantiatedAttacks.Count - 1; i >= 0; i--)
         {
             Destroy(_instantiatedAttacks[i]);
         }
         _instantiatedAttacks.Clear();
+        // Compile all attacks to load UI
+        List<EnemyInfo> infos = new();
+        foreach (EnemyAttack attack in enemyData.Attacks)
+        {
+            infos.Add(new EnemyInfo()
+            {
+                Name = attack.AttackName,
+                Description = attack.AttackDescription,
+                InfoSprite = attack.IconSprite
+            });
+        }
         // Instantiate an instance for each piece of info
         for (int i = 0; i < infos.Count; i++)
         {
@@ -38,6 +52,8 @@ public class EnemyInfoBox : MonoBehaviour
             infoObject.GetComponent<EnemyInfoHandler>().Initialize(infos[i]);
             _instantiatedAttacks.Add(infoObject);
         }
+        // Set description text
+        _enemyDescText.text = enemyData.EnemyDescription;
     }
 
 }
