@@ -40,4 +40,20 @@ public class TreasureSection : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Given a TreasureType enum, returns True if that
+    /// treasure is currently equipped, else False.
+    /// </summary>
+    public bool HasTreasure(TreasureType type)
+    {
+        foreach (TreasureItem item in _treasureObjects)
+        {
+            if (item.TreasureData.Type == type)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

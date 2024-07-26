@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -32,7 +33,18 @@ public class DamageIndicator : MonoBehaviour
         if (isWordReal)
         {
             int damage = _wordGenerator.CalculateDamage(WordPreview.Instance.CurrentTiles);
+            // If profane with right treasure, add one for each letter
+            if (TreasureSection.Instance.HasTreasure(TreasureType.DUCT_TAPE) && _wordGenerator.IsProfaneWord(word))
+            {
+                damage += word.Length;
+            }
+            // If seven letters with right treasure, add seven damage
+            if (TreasureSection.Instance.HasTreasure(TreasureType.MAGIC_7_BALL) && word.Length == 7)
+            {
+                damage += 7;
+            }
             _damageText.text = StringLayout.Replace("%d", damage.ToString());
+
         }
     }
 

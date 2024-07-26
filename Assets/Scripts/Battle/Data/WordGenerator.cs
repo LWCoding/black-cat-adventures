@@ -5,8 +5,8 @@ using UnityEngine;
 public class WordGenerator
 {
 
-    private List<string> _validWords = new();
-    private List<string> _profaneWords = new();
+    private readonly List<string> _validWords = new();
+    private readonly List<string> _profaneWords = new();
 
     /// <summary>
     /// This function goes through provided files and

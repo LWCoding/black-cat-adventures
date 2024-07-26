@@ -46,7 +46,11 @@ public class TreasureItem : MonoBehaviour
                         StartCoroutine(RunNextFrameCoroutine(() =>
                         {
                             WordPreview.Instance.FeedbackText.enabled = true;
-                            WordPreview.Instance.FeedbackText.text = "Profane!";
+                            if (WordPreview.Instance.FeedbackText.text != "")
+                            {
+                                WordPreview.Instance.FeedbackText.text += " ";
+                            }
+                            WordPreview.Instance.FeedbackText.text += "Profane!";
                         }));
                     }
                 };
@@ -55,6 +59,30 @@ public class TreasureItem : MonoBehaviour
                     if (_wordGenerator.IsProfaneWord(WordPreview.Instance.CurrentWord))
                     {
                         LevelManager.Instance.DealDamageToEnemy(WordPreview.Instance.CurrentWord.Length);
+                    }
+                };
+                break;
+            case TreasureType.MAGIC_7_BALL:
+                WordPreview.Instance.OnLetterTilesChanged += () =>
+                {
+                    if (_wordGenerator.IsValidWord(WordPreview.Instance.CurrentWord) && WordPreview.Instance.CurrentTiles.Count == 7)
+                    {
+                        StartCoroutine(RunNextFrameCoroutine(() =>
+                        {
+                            WordPreview.Instance.FeedbackText.enabled = true;
+                            if (WordPreview.Instance.FeedbackText.text != "")
+                            {
+                                WordPreview.Instance.FeedbackText.text += " ";
+                            }
+                            WordPreview.Instance.FeedbackText.text += "Seven!";
+                        }));
+                    }
+                };
+                LevelManager.Instance.OnPlayerAttack += () =>
+                {
+                    if (WordPreview.Instance.CurrentTiles.Count == 7)
+                    {
+                        LevelManager.Instance.DealDamageToEnemy(7);
                     }
                 };
                 break;
