@@ -20,12 +20,12 @@ public class Tile
         set
         {
             _letters = value;
-            // AAAAABBCCDDDEEEEEEEEFFGGHHHHHIIIIIIJKLLLLMMNNNNNOOOOOOPPQRRRRRSSSSSSTTTTTTTUUUVVWWWXYYYZ
+            // AAAAABBCCDDDEEEEEEEEFFGGHHHHHIIIIIIJKLLLLMMNNNNNOOOOOOPPQRRRRRSSSSSSTTTTTTTUUUVVWWXYYZ
             if ("JKQXZ".Contains(value))
             {
                 DamageType = TileDamage.HIGH;
             }
-            else if ("BCFGMPV".Contains(value))
+            else if ("BCFGMPVWY".Contains(value))
             {
                 DamageType = TileDamage.MEDIUM;
             }
