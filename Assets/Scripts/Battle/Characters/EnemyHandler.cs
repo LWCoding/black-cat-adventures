@@ -65,6 +65,12 @@ public class EnemyHandler : CharacterHandler
 
         EnemyAttack chosenAttack = possibleAttacks[Random.Range(0, possibleAttacks.Count)];
 
+        // Flash the chosen attack in the enemy box
+        if (EnemyInfoBox.Instance != null)
+        {
+            EnemyInfoBox.Instance.FlashAttackByName(chosenAttack.AttackName);
+        }
+
         // Perform an animation depending on the type
         switch (chosenAttack.AnimType)
         {

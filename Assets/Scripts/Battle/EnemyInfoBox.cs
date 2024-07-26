@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public struct EnemyInfo
 {
@@ -14,13 +14,24 @@ public struct EnemyInfo
 public class EnemyInfoBox : MonoBehaviour
 {
 
+    public static EnemyInfoBox Instance;
+
     [Header("Prefab Assignments")]
     [SerializeField] private GameObject _infoPrefab;
     [Header("Object Assignments")]
     [SerializeField] private Transform _attackContainer;
     [SerializeField] private TextMeshPro _enemyDescText;
 
-    private readonly List<GameObject> _instantiatedAttacks = new();
+    private readonly List<Tuple<string, EnemyInfoHandler>> _instantiatedAttacks = new();
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(this);
+        }
+        Instance = this;
+    }
 
     /// <summary>
     /// Given an Enemy's data, sets the info box's description to
@@ -30,7 +41,7 @@ public class EnemyInfoBox : MonoBehaviour
     {
         for (int i = _instantiatedAttacks.Count - 1; i >= 0; i--)
         {
-            Destroy(_instantiatedAttacks[i]);
+            Destroy(_instantiatedAttacks[i].Item2.gameObject);
         }
         _instantiatedAttacks.Clear();
         // Compile all attacks to load UI
@@ -50,10 +61,25 @@ public class EnemyInfoBox : MonoBehaviour
             GameObject infoObject = Instantiate(_infoPrefab, _attackContainer, false);
             infoObject.transform.position -= new Vector3(0, 1f * i);
             infoObject.GetComponent<EnemyInfoHandler>().Initialize(infos[i]);
-            _instantiatedAttacks.Add(infoObject);
+            _instantiatedAttacks.Add(new(infos[i].Name, infoObject.GetComponent<EnemyInfoHandler>()));
         }
         // Set description text
         _enemyDescText.text = enemyData.EnemyDescription;
+    }
+
+    /// <summary>
+    /// Given the name of an attack, flashes it to indicate
+    /// that the attack has been used.
+    /// </summary>
+    public void FlashAttackByName(string attackName)
+    {
+        for (int i = 0; i < _instantiatedAttacks.Count; i++)
+        {
+            if (_instantiatedAttacks[i].Item1 == attackName)
+            {
+                _instantiatedAttacks[i].Item2.FlashAttack();
+            }
+        }
     }
 
 }
