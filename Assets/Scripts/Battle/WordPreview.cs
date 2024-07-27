@@ -50,21 +50,23 @@ public class WordPreview : MonoBehaviour
         OnLetterTilesChanged += () =>
         {
             FeedbackText.enabled = false;
-            if (!_wordGenerator.IsValidWord(CurrentWord) || CurrentTiles.Count < 5) return;
+            if (!_wordGenerator.IsValidWord(CurrentWord)) { return; }
+            float wordDamage = _wordGenerator.CalculateDamage(CurrentTiles);
+            if (wordDamage < 7) { return; }
             FeedbackText.enabled = true;
-            if (CurrentTiles.Count >= 8)
+            if (wordDamage >= 20)
             {
                 FeedbackText.text = "Spectacular!";
             } 
-            else if (CurrentTiles.Count >= 7) 
+            else if (wordDamage >= 15) 
             { 
                 FeedbackText.text = "Amazing!";
             } 
-            else if (CurrentTiles.Count >= 6)
+            else if (wordDamage >= 10)
             {
                 FeedbackText.text = "Great!";
             }
-            else if (CurrentTiles.Count >= 5)
+            else if (wordDamage >= 7)
             {
                 FeedbackText.text = "Good!";
             }
