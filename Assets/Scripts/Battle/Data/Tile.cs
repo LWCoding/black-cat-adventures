@@ -16,16 +16,22 @@ public class Tile
 
     public string Letters
     {
-        get => _letters;
+        get
+        {
+            if (_letters == "q")
+            {
+                return "Qu";
+            } 
+            return _letters.ToUpper();
+        }
         set
         {
-            _letters = value;
-            // AAAAABBCCDDDEEEEEEEEFFGGHHHHHIIIIIIJKLLLLMMNNNNNOOOOOOPPQRRRRRSSSSSSTTTTTTTUUUVVWWXYYZ
-            if ("JKQXZ".Contains(value))
+            _letters = value.ToLower();
+            if ("jkxzq".Contains(_letters))
             {
                 DamageType = TileDamage.HIGH;
             }
-            else if ("BCFGMPVWY".Contains(value))
+            else if ("bcfgmpvwy".Contains(_letters))
             {
                 DamageType = TileDamage.MEDIUM;
             }

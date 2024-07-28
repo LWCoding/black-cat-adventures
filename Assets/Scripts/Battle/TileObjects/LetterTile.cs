@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class LetterTile : MonoBehaviour
@@ -34,6 +35,8 @@ public abstract class LetterTile : MonoBehaviour
         IsSelected = false;
     }
 
+    public string GetLetters() => _tile.Letters;
+
     /// <summary>
     /// Initializes this tile object to a specified tile. Saves the tile index.
     /// Sets the damage indicator to the correct damage.
@@ -59,12 +62,28 @@ public abstract class LetterTile : MonoBehaviour
 
     /// <summary>
     /// Randomly gets a tile using the WordGenerator class and sets this tile to
-    /// appear like that tile. Must be initialized first.
+    /// appear like that tile. May take in a list of tiles to discourage certain
+    /// tiles from appearing. Must be initialized first.
     /// </summary>
-    public void RandomizeTile()
+    public void RandomizeTile(string discouragedLetters = "")
     {
-        Tile newTile = _wordGenerator.GetRandomTile(_tile.TileIndex);
-        InitializeTile(newTile);
+        if (discouragedLetters == "")
+        {
+            Tile newTile = _wordGenerator.GetRandomTile(_tile.TileIndex);
+            InitializeTile(newTile);
+        } else {
+            // If we have discouraged tiles, 40% chance to allow them to show up
+            Tile newTile;
+            if (Random.Range(0f, 1f) < 0.4f)
+            {
+                newTile = _wordGenerator.GetRandomTile(_tile.TileIndex);
+            }
+            else
+            {
+                newTile = _wordGenerator.GetRandomTile(_tile.TileIndex, discouragedLetters);
+            }
+            InitializeTile(newTile);
+        }
     }
 
     /// <summary>
