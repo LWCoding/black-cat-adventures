@@ -108,7 +108,25 @@ public class WordPreview : MonoBehaviour
         for (int i = _currTiles.Count - 1; i >= 0; i--)
         {
             Tile t = _currTiles[i];
-            WordGrid.Instance.LetterTiles[t.TileIndex].InitializeTile(_wordGenerator.GetRandomTile(t.TileIndex));
+            // Find any discouraged tiles that appear >1 time
+            Dictionary<string, int> tileOccur = new();
+            StringBuilder discouragedLetters = new();
+            List<LetterTile> gridTiles = WordGrid.Instance.LetterTiles;
+            for (int j = gridTiles.Count - 1; j >= 0; j--)
+            {
+                string currTileLetters = gridTiles[j].GetLetters();
+                if (!tileOccur.ContainsKey(currTileLetters))
+                {
+                    tileOccur[currTileLetters] = 0;
+                }
+                tileOccur[gridTiles[j].GetLetters()] += 1;
+                if (tileOccur[currTileLetters] == 2)
+                {
+                    discouragedLetters.Append(currTileLetters);
+                }
+            }
+            // Randomize the tile, given these discouraged letters
+            WordGrid.Instance.LetterTiles[t.TileIndex].RandomizeTile(discouragedLetters.ToString());
             RemoveTile(t);
         }
     }
