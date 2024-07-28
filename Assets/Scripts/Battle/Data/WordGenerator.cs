@@ -93,9 +93,8 @@ public class WordGenerator
         }
 
         // Pick a random character from the available characters
-        char randomChar = availableChars[Random.Range(0, availableChars.Length)];
-        // TODO: If I want to, add some letters that translate to character pairs (e.g., 1 -> ER)
-        return randomChar.ToString();
+        string randomLetter = availableChars[Random.Range(0, availableChars.Length)].ToString();
+        return randomLetter.ToString();
     }
 
     /// <summary>

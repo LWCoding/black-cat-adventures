@@ -38,7 +38,7 @@ public class FallingText : MonoBehaviour
         _text.color = new Color(textColor.r, textColor.g, textColor.b, 1);
         StartCoroutine(MoveDownCoroutine());
         StartCoroutine(FadeTextCoroutine());
-        Destroy(this, 1.5f);  // Destroy after 1.5 second
+        Destroy(gameObject, 1.5f);  // Destroy after 1.5 second
     }
 
     /// <summary>

@@ -34,6 +34,8 @@ public abstract class LetterTile : MonoBehaviour
         IsSelected = false;
     }
 
+    public string GetLetters() => _tile.Letters;
+
     /// <summary>
     /// Initializes this tile object to a specified tile. Saves the tile index.
     /// Sets the damage indicator to the correct damage.

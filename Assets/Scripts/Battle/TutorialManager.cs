@@ -45,7 +45,7 @@ public class TutorialManager : MonoBehaviour
         // Initialize board with bad tiles initially
         for (int i = 0; i < WordGrid.Instance.LetterTiles.Count; i++)
         {
-            WordGrid.Instance.LetterTiles[i].SetTileText("Q");
+            WordGrid.Instance.LetterTiles[i].SetTileText("X");
         }
         WordGrid.Instance.LetterTiles[0].SetTileText("P");
         WordGrid.Instance.LetterTiles[6].SetTileText("L");
@@ -114,7 +114,10 @@ public class TutorialManager : MonoBehaviour
         // Initialize board with bad tiles... again!
         for (int i = 0; i < WordGrid.Instance.LetterTiles.Count; i++)
         {
-            WordGrid.Instance.LetterTiles[i].SetTileText("Q");
+            if (WordGrid.Instance.LetterTiles[i].GetLetters() != "X")
+            {
+                WordGrid.Instance.LetterTiles[i].SetTileText("Z");
+            }
         }
     }
 
