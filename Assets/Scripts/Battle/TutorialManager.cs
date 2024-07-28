@@ -116,7 +116,7 @@ public class TutorialManager : MonoBehaviour
         {
             if (WordGrid.Instance.LetterTiles[i].GetLetters() != "X")
             {
-                WordGrid.Instance.LetterTiles[i].SetTileText("Z");
+                WordGrid.Instance.LetterTiles[i].SetTileText("W");
             }
         }
     }

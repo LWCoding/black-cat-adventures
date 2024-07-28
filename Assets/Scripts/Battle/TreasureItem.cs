@@ -105,6 +105,10 @@ public class TreasureItem : MonoBehaviour
     /// </summary>
     public void EnableTreasure()
     {
+        if (_animator == null)
+        {
+            _animator = GetComponent<Animator>();
+        }
         _animator.Play("Selected");
     }
 
@@ -113,6 +117,10 @@ public class TreasureItem : MonoBehaviour
     /// </summary>
     public void DisableTreasure()
     {
+        if (_animator == null)
+        {
+            _animator = GetComponent<Animator>();
+        }
         _animator.Play("Unselected");
     }
 

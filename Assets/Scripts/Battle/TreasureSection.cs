@@ -25,14 +25,18 @@ public class TreasureSection : MonoBehaviour
         Instance = this;
     }
 
-    private void OnEnable()
+    private void Start()
     {
         // If we haven't unlocked this yet, hide it
         if (!UnlockedTreasureSection)
         {
             gameObject.SetActive(false);
-            return;
         }
+    }
+
+    private void OnEnable()
+    {
+        if (!UnlockedTreasureSection) { return; }
         // Initialize all items inside
         foreach (TreasureItem item in _treasureObjects)
         {
@@ -43,9 +47,12 @@ public class TreasureSection : MonoBehaviour
     /// <summary>
     /// Given a TreasureType enum, returns True if that
     /// treasure is currently equipped, else False.
+    /// 
+    /// Returns false if the section is locked.
     /// </summary>
     public bool HasTreasure(TreasureType type)
     {
+        if (!UnlockedTreasureSection) { return false; }
         foreach (TreasureItem item in _treasureObjects)
         {
             if (item.TreasureData.Type == type)

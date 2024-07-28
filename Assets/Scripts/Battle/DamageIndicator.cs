@@ -33,6 +33,11 @@ public class DamageIndicator : MonoBehaviour
         if (isWordReal)
         {
             int damage = _wordGenerator.CalculateDamage(WordPreview.Instance.CurrentTiles);
+            // If cat paw, add one damage
+            if (TreasureSection.Instance.HasTreasure(TreasureType.CAT_PAW))
+            {
+                damage += 1;
+            }
             // If profane with right treasure, add one for each letter
             if (TreasureSection.Instance.HasTreasure(TreasureType.DUCT_TAPE) && _wordGenerator.IsProfaneWord(word))
             {

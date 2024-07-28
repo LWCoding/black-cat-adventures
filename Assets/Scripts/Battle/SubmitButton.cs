@@ -20,6 +20,7 @@ public class SubmitButton : MonoBehaviour
 
     private void Awake()
     {
+        OnClickButton = null;
         _pointerCursorOnHover = GetComponent<PointerCursorOnHover>();
         ToggleInteractability(false);  // Start off with the button uninteractable
     }

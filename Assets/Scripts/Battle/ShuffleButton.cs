@@ -55,6 +55,11 @@ public class ShuffleButton : MonoBehaviour
         }
     }
 
+    public void OnEnable()
+    {
+        UnlockedShuffleButton = true;
+    }
+
     /// <summary>
     /// Toggle whether this tile is clickable or not.
     /// 

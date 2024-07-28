@@ -101,7 +101,8 @@ public class WordPreview : MonoBehaviour
 
     /// <summary>
     /// Remove all preview tiles currently showing at the top.
-    /// Refresh the tiles in the word grid to be different letters.
+    /// Refresh the tiles in the word grid to be different letters,
+    /// but discourage letters that appear twice or more.
     /// </summary>
     public void ConsumeTiles()
     {
