@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 426e616f127ca6942817a52a3d47db9b, type: 3}
+  m_Name: Poison
+  m_EditorClassIdentifier: 
+  _name: Poison
+  _description: Inflicts your mom every turn
+  _icon: {fileID: 21300000, guid: 4e39e986787d4704aaa7fd94387f86bd, type: 3}

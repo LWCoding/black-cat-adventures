@@ -14,7 +14,9 @@ public abstract class CharacterHandler : MonoBehaviour
     [Header("Character Properties")]
     [SerializeField] private CharacterData _charData;
     [Header("Optional Assignments")]
-    [SerializeField] private DialogueBoxHandler _dBoxHandler; 
+    [SerializeField] private DialogueBoxHandler _dBoxHandler;
+
+    private List<IStatusEffect> _effects;
 
     public CharacterData CharData
     {
@@ -33,6 +35,16 @@ public abstract class CharacterHandler : MonoBehaviour
         {
             SetSprite(_charData.DeadSprite);
         };
+    }
+
+    /// <summary>
+    /// Make this character gain a new status effect. Immediately renders
+    /// any effects on apply.
+    /// </summary>
+    public void GainStatusEffect(IStatusEffect status)
+    {
+        _effects.Add(status);
+        status.ApplyEffect(this);
     }
 
     public void InitializeInfo(CharacterData charInfo)
