@@ -14,14 +14,19 @@ public class Poison : ScriptableObject, IStatusEffect
     public string Description => _description;
     public Sprite Icon => _icon;
 
-    public void ApplyEffect(CharacterHandler handler)
+    private int _counter;
+
+    public void ApplyEffect(CharacterHandler handler, int amplifier)
     {
-        throw new System.NotImplementedException();
+        _counter = amplifier;
+        return;
     }
 
     public bool UpdateEffect(CharacterHandler handler)
     {
-        throw new System.NotImplementedException();
+        handler.HealthHandler.TakeDamage(1);
+        _counter--;
+        return _counter == 0;
     }
 
 }

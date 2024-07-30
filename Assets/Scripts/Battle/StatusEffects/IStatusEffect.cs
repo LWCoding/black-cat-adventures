@@ -13,7 +13,7 @@ public interface IStatusEffect
     /// Given a CharacterHandler, inflicts effects onto it (based on the
     /// nature of the status effect) after immediately applied.
     /// </summary>
-    public void ApplyEffect(CharacterHandler handler);
+    public void ApplyEffect(CharacterHandler handler, int amplifier);
 
     /// <summary>
     /// Given a CharacterHandler, inflicts effects onto it (based on the

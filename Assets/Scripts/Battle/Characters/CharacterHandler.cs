@@ -41,10 +41,10 @@ public abstract class CharacterHandler : MonoBehaviour
     /// Make this character gain a new status effect. Immediately renders
     /// any effects on apply.
     /// </summary>
-    public void GainStatusEffect(IStatusEffect status)
+    public void GainStatusEffect(IStatusEffect status, int amplifier)
     {
         _effects.Add(status);
-        status.ApplyEffect(this);
+        status.ApplyEffect(this, amplifier);
     }
 
     public void InitializeInfo(CharacterData charInfo)
