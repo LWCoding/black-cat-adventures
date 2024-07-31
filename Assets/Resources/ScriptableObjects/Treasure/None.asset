@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2b1f4d43f791764393b6f5c646d2e34, type: 3}
+  m_Script: {fileID: 11500000, guid: 8206a72c8fcb8f640a03dab3209a206a, type: 3}
   m_Name: None
   m_EditorClassIdentifier: 
   TreasureName: None
-  TreasureDescription: There is no treasure in this slot
+  TreasureDescription: There is no treasure in this slot.
   TreasureIcon: {fileID: 0}
-  Type: 0

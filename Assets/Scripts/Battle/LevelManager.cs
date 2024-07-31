@@ -142,4 +142,19 @@ public class LevelManager : MonoBehaviour
 
     private void LoadLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
+    /// <summary>
+    /// Run specific code after the next frame, to avoid
+    /// conflicts that occur due to priority.
+    /// </summary>
+    public void RunNextFrame(Action codeToRunAfter)
+    {
+        StartCoroutine(RunNextFrameCoroutine(codeToRunAfter));
+    }
+
+    private IEnumerator RunNextFrameCoroutine(Action codeToRunAfter)
+    {
+        yield return new WaitForEndOfFrame();
+        codeToRunAfter.Invoke();
+    }
+
 }

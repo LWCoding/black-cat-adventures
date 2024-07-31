@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2b1f4d43f791764393b6f5c646d2e34, type: 3}
+  m_Script: {fileID: 11500000, guid: 84ed66b1e1cf12c46801feeebc08d362, type: 3}
   m_Name: Lucky Cat Paw
   m_EditorClassIdentifier: 
   TreasureName: Lucky Cat Paw
-  TreasureDescription: All attacks deal an additional +1 damage!
+  TreasureDescription: All attacks deal +1 damage!
   TreasureIcon: {fileID: 21300000, guid: 73fb2887745ac7945b7a2ea11c940113, type: 3}
-  Type: 1

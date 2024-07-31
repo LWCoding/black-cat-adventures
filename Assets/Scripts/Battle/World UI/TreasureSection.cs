@@ -50,12 +50,12 @@ public class TreasureSection : MonoBehaviour
     /// 
     /// Returns false if the section is locked.
     /// </summary>
-    public bool HasTreasure(TreasureType type)
+    public bool HasTreasure(Type treasure)
     {
         if (!UnlockedTreasureSection) { return false; }
         foreach (TreasureItem item in _treasureObjects)
         {
-            if (item.TreasureData.Type == type)
+            if (item.TreasureData.GetType() == treasure)
             {
                 return true;
             }

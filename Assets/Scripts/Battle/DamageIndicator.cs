@@ -32,17 +32,17 @@ public class DamageIndicator : MonoBehaviour
         {
             int damage = WordGenerator.Instance.CalculateDamage(WordPreview.Instance.CurrentTiles);
             // If cat paw, add one damage
-            if (TreasureSection.Instance.HasTreasure(TreasureType.CAT_PAW))
+            if (TreasureSection.Instance.HasTreasure(typeof(LuckyCatPaw)))
             {
                 damage += 1;
             }
             // If profane with right treasure, add one for each letter
-            if (TreasureSection.Instance.HasTreasure(TreasureType.DUCT_TAPE) && WordGenerator.Instance.IsProfaneWord(word))
+            if (TreasureSection.Instance.HasTreasure(typeof(ProfanityTape)) && WordGenerator.Instance.IsProfaneWord(word))
             {
                 damage += word.Length;
             }
             // If seven letters with right treasure, add seven damage
-            if (TreasureSection.Instance.HasTreasure(TreasureType.MAGIC_7_BALL) && word.Length == 7)
+            if (TreasureSection.Instance.HasTreasure(typeof(MagicSevenBall)) && word.Length == 7)
             {
                 damage += 7;
             }

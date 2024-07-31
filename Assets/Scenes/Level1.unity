@@ -721,8 +721,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 1429914442}
     m_Modifications:
     - target: {fileID: 1082404490038344205, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1082404490038344205, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 1082404490038344205, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247529224090921242, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.5154836
+      objectReference: {fileID: 0}
+    - target: {fileID: 2247529224090921242, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.3423
       objectReference: {fileID: 0}
     - target: {fileID: 2247529224090921242, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -730,7 +746,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_text
-      value: Treasures give you passive buffs in battle! (hover)
+      value: Treasures give passive buffs in battle! (hover)
       objectReference: {fileID: 0}
     - target: {fileID: 6748022944440307023, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_Name
@@ -738,11 +754,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6748022944440307023, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9017043307771458979, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_LocalScale.y
-      value: -1.6504333
+      value: -0.26902065
       objectReference: {fileID: 0}
     - target: {fileID: 9017043307771458979, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -750,15 +766,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9017043307771458979, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9715
+      value: -0.5727
       objectReference: {fileID: 0}
     - target: {fileID: 9212215338475219214, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.91
+      value: -6.77
       objectReference: {fileID: 0}
     - target: {fileID: 9212215338475219214, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.43
+      value: -2.48
       objectReference: {fileID: 0}
     - target: {fileID: 9212215338475219214, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -795,7 +811,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1377439466573852872, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
 --- !u!4 &146524997 stripped
 Transform:
@@ -1158,7 +1177,7 @@ PrefabInstance:
     - target: {fileID: -6573415247330144372, guid: 4a578763431c6e0438a34b0d8d4921b0, type: 3}
       propertyPath: _treasureData
       value: 
-      objectReference: {fileID: 11400000, guid: dec2c32dc403c1846bdcf14a3e2749f0, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3555829932635558274, guid: 4a578763431c6e0438a34b0d8d4921b0, type: 3}
       propertyPath: m_Name
       value: Treasure (2)
@@ -1995,10 +2014,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1377439466573852872, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
 --- !u!4 &937710088 stripped
 Transform:
@@ -2484,11 +2500,11 @@ PrefabInstance:
     - target: {fileID: -6573415247330144372, guid: 4a578763431c6e0438a34b0d8d4921b0, type: 3}
       propertyPath: TreasureData
       value: 
-      objectReference: {fileID: 11400000, guid: 1698900805ef82c4ab7d7ac680bec85d, type: 2}
+      objectReference: {fileID: 11400000, guid: a4708cb27e773594cb315e3943fb835c, type: 2}
     - target: {fileID: -6573415247330144372, guid: 4a578763431c6e0438a34b0d8d4921b0, type: 3}
       propertyPath: _treasureData
       value: 
-      objectReference: {fileID: 11400000, guid: dec2c32dc403c1846bdcf14a3e2749f0, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3555829932635558274, guid: 4a578763431c6e0438a34b0d8d4921b0, type: 3}
       propertyPath: m_Name
       value: Treasure

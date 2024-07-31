@@ -57,10 +57,6 @@ public class TutorialManager : MonoBehaviour
         // During the player's turn, spawn tooltip
         LevelManager.Instance.OnStateChanged += (state) =>
         {
-            if (state is EnemyTurnState && _isStatusAppliedYet)
-            {
-                _statusTooltipObject.SetActive(false);
-            }
             if (state is not PlayerTurnState) { return; }
             _playerTurnTracker++;
             switch (_playerTurnTracker) {
@@ -94,6 +90,11 @@ public class TutorialManager : MonoBehaviour
             if (TreasureSection.UnlockedTreasureSection)
             {
                 _treasureTooltipObject.SetActive(false);
+            }
+            // If status is unlocked, hide tooltip when damage is dealt
+            if (_isStatusAppliedYet)
+            {
+                _statusTooltipObject.SetActive(false);
             }
         };
         // When a word is shuffled, hide the tooltip

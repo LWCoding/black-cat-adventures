@@ -13,6 +13,7 @@ public struct AttackStatus
 public abstract class StatusEffect : ScriptableObject
 {
 
+    [Header("Status Properties")]
     public string Name;
     public string Description;
     public Sprite Icon;
