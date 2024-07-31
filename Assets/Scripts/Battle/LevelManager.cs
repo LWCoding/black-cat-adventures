@@ -75,11 +75,11 @@ public class LevelManager : MonoBehaviour
                 wasStalled = true;
                 SetState(new WaitState());
             }
-            if (di.Speaker == DialogueFaction.PLAYER)
+            if (di.Speaker == Faction.PLAYER)
             {
                 PlayerHandler.SayDialogue(di);
             }
-            else if (di.Speaker == DialogueFaction.ENEMY)
+            else if (di.Speaker == Faction.ENEMY)
             {
                 CurrEnemyHandler.SayDialogue(di);
             }
@@ -106,7 +106,7 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Deal damage (as the player) to the enemy.
     /// </summary>
-    public void DealDamageToEnemy(int damage)
+    public void RenderAttackAgainstEnemy(int damage)
     {
         // Make the enemy actually take the damage.
         CurrEnemyHandler.HealthHandler.TakeDamage(damage);
@@ -115,10 +115,22 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Render damage (as the enemy) to the player.
     /// </summary>
-    public void DealDamageToPlayer(int damage)
+    public void RenderAttackAgainstPlayer(EnemyAttack attack)
     {
+        // If any effects should be applied, apply them.
+        foreach (AttackStatus effect in attack.InflictedStatuses)
+        {
+            if (effect.Target == Faction.ENEMY)
+            {
+                CurrEnemyHandler.GainStatusEffect(effect.Status, effect.Amplifier);
+            }
+            if (effect.Target == Faction.PLAYER)
+            {
+                PlayerHandler.GainStatusEffect(effect.Status, effect.Amplifier);
+            }
+        }
         // Make the player actually take the damage.
-        PlayerHandler.HealthHandler.TakeDamage(damage);
+        PlayerHandler.HealthHandler.TakeDamage(attack.Damage);
     }
 
     /// <summary>

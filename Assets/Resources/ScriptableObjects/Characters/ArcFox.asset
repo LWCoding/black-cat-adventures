@@ -31,3 +31,4 @@ MonoBehaviour:
     _attackDescription: Swings at you, dealing %d damage.
     Damage: 3
     AnimType: 0
+    InflictedStatuses: []

@@ -35,7 +35,7 @@ public class TreasureItem : MonoBehaviour
             case TreasureType.CAT_PAW:
                 LevelManager.Instance.OnPlayerAttack += () =>
                 {
-                    LevelManager.Instance.DealDamageToEnemy(1);
+                    LevelManager.Instance.RenderAttackAgainstEnemy(1);
                 };
                 break;
             case TreasureType.DUCT_TAPE:
@@ -58,7 +58,7 @@ public class TreasureItem : MonoBehaviour
                 {
                     if (_wordGenerator.IsProfaneWord(WordPreview.Instance.CurrentWord))
                     {
-                        LevelManager.Instance.DealDamageToEnemy(WordPreview.Instance.CurrentWord.Length);
+                        LevelManager.Instance.RenderAttackAgainstEnemy(WordPreview.Instance.CurrentWord.Length);
                     }
                 };
                 break;
@@ -82,7 +82,7 @@ public class TreasureItem : MonoBehaviour
                 {
                     if (WordPreview.Instance.CurrentTiles.Count == 7)
                     {
-                        LevelManager.Instance.DealDamageToEnemy(7);
+                        LevelManager.Instance.RenderAttackAgainstEnemy(7);
                     }
                 };
                 break;

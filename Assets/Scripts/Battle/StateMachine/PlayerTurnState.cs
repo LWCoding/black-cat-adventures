@@ -7,7 +7,7 @@ public class PlayerTurnState : State
 
     public override void OnEnterState()
     {
-
+        LevelManager.Instance.PlayerHandler.RenderStatusEffectEffects();
     }
 
     public override void OnExitState()

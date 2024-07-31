@@ -3,30 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Poison", menuName = "Status Effects/Poison")]
-public class Poison : ScriptableObject, IStatusEffect
+public class Poison : StatusEffect
 {
 
-    [SerializeField] private string _name;
-    [SerializeField] private string _description;
-    [SerializeField] private Sprite _icon;
-
-    public string Name => _name;
-    public string Description => _description;
-    public Sprite Icon => _icon;
-
-    private int _counter;
-
-    public void ApplyEffect(CharacterHandler handler, int amplifier)
+    public override void ApplyEffect(CharacterHandler handler, int amplifier)
     {
-        _counter = amplifier;
+        CurrAmplifier = amplifier;
         return;
     }
 
-    public bool UpdateEffect(CharacterHandler handler)
+    public override bool UpdateEffect(CharacterHandler handler)
     {
-        handler.HealthHandler.TakeDamage(1);
-        _counter--;
-        return _counter == 0;
+        handler.HealthHandler.TakeDamage(CurrAmplifier);
+        CurrAmplifier--;
+        return CurrAmplifier == 0;
     }
 
 }

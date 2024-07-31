@@ -16,7 +16,7 @@ public abstract class CharacterHandler : MonoBehaviour
     [Header("Optional Assignments")]
     [SerializeField] private DialogueBoxHandler _dBoxHandler;
 
-    private List<IStatusEffect> _effects;
+    private readonly List<StatusEffect> _effects = new();
 
     public CharacterData CharData
     {
@@ -39,14 +39,44 @@ public abstract class CharacterHandler : MonoBehaviour
 
     /// <summary>
     /// Make this character gain a new status effect. Immediately renders
-    /// any effects on apply.
+    /// any effects on apply. If the character already has the effect,
+    /// increases the amplifier instead.
     /// </summary>
-    public void GainStatusEffect(IStatusEffect status, int amplifier)
+    public void GainStatusEffect(StatusEffect status, int amplifier)
     {
-        _effects.Add(status);
-        status.ApplyEffect(this, amplifier);
+        int existingStatusIdx = _effects.FindIndex((aStatus) => aStatus.Name == status.Name);
+        if (existingStatusIdx < 0)
+        {
+            _effects.Add(status);
+            status.ApplyEffect(this, amplifier);
+        } else
+        {
+            _effects[existingStatusIdx].CurrAmplifier += amplifier;
+        }
     }
 
+    /// <summary>
+    /// Renders the turn-passed effect for any status effects currently on
+    /// this character. Runs in reverse order.
+    /// 
+    /// If the status effect should go away, removes the status effect.
+    /// </summary>
+    public void RenderStatusEffectEffects()
+    {
+        for (int i = _effects.Count - 1; i >= 0; i--)
+        {
+            bool isDone = _effects[i].UpdateEffect(this);
+            if (isDone)
+            {
+                _effects.RemoveAt(i);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Given some character data, initializes this character to appear
+    /// like that character and have the appropriate base statistics.
+    /// </summary>
     public void InitializeInfo(CharacterData charInfo)
     {
         if (charInfo == null)

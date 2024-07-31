@@ -31,8 +31,10 @@ MonoBehaviour:
     _attackDescription: Fists you, dealing %d damage.
     Damage: 4
     AnimType: 0
+    InflictedStatuses: []
   - IconSprite: {fileID: 21300000, guid: d23980e3c5c69d04fa099919c2241196, type: 3}
     AttackName: Wooden Justice
     _attackDescription: Full-force whacks you, dealing %d damage.
     Damage: 6
     AnimType: 0
+    InflictedStatuses: []

@@ -84,7 +84,7 @@ public class EnemyHandler : CharacterHandler
                     transform.position = Vector3.Lerp(startingPos, targetPos, (0.1f - timeToWait) * 10);
                     yield return null;
                 }
-                LevelManager.Instance.DealDamageToPlayer(chosenAttack.Damage);
+                LevelManager.Instance.RenderAttackAgainstPlayer(chosenAttack);
                 yield return new WaitForSeconds(0.1f);
                 timeToWait = 0.1f;
                 while (timeToWait > 0)
@@ -99,12 +99,12 @@ public class EnemyHandler : CharacterHandler
             case AttackAnimation.SAY_NOTHING:
                 SayDialogue(new DialogueInfo()
                 {
-                    Speaker = DialogueFaction.ENEMY,
+                    Speaker = Faction.ENEMY,
                     Text = "...",
                     Duration = 1f
                 });
                 yield return new WaitForSeconds(1.2f);
-                LevelManager.Instance.DealDamageToPlayer(chosenAttack.Damage);
+                LevelManager.Instance.RenderAttackAgainstPlayer(chosenAttack);
                 break;
 
             default:

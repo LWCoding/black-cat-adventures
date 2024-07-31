@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public enum DialogueFaction
+public enum Faction
 {
     PLAYER = 0, ENEMY = 1
 }
@@ -14,7 +14,7 @@ public struct DialogueInfo
 {
     public string Text;
     public float Duration;
-    public DialogueFaction Speaker;
+    public Faction Speaker;
     public bool ShouldStallState;  // True = state will be switched to WaitState, False = return
     public bool ShouldWinStateAfter;  // True = state will be switched to WinState, False = continue as normal
 }

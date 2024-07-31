@@ -66,7 +66,7 @@ public class SubmitButton : MonoBehaviour
         // Algorithm to determine damage from word!
         int wordLength = WordPreview.Instance.CurrentWord.Length;
         int damageDealt = _wordGenerator.CalculateDamage(WordPreview.Instance.CurrentTiles);
-        LevelManager.Instance.DealDamageToEnemy(damageDealt);
+        LevelManager.Instance.RenderAttackAgainstEnemy(damageDealt);
         LevelManager.Instance.OnPlayerAttack?.Invoke();
         WordPreview.Instance.ConsumeTiles();
     }
