@@ -143,7 +143,7 @@ public class EnemyHandler : CharacterHandler
         if (_nextBattleObject.TryGetComponent(out EnemyHandler enemyHandler))
         {
             // If the enemy is fightable, set the state to be the player's
-            if (enemyHandler.IsFightable)
+            if (!enemyHandler.DialogueToPlayOnMeet[0].ShouldStallState && enemyHandler.IsFightable)
             {
                 LevelManager.Instance.SetState(new PlayerTurnState());
             }

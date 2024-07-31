@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
   m_Name: Bovid
   m_EditorClassIdentifier: 
-  StartingHealth: 15
+  StartingHealth: 20
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 408b9fbb3cddc3545bb961f25e3660be, type: 3}
     Offset: {x: 0.7, y: 0.9}

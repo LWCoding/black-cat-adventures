@@ -64,7 +64,6 @@ public class LevelManager : MonoBehaviour
     private IEnumerator RenderDialogueCoroutine(List<DialogueInfo> diList)
     {
         bool wasStalled = false;
-        State previousState = CurrentState;
 
         while (diList.Count > 0)
         {
@@ -99,7 +98,7 @@ public class LevelManager : MonoBehaviour
         // If the dialogue was stalled, restore the state at the end
         if (wasStalled)
         {
-            SetState(previousState);
+            SetState(new PlayerTurnState());
         }
     }
 
