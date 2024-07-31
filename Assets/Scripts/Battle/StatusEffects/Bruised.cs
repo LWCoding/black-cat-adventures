@@ -14,7 +14,13 @@ public class Bruised : StatusEffect
 
     public override bool UpdateEffect(CharacterHandler handler)
     {
-        handler.HealthHandler.TakeDamage(CurrAmplifier);
+        // Skip the first turn of effect
+        if (JustApplied)
+        {
+            JustApplied = false;
+            return CurrAmplifier == 0;
+        }
+        handler.HealthHandler.TakeDamage(1);
         CurrAmplifier--;
         return CurrAmplifier == 0;
     }

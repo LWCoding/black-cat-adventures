@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -18,6 +19,8 @@ public class StatusHandler : MonoBehaviour
 
     private const float SPACE_BETWEEN_STATUSES = 0.15f;
 
+    public Action OnStatusApplied;
+
     public void Initialize(CharacterHandler characterHandler)
     {
         _characterHandler = characterHandler;
@@ -32,6 +35,7 @@ public class StatusHandler : MonoBehaviour
     /// </summary>
     public void GainStatusEffect(StatusEffect status, int amplifier)
     {
+        OnStatusApplied.Invoke();
         int existingStatusIdx = _effects.FindIndex((aStatus) => aStatus.Name == status.Name);
         StatusEffect statusCopy = Instantiate(status);  // Make new status effect object
         if (existingStatusIdx < 0)

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bruised
   m_EditorClassIdentifier: 
   Name: Bruised
-  Description: This is a randmo effect
-  Icon: {fileID: 21300000, guid: 83a7fa7039f814b4ea93afe6ac602104, type: 3}
+  Description: Every turn, take 1 damage.
+  Icon: {fileID: 21300000, guid: f7fd8f73897fd104186ef9a999763264, type: 3}
   CurrAmplifier: 0

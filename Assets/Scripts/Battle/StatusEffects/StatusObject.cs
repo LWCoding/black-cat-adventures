@@ -19,7 +19,7 @@ public class StatusObject : MonoBehaviour
     {
         _spriteRenderer.sprite = status.Icon;
         _amplifierText.text = status.CurrAmplifier.ToString();
-        _tooltipText.text = "<b>" + status.Name + "</b> (x" + status.CurrAmplifier.ToString() + "): " + status.Description;
+        _tooltipText.text = "<b>" + status.Name + "</b> (" + status.CurrAmplifier.ToString() + " turn" + (status.CurrAmplifier == 1 ? "" : "s") + " left): " + status.Description.Replace("%d", status.CurrAmplifier.ToString());
     }
 
 }

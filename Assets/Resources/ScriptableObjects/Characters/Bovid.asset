@@ -28,6 +28,10 @@ MonoBehaviour:
   Attacks:
   - IconSprite: {fileID: 21300000, guid: 94dc8143aaee5804486cebd93c161ed5, type: 3}
     AttackName: Roughhoofing
-    _attackDescription: Takes a few jabs at you, dealing %d damage.
-    Damage: 5
+    _attackDescription: Deals %d damage and inflicts Bruise.
+    Damage: 2
     AnimType: 0
+    InflictedStatuses:
+    - Target: 0
+      Status: {fileID: 11400000, guid: 10a67663f471ab44a9691e5145894c21, type: 2}
+      Amplifier: 2

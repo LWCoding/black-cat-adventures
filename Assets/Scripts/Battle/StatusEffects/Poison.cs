@@ -14,6 +14,12 @@ public class Poison : StatusEffect
 
     public override bool UpdateEffect(CharacterHandler handler)
     {
+        // Skip the first turn of effect
+        if (JustApplied)
+        {
+            JustApplied = false;
+            return CurrAmplifier == 0;
+        }
         handler.HealthHandler.TakeDamage(CurrAmplifier);
         CurrAmplifier--;
         return CurrAmplifier == 0;

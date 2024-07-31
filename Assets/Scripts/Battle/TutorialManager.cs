@@ -14,8 +14,10 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject _shuffleTooltipObject;
     [SerializeField] private GameObject _enemyTooltipObject;
     [SerializeField] private GameObject _treasureTooltipObject;
+    [SerializeField] private GameObject _statusTooltipObject;
 
     private int _playerTurnTracker = 0;  // Increments by one each time the player's turn arrives
+    private bool _isStatusAppliedYet = false;  // Becomes true after receiving effect once
 
     private void Awake()
     {
@@ -55,6 +57,10 @@ public class TutorialManager : MonoBehaviour
         // During the player's turn, spawn tooltip
         LevelManager.Instance.OnStateChanged += (state) =>
         {
+            if (state is EnemyTurnState && _isStatusAppliedYet)
+            {
+                _statusTooltipObject.SetActive(false);
+            }
             if (state is not PlayerTurnState) { return; }
             _playerTurnTracker++;
             switch (_playerTurnTracker) {
@@ -95,12 +101,21 @@ public class TutorialManager : MonoBehaviour
         {
             _shuffleTooltipObject.SetActive(false);
         };
-        // When an enemy is defeated, show treasure
+        // When an enemy is defeated, show treasure and hide status tooltip if necessary
         LevelManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath += () =>
         {
             TreasureSection.UnlockedTreasureSection = true;
             TreasureSection.Instance.gameObject.SetActive(true);
             _treasureTooltipObject.SetActive(true);
+        };
+        // When a status is applied for the first time, show status tooltip
+        LevelManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied += () =>
+        {
+            if (!_isStatusAppliedYet)
+            {
+                _statusTooltipObject.SetActive(true);
+                _isStatusAppliedYet = true;
+            }
         };
     }
     

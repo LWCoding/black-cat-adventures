@@ -17,6 +17,7 @@ public abstract class StatusEffect : ScriptableObject
     public string Description;
     public Sprite Icon;
     [HideInInspector] public int CurrAmplifier;
+    public bool JustApplied = true;  // Can be used if we want to skip effect when applied
 
     /// <summary>
     /// Given a CharacterHandler, inflicts effects onto it (based on the
