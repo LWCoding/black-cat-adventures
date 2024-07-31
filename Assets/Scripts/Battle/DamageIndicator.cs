@@ -13,8 +13,6 @@ public class DamageIndicator : MonoBehaviour
     [SerializeField] private GameObject _objectToShow;
     [SerializeField] private TextMeshPro _damageText;
 
-    private WordGenerator _wordGenerator = new();
-
     private void Start()
     {
         _objectToShow.SetActive(false);  // Indicator should start inactive
@@ -28,18 +26,18 @@ public class DamageIndicator : MonoBehaviour
     public void WhenDamageChanged()
     {
         string word = WordPreview.Instance.CurrentWord;
-        bool isWordReal = _wordGenerator.IsValidWord(word);
+        bool isWordReal = WordGenerator.Instance.IsValidWord(word);
         _objectToShow.SetActive(isWordReal);
         if (isWordReal)
         {
-            int damage = _wordGenerator.CalculateDamage(WordPreview.Instance.CurrentTiles);
+            int damage = WordGenerator.Instance.CalculateDamage(WordPreview.Instance.CurrentTiles);
             // If cat paw, add one damage
             if (TreasureSection.Instance.HasTreasure(TreasureType.CAT_PAW))
             {
                 damage += 1;
             }
             // If profane with right treasure, add one for each letter
-            if (TreasureSection.Instance.HasTreasure(TreasureType.DUCT_TAPE) && _wordGenerator.IsProfaneWord(word))
+            if (TreasureSection.Instance.HasTreasure(TreasureType.DUCT_TAPE) && WordGenerator.Instance.IsProfaneWord(word))
             {
                 damage += word.Length;
             }

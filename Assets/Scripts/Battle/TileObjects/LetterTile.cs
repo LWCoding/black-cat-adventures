@@ -28,8 +28,6 @@ public abstract class LetterTile : MonoBehaviour
     protected bool IsVisibilityLocked = false;  // If true, visibility cannot be changed
     protected Tile _tile;
 
-    private readonly WordGenerator _wordGenerator = new();
-
     private void Start()
     {
         IsSelected = false;
@@ -69,18 +67,18 @@ public abstract class LetterTile : MonoBehaviour
     {
         if (discouragedLetters == "")
         {
-            Tile newTile = _wordGenerator.GetRandomTile(_tile.TileIndex);
+            Tile newTile = WordGenerator.Instance.GetRandomTile(_tile.TileIndex);
             InitializeTile(newTile);
         } else {
             // If we have discouraged tiles, 40% chance to allow them to show up
             Tile newTile;
             if (Random.Range(0f, 1f) < 0.4f)
             {
-                newTile = _wordGenerator.GetRandomTile(_tile.TileIndex);
+                newTile = WordGenerator.Instance.GetRandomTile(_tile.TileIndex);
             }
             else
             {
-                newTile = _wordGenerator.GetRandomTile(_tile.TileIndex, discouragedLetters);
+                newTile = WordGenerator.Instance.GetRandomTile(_tile.TileIndex, discouragedLetters);
             }
             InitializeTile(newTile);
         }
@@ -92,13 +90,13 @@ public abstract class LetterTile : MonoBehaviour
     /// </summary>
     public void RandomizeVowel()
     {
-        Tile newTile = _wordGenerator.GetRandomVowel(_tile.TileIndex);
+        Tile newTile = WordGenerator.Instance.GetRandomVowel(_tile.TileIndex);
         InitializeTile(newTile);
     }
 
     public void SetTileText(string letters)
     {
-        Tile newTile = _wordGenerator.GetRandomTile(_tile.TileIndex);
+        Tile newTile = WordGenerator.Instance.GetRandomTile(_tile.TileIndex);
         newTile.Letters = letters;
         InitializeTile(newTile);
     }

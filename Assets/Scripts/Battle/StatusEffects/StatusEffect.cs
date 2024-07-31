@@ -16,7 +16,7 @@ public abstract class StatusEffect : ScriptableObject
     public string Name;
     public string Description;
     public Sprite Icon;
-    public int CurrAmplifier;
+    [HideInInspector] public int CurrAmplifier;
 
     /// <summary>
     /// Given a CharacterHandler, inflicts effects onto it (based on the

@@ -5,18 +5,19 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(HealthHandler))]
+[RequireComponent(typeof(StatusHandler))]
 public abstract class CharacterHandler : MonoBehaviour
 {
 
     [Header("Object Assignments")]
     [SerializeField] protected SpriteRenderer _spriteRenderer;
-    public HealthHandler HealthHandler;
     [Header("Character Properties")]
     [SerializeField] private CharacterData _charData;
     [Header("Optional Assignments")]
     [SerializeField] private DialogueBoxHandler _dBoxHandler;
 
-    private readonly List<StatusEffect> _effects = new();
+    [HideInInspector] public HealthHandler HealthHandler;
+    [HideInInspector] public StatusHandler StatusHandler;
 
     public CharacterData CharData
     {
@@ -29,48 +30,17 @@ public abstract class CharacterHandler : MonoBehaviour
 
     private void Awake()
     {
+        // Initialize required components
+        HealthHandler = GetComponent<HealthHandler>();
+        StatusHandler = GetComponent<StatusHandler>();
         InitializeInfo(_charData);
         // Set the character's sprite to be dead when reaching zero health.
         HealthHandler.OnDeath += () =>
         {
             SetSprite(_charData.DeadSprite);
         };
-    }
-
-    /// <summary>
-    /// Make this character gain a new status effect. Immediately renders
-    /// any effects on apply. If the character already has the effect,
-    /// increases the amplifier instead.
-    /// </summary>
-    public void GainStatusEffect(StatusEffect status, int amplifier)
-    {
-        int existingStatusIdx = _effects.FindIndex((aStatus) => aStatus.Name == status.Name);
-        if (existingStatusIdx < 0)
-        {
-            _effects.Add(status);
-            status.ApplyEffect(this, amplifier);
-        } else
-        {
-            _effects[existingStatusIdx].CurrAmplifier += amplifier;
-        }
-    }
-
-    /// <summary>
-    /// Renders the turn-passed effect for any status effects currently on
-    /// this character. Runs in reverse order.
-    /// 
-    /// If the status effect should go away, removes the status effect.
-    /// </summary>
-    public void RenderStatusEffectEffects()
-    {
-        for (int i = _effects.Count - 1; i >= 0; i--)
-        {
-            bool isDone = _effects[i].UpdateEffect(this);
-            if (isDone)
-            {
-                _effects.RemoveAt(i);
-            }
-        }
+        // Ensure the status effect handler knows what to refer to
+        StatusHandler.Initialize(this);
     }
 
     /// <summary>

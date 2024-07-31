@@ -15,7 +15,6 @@ public class TreasureItem : MonoBehaviour
     public TreasureData TreasureData;
 
     private Animator _animator;
-    private WordGenerator _wordGenerator = new();
 
     private void Awake()
     {
@@ -41,7 +40,7 @@ public class TreasureItem : MonoBehaviour
             case TreasureType.DUCT_TAPE:
                 WordPreview.Instance.OnLetterTilesChanged += () =>
                 {
-                    if (_wordGenerator.IsProfaneWord(WordPreview.Instance.CurrentWord))
+                    if (WordGenerator.Instance.IsProfaneWord(WordPreview.Instance.CurrentWord))
                     {
                         StartCoroutine(RunNextFrameCoroutine(() =>
                         {
@@ -56,7 +55,7 @@ public class TreasureItem : MonoBehaviour
                 };
                 LevelManager.Instance.OnPlayerAttack += () =>
                 {
-                    if (_wordGenerator.IsProfaneWord(WordPreview.Instance.CurrentWord))
+                    if (WordGenerator.Instance.IsProfaneWord(WordPreview.Instance.CurrentWord))
                     {
                         LevelManager.Instance.RenderAttackAgainstEnemy(WordPreview.Instance.CurrentWord.Length);
                     }
@@ -65,7 +64,7 @@ public class TreasureItem : MonoBehaviour
             case TreasureType.MAGIC_7_BALL:
                 WordPreview.Instance.OnLetterTilesChanged += () =>
                 {
-                    if (_wordGenerator.IsValidWord(WordPreview.Instance.CurrentWord) && WordPreview.Instance.CurrentTiles.Count == 7)
+                    if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord) && WordPreview.Instance.CurrentTiles.Count == 7)
                     {
                         StartCoroutine(RunNextFrameCoroutine(() =>
                         {

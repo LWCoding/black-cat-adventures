@@ -22,8 +22,6 @@ public class WordGrid : MonoBehaviour
     private readonly List<LetterTile> _letterTiles = new();  // Instantiated letters
     public List<LetterTile> LetterTiles => _letterTiles;
 
-    private WordGenerator _wordGenerator = new();
-
     private void Awake()
     {
         if (Instance != null)
@@ -71,7 +69,7 @@ public class WordGrid : MonoBehaviour
             LetterTile letter = _letterTiles[i];
 
             // Get a random letter that's not blacklisted; add one to its occurrences
-            string generatedLetter = _wordGenerator.GetRandomLetter(blacklistedLetters.ToString());
+            string generatedLetter = WordGenerator.Instance.GetRandomLetter(blacklistedLetters.ToString());
             if (!letterOccur.ContainsKey(generatedLetter))
             {
                 letterOccur[generatedLetter] = 0;
@@ -84,7 +82,7 @@ public class WordGrid : MonoBehaviour
 
             // Set the tile to the created tile, disregarding the tile index
             letter.SetTileText(generatedLetter);
-            if (_wordGenerator.IsVowel(generatedLetter)) vowelCount++;  // Add one to vowel count if we made a vowel
+            if (WordGenerator.Instance.IsVowel(generatedLetter)) vowelCount++;  // Add one to vowel count if we made a vowel
         }
 
         // Guarantee at least three vowels

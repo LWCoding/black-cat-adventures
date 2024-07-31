@@ -2,11 +2,23 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WordGenerator
+public class WordGenerator : MonoBehaviour
 {
+
+    public static WordGenerator Instance;
 
     private readonly List<string> _validWords = new();
     private readonly List<string> _profaneWords = new();
+
+    public void Awake()
+    {   
+        if (Instance != null)
+        {
+            Destroy(this);
+        }
+        Instance = this;
+        AssembleWords();  // Assemble once initialized
+    }
 
     /// <summary>
     /// This function goes through provided files and

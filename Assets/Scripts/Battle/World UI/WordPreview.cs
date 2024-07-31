@@ -32,7 +32,6 @@ public class WordPreview : MonoBehaviour
         }
     }
 
-    private WordGenerator _wordGenerator = new();
     private readonly List<GameObject> _previewLetterTiles = new();
     private readonly List<Tile> _currTiles = new();
     private readonly float SPACE_BETWEEN_TILES = 0.1f;
@@ -50,8 +49,8 @@ public class WordPreview : MonoBehaviour
         OnLetterTilesChanged += () =>
         {
             FeedbackText.enabled = false;
-            if (!_wordGenerator.IsValidWord(CurrentWord)) { return; }
-            float wordDamage = _wordGenerator.CalculateDamage(CurrentTiles);
+            if (!WordGenerator.Instance.IsValidWord(CurrentWord)) { return; }
+            float wordDamage = WordGenerator.Instance.CalculateDamage(CurrentTiles);
             if (wordDamage < 7) { return; }
             FeedbackText.enabled = true;
             if (wordDamage >= 20)

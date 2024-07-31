@@ -122,11 +122,11 @@ public class LevelManager : MonoBehaviour
         {
             if (effect.Target == Faction.ENEMY)
             {
-                CurrEnemyHandler.GainStatusEffect(effect.Status, effect.Amplifier);
+                CurrEnemyHandler.StatusHandler.GainStatusEffect(effect.Status, effect.Amplifier);
             }
             if (effect.Target == Faction.PLAYER)
             {
-                PlayerHandler.GainStatusEffect(effect.Status, effect.Amplifier);
+                PlayerHandler.StatusHandler.GainStatusEffect(effect.Status, effect.Amplifier);
             }
         }
         // Make the player actually take the damage.
