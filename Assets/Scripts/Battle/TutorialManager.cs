@@ -15,6 +15,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject _enemyTooltipObject;
     [SerializeField] private GameObject _treasureTooltipObject;
     [SerializeField] private GameObject _statusTooltipObject;
+    [SerializeField] private GameObject _endTreasureTooltipObject;
 
     private int _playerTurnTracker = 0;  // Increments by one each time the player's turn arrives
     private bool _isStatusAppliedYet = false;  // Becomes true after receiving effect once
@@ -30,6 +31,7 @@ public class TutorialManager : MonoBehaviour
         _shuffleTooltipObject.SetActive(false);
         _enemyTooltipObject.SetActive(false);
         _treasureTooltipObject.SetActive(false);
+        _endTreasureTooltipObject.SetActive(false);
     }
 
     private void Start()
@@ -117,6 +119,11 @@ public class TutorialManager : MonoBehaviour
                 _statusTooltipObject.SetActive(true);
                 _isStatusAppliedYet = true;
             }
+        };
+        // When we reach the last enemy (treasure), show that tooltip
+        LevelManager.Instance.OnReachedLastEnemy += () =>
+        {
+            _endTreasureTooltipObject.SetActive(true);
         };
     }
     

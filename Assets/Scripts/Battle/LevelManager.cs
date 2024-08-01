@@ -31,6 +31,7 @@ public class LevelManager : MonoBehaviour
     public Action OnPlayerAttack = null;
     public Action OnEnemyAttack = null;
     public Action<State> OnStateChanged = null;  // Parameter is the state to transition to
+    public Action OnReachedLastEnemy = null;
 
     private void Start()
     {
@@ -88,11 +89,6 @@ public class LevelManager : MonoBehaviour
                 dialogueFinished = true; 
             };
             yield return new WaitUntil(() => dialogueFinished);
-            // If we should win after this dialogue, do that 
-            if (di.ShouldWinStateAfter)
-            {
-                SetState(new WinState());
-            }
         }
 
         // If the dialogue was stalled, restore the state at the end

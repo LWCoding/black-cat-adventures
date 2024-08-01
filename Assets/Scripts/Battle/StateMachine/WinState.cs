@@ -14,7 +14,7 @@ public class WinState : State
 
     public override void OnExitState()
     {
-        throw new System.NotImplementedException();
+        
     }
 
 }

@@ -53,7 +53,7 @@ public class HealthHandler : MonoBehaviour
     {
         _maxHealth = startingHealth;
         CurrentHealth = startingHealth;
-        if (CurrentHealth == 0)
+        if (CurrentHealth == 0 && TextToUpdate != null)
         {
             TextToUpdate.gameObject.SetActive(false);
         }

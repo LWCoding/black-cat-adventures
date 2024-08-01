@@ -14,8 +14,10 @@ public class EnemyHandler : CharacterHandler
     [Header("Optional Dialogue Assignments")]
     public List<DialogueInfo> DialogueToPlayOnMeet = new();
 
-    [Header("Enemy Status")]
-    public bool IsFightable = true;  // If false, then turn doesn't switch to player after meeting
+    [Header("Game State Properties")]
+    public bool ShouldStallBeforeTurn;  // If true, doesn't go straight to player turn
+
+    public bool IsLastEnemy() => _nextBattleObject == null;
 
     private void Start()
     {
@@ -26,7 +28,7 @@ public class EnemyHandler : CharacterHandler
             HealthHandler.OnDeath += () =>
             {
                 StartCoroutine(FadeAwayCoroutine());
-                TransitionToNextEnemy();
+                TransitionToNextObject();
                 LevelManager.Instance.SetState(new WaitState());
             };
         } else
@@ -118,14 +120,14 @@ public class EnemyHandler : CharacterHandler
     }
 
     /// <summary>
-    /// Animate towards the next enemy.
+    /// Animate towards the next object.
     /// </summary>
-    public void TransitionToNextEnemy()
+    public void TransitionToNextObject()
     {
-        StartCoroutine(TransitionToNextEnemyCoroutine());
+        StartCoroutine(TransitionToNextObjectCoroutine());
     }
 
-    private IEnumerator TransitionToNextEnemyCoroutine()
+    private IEnumerator TransitionToNextObjectCoroutine()
     {
         _nextBattleObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);
@@ -143,11 +145,15 @@ public class EnemyHandler : CharacterHandler
         if (_nextBattleObject.TryGetComponent(out EnemyHandler enemyHandler))
         {
             // If the enemy is fightable, set the state to be the player's
-            if (!enemyHandler.DialogueToPlayOnMeet[0].ShouldStallState && enemyHandler.IsFightable)
+            if (!enemyHandler.ShouldStallBeforeTurn && !enemyHandler.DialogueToPlayOnMeet[0].ShouldStallState)
             {
                 LevelManager.Instance.SetState(new PlayerTurnState());
             }
             LevelManager.Instance.SetNewEnemy(enemyHandler);
+            if(enemyHandler.IsLastEnemy())
+        {
+                LevelManager.Instance.OnReachedLastEnemy?.Invoke();
+            }
         }
         gameObject.SetActive(false);
     }
