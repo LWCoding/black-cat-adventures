@@ -46,11 +46,17 @@ public class HealthHandler : MonoBehaviour
     /// <summary>
     /// Initialize this character's starting health to a
     /// specified value.
+    /// 
+    /// If it's zero health, hide the health instead.
     /// </summary>
     public void InitializeHealth(int startingHealth)
     {
         _maxHealth = startingHealth;
         CurrentHealth = startingHealth;
+        if (CurrentHealth == 0)
+        {
+            TextToUpdate.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>
