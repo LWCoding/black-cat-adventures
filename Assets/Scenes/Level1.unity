@@ -4131,9 +4131,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _treasureObjects:
-  - {fileID: 1378913041}
   - {fileID: 2010266390}
+  - {fileID: 1378913041}
   - {fileID: 1973990181}
+  _noneTreasure: {fileID: 11400000, guid: dec2c32dc403c1846bdcf14a3e2749f0, type: 2}
 --- !u!1 &1666339451 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6748022944440307023, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}

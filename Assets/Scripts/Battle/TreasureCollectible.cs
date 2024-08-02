@@ -73,8 +73,10 @@ public class TreasureCollectible : MonoBehaviour
             _iconRenderer.color = Color.Lerp(startColor, endColor, currTime / timeToWait);
             yield return null;
         }
-        // TODO: Make the player obtain the treasure
-        yield return new WaitForSeconds(2);
+        // Make the player obtain the treasure
+        GameManager.EquippedTreasures.Add(_treasureData);
+        // Go to win state afterwards
+        yield return new WaitForSeconds(0.5f);
         LevelManager.Instance.SetState(new WinState());
     }
 

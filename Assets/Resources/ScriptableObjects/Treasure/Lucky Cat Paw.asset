@@ -15,3 +15,4 @@ MonoBehaviour:
   TreasureName: Lucky Cat Paw
   TreasureDescription: All attacks deal +1 damage!
   TreasureIcon: {fileID: 21300000, guid: 73fb2887745ac7945b7a2ea11c940113, type: 3}
+  IsUnlockedByDefault: 1

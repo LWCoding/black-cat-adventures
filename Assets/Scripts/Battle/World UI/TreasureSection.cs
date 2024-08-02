@@ -13,6 +13,8 @@ public class TreasureSection : MonoBehaviour
 
     [Header("Object Assignments")]
     [SerializeField] private List<TreasureItem> _treasureObjects;
+    [Header("Default Treasure Assignment")]
+    [SerializeField] private Treasure _noneTreasure;
 
     public Action OnTreasureSelected = null;
 
@@ -38,9 +40,14 @@ public class TreasureSection : MonoBehaviour
     {
         if (!UnlockedTreasureSection) { return; }
         // Initialize all items inside
-        foreach (TreasureItem item in _treasureObjects)
+        for (int i = 0; i < _treasureObjects.Count; i++)
         {
-            item.Initialize();
+            if (i >= GameManager.EquippedTreasures.Count)
+            {
+                _treasureObjects[i].Initialize(_noneTreasure);
+                continue;
+            }
+            _treasureObjects[i].Initialize(GameManager.EquippedTreasures[i]);
         }
     }
 

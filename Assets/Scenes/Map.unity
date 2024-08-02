@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: d0d9e846112887545ba3328e84e0f4e0, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -236,13 +236,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 15193976}
     m_Modifications:
+    - target: {fileID: 13281490122400323, guid: eb42fe770dc42624c8fa22fa1bcb7ead, type: 3}
+      propertyPath: m_text
+      value: lvl1
+      objectReference: {fileID: 0}
     - target: {fileID: 177384343494518220, guid: eb42fe770dc42624c8fa22fa1bcb7ead, type: 3}
       propertyPath: m_Name
       value: Level (2)
       objectReference: {fileID: 0}
     - target: {fileID: 1052334601519148277, guid: eb42fe770dc42624c8fa22fa1bcb7ead, type: 3}
       propertyPath: SceneName
-      value: Level3
+      value: Level1
       objectReference: {fileID: 0}
     - target: {fileID: 4251279712757970769, guid: eb42fe770dc42624c8fa22fa1bcb7ead, type: 3}
       propertyPath: m_Pivot.x
@@ -404,13 +408,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 15193976}
     m_Modifications:
+    - target: {fileID: 13281490122400323, guid: eb42fe770dc42624c8fa22fa1bcb7ead, type: 3}
+      propertyPath: m_text
+      value: lvl1
+      objectReference: {fileID: 0}
     - target: {fileID: 177384343494518220, guid: eb42fe770dc42624c8fa22fa1bcb7ead, type: 3}
       propertyPath: m_Name
       value: Level (1)
       objectReference: {fileID: 0}
     - target: {fileID: 1052334601519148277, guid: eb42fe770dc42624c8fa22fa1bcb7ead, type: 3}
       propertyPath: SceneName
-      value: Level2
+      value: Level1
       objectReference: {fileID: 0}
     - target: {fileID: 4251279712757970769, guid: eb42fe770dc42624c8fa22fa1bcb7ead, type: 3}
       propertyPath: m_Pivot.x
@@ -1105,6 +1113,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 15193976}
     m_Modifications:
+    - target: {fileID: 13281490122400323, guid: eb42fe770dc42624c8fa22fa1bcb7ead, type: 3}
+      propertyPath: m_text
+      value: lvl1
+      objectReference: {fileID: 0}
     - target: {fileID: 177384343494518220, guid: eb42fe770dc42624c8fa22fa1bcb7ead, type: 3}
       propertyPath: m_Name
       value: Level

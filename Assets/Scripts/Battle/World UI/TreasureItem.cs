@@ -11,8 +11,16 @@ public class TreasureItem : MonoBehaviour
     [Header("Object Assignments")]
     [SerializeField] private SpriteRenderer _iconRenderer;
     [SerializeField] private TextMeshPro _tooltipText;
-    [Header("Treasure Properties")]
-    public Treasure TreasureData;
+
+    private Treasure _treasureData;
+    public Treasure TreasureData
+    {
+        get => _treasureData;
+        private set
+        {
+            _treasureData = value;
+        }
+    }
 
     private Animator _animator;
 
@@ -25,8 +33,9 @@ public class TreasureItem : MonoBehaviour
     /// Store an index into this treasure item, so that it can properly
     /// select itself. Also registers all of the treasure stats.
     /// </summary>
-    public void Initialize()
+    public void Initialize(Treasure treasureData)
     {
+        TreasureData = treasureData;
         _iconRenderer.sprite = TreasureData.TreasureIcon;
         _tooltipText.text = "<b>" + TreasureData.TreasureName + "</b>:\n" + TreasureData.TreasureDescription;
         TreasureData.ActivateTreasure();

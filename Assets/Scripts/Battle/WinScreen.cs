@@ -28,7 +28,7 @@ public class WinScreen : MonoBehaviour
     private IEnumerator ShowWinScreenCoroutine()
     {
         _winScreenAnimator.Play("Show");
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("Map");
     }
 
