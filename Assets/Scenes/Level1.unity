@@ -4492,7 +4492,7 @@ PrefabInstance:
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: _nextBattleObject
       value: 
-      objectReference: {fileID: 1034841364}
+      objectReference: {fileID: 1203600724}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: _nextEnemyHandler
       value: 
