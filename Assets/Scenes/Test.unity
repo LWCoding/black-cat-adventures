@@ -355,7 +355,7 @@ PrefabInstance:
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: _charData
       value: 
-      objectReference: {fileID: 11400000, guid: 2b9fdc57ab124aa43ab2c5361d794609, type: 2}
+      objectReference: {fileID: 11400000, guid: dfb97d8c0475ebf48a1b7ee496415a06, type: 2}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: _nextEnemyObject
       value: 
@@ -2373,6 +2373,7 @@ MonoBehaviour:
   - {fileID: 174630731}
   - {fileID: 1567566411}
   - {fileID: 1122279697}
+  _noneTreasure: {fileID: 0}
 --- !u!1 &1381893154
 GameObject:
   m_ObjectHideFlags: 0
