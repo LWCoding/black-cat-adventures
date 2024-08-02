@@ -95,6 +95,7 @@ MonoBehaviour:
   _treasureData: {fileID: 11400000, guid: fc881eb429299984398219c42713d5b5, type: 2}
   _iconRenderer: {fileID: 4661030893801619036}
   _tooltipText: {fileID: 6684961391291092524}
+  _treasureAnimator: {fileID: 1738821398578343002}
 --- !u!95 &1738821398578343002
 Animator:
   serializedVersion: 5

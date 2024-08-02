@@ -8,8 +8,7 @@ public class WinState : State
 
     public override void OnEnterState()
     {
-        Debug.Log("You won!");
-        SceneManager.LoadScene("Map");
+
     }
 
     public override void OnExitState()
