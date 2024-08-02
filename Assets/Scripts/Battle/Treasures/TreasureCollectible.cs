@@ -54,9 +54,9 @@ public class TreasureCollectible : MonoBehaviour
     {
         if (!_isInteractable) { return; }
         OnCollect?.Invoke();
-        _isInteractable = false;
+        OnMouseExit();  // Make sure to call this BEFORE setting interactable to false
         StartCoroutine(CollectAndWinCoroutine());
-        OnMouseExit();
+        _isInteractable = false;
     }
 
     private IEnumerator CollectAndWinCoroutine()
