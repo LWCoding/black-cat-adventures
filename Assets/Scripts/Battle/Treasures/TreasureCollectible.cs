@@ -1,11 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TreasureCollectible : MonoBehaviour
 {
+
+    public static Action OnCollect = null;
 
     [Header("Treasure Properties")]
     [SerializeField] private Treasure _treasureData;
@@ -51,7 +53,8 @@ public class TreasureCollectible : MonoBehaviour
     public void OnMouseDown()
     {
         if (!_isInteractable) { return; }
-        _isInteractable = true;
+        OnCollect?.Invoke();
+        _isInteractable = false;
         StartCoroutine(CollectAndWinCoroutine());
         OnMouseExit();
     }

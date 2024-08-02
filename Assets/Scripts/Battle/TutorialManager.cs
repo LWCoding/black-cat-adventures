@@ -125,6 +125,11 @@ public class TutorialManager : MonoBehaviour
         {
             _endTreasureTooltipObject.SetActive(true);
         };
+        // When we have obtained the collectible treasure, hide that tooltip
+        TreasureCollectible.OnCollect += () =>
+        {
+            _endTreasureTooltipObject.SetActive(false);
+        };
     }
     
     /// <summary>
