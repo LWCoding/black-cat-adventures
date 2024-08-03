@@ -29,6 +29,10 @@ public class WordGrid : MonoBehaviour
             Destroy(this);
         }
         Instance = this;
+    }
+
+    private void Start()
+    {
         InitializeBoard();
     }
 

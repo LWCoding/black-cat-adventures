@@ -32,6 +32,15 @@ public class ShuffleButton : MonoBehaviour
         Instance = this;
         _pointerCursorOnHover = GetComponent<PointerCursorOnHover>();
         ToggleInteractability(false);  // Start off with the button uninteractable
+        // If we haven't unlocked this yet, hide it
+        if (!UnlockedShuffleButton)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void Start()
+    {
         // If player turn, button is interactable, else no
         LevelManager.Instance.OnStateChanged += (state) =>
         {
@@ -44,16 +53,12 @@ public class ShuffleButton : MonoBehaviour
                 ToggleInteractability(false);
             }
         };
-        // If we haven't unlocked this yet, hide it
-        if (!UnlockedShuffleButton)
-        {
-            gameObject.SetActive(false);
-        }
     }
 
     public void OnEnable()
     {
         UnlockedShuffleButton = true;
+        ToggleInteractability(true);
     }
 
     /// <summary>
