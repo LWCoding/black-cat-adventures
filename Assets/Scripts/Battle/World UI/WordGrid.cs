@@ -45,10 +45,6 @@ public class WordGrid : MonoBehaviour
                 _instance = this;
             }
         }
-    }
-
-    private void Start()
-    {
         InitializeBoard();
     }
 
