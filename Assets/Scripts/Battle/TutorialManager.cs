@@ -19,6 +19,7 @@ public class TutorialManager : MonoBehaviour
 
     private int _playerTurnTracker = 0;  // Increments by one each time the player's turn arrives
     private bool _isStatusAppliedYet = false;  // Becomes true after receiving effect once
+    private bool _isTreasureUnlockedYet = false;  // Becomes true after unlocking treasure
 
     private void Awake()
     {
@@ -32,6 +33,8 @@ public class TutorialManager : MonoBehaviour
         _enemyTooltipObject.SetActive(false);
         _treasureTooltipObject.SetActive(false);
         _endTreasureTooltipObject.SetActive(false);
+        ShuffleButton.Instance.gameObject.SetActive(false);
+        TreasureSection.Instance.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -89,7 +92,7 @@ public class TutorialManager : MonoBehaviour
                     break;
             }
             // If treasure is unlocked, hide tooltip when damage is dealt
-            if (TreasureSection.UnlockedTreasureSection)
+            if (_isTreasureUnlockedYet)
             {
                 _treasureTooltipObject.SetActive(false);
             }
@@ -107,7 +110,7 @@ public class TutorialManager : MonoBehaviour
         // When an enemy is defeated, show treasure and hide status tooltip if necessary
         LevelManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath += () =>
         {
-            TreasureSection.UnlockedTreasureSection = true;
+            _isTreasureUnlockedYet = true;
             TreasureSection.Instance.gameObject.SetActive(true);
             _treasureTooltipObject.SetActive(true);
         };

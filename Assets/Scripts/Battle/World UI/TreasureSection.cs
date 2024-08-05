@@ -7,8 +7,6 @@ using UnityEngine;
 public class TreasureSection : MonoBehaviour
 {
 
-    public static bool UnlockedTreasureSection = false;
-
     public static TreasureSection Instance;
 
     [Header("Object Assignments")]
@@ -17,6 +15,7 @@ public class TreasureSection : MonoBehaviour
     [SerializeField] private Treasure _noneTreasure;
 
     public Action OnTreasureSelected = null;
+    private bool _wasSectionInitialized = false;
 
     private void Awake()
     {
@@ -29,16 +28,16 @@ public class TreasureSection : MonoBehaviour
 
     private void Start()
     {
-        // If we haven't unlocked this yet, hide it
-        if (!UnlockedTreasureSection)
+        // If we haven't set the treasures yet, initialize their effects
+        if (!_wasSectionInitialized)
         {
-            gameObject.SetActive(false);
+            Initialize();
+            _wasSectionInitialized = true;
         }
     }
 
-    private void OnEnable()
+    private void Initialize()
     {
-        if (!UnlockedTreasureSection) { return; }
         // Initialize all items inside
         for (int i = 0; i < _treasureObjects.Count; i++)
         {
@@ -55,11 +54,17 @@ public class TreasureSection : MonoBehaviour
     /// Given a TreasureType enum, returns True if that
     /// treasure is currently equipped, else False.
     /// 
-    /// Returns false if the section is locked.
+    /// Returns False if section is still hidden.
     /// </summary>
     public bool HasTreasure(Type treasure)
     {
-        if (!UnlockedTreasureSection) { return false; }
+        if (!gameObject.activeSelf) { return false; }
+        // If we haven't set the treasures yet, initialize their effects
+        if (!_wasSectionInitialized)
+        {
+            Initialize();
+            _wasSectionInitialized = true;
+        }
         foreach (TreasureItem item in _treasureObjects)
         {
             if (item.TreasureData.GetType() == treasure)

@@ -9,7 +9,6 @@ public class ShuffleButton : MonoBehaviour
 {
 
     public static ShuffleButton Instance;
-    public static bool UnlockedShuffleButton = false;
 
     [Header("Object Assignments")]
     [SerializeField] private WordGrid _wordGrid;
@@ -31,16 +30,15 @@ public class ShuffleButton : MonoBehaviour
         }
         Instance = this;
         _pointerCursorOnHover = GetComponent<PointerCursorOnHover>();
-        ToggleInteractability(false);  // Start off with the button uninteractable
-        // If we haven't unlocked this yet, hide it
-        if (!UnlockedShuffleButton)
-        {
-            gameObject.SetActive(false);
-        }
     }
 
     private void Start()
     {
+        // When starting, if it's player state, set interactable
+        if (LevelManager.Instance.CurrentState is PlayerTurnState)
+        {
+            ToggleInteractability(true);
+        }
         // If player turn, button is interactable, else no
         LevelManager.Instance.OnStateChanged += (state) =>
         {
@@ -53,12 +51,6 @@ public class ShuffleButton : MonoBehaviour
                 ToggleInteractability(false);
             }
         };
-    }
-
-    public void OnEnable()
-    {
-        UnlockedShuffleButton = true;
-        ToggleInteractability(true);
     }
 
     /// <summary>
