@@ -5,18 +5,35 @@ using UnityEngine;
 public class WordGenerator : MonoBehaviour
 {
 
-    public static WordGenerator Instance;
+    private static WordGenerator _instance;
+    public static WordGenerator Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindAnyObjectByType<WordGenerator>();
+            }
+            return _instance;
+        }
+    }
 
     private readonly List<string> _validWords = new();
     private readonly List<string> _profaneWords = new();
 
     public void Awake()
-    {   
-        if (Instance != null)
+    {
+        if (!ReferenceEquals(_instance, this))
         {
-            Destroy(this);
+            if (_instance != null)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                _instance = this;
+            }
         }
-        Instance = this;
         AssembleWords();  // Assemble once initialized
     }
 

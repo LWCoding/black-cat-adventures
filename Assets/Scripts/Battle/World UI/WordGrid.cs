@@ -7,7 +7,18 @@ using UnityEngine;
 public class WordGrid : MonoBehaviour
 {
 
-    public static WordGrid Instance;
+    private static WordGrid _instance;
+    public static WordGrid Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindAnyObjectByType<WordGrid>();
+            }
+            return _instance;
+        }
+    }
 
     [Header("Prefab Assignments")]
     [SerializeField] private GameObject _letterPrefab;
@@ -24,11 +35,16 @@ public class WordGrid : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(this);
+        if (!ReferenceEquals(_instance, this)) {
+            if (_instance != null)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                _instance = this;
+            }
         }
-        Instance = this;
     }
 
     private void Start()

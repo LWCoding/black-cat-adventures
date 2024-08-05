@@ -7,7 +7,18 @@ using UnityEngine;
 public class TreasureSection : MonoBehaviour
 {
 
-    public static TreasureSection Instance;
+    private static TreasureSection _instance;
+    public static TreasureSection Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindAnyObjectByType<TreasureSection>();
+            }
+            return _instance;
+        }
+    }
 
     [Header("Object Assignments")]
     [SerializeField] private List<TreasureItem> _treasureObjects;
@@ -19,11 +30,17 @@ public class TreasureSection : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
+        if (_instance != this)
         {
-            Destroy(this);
+            if (_instance != null)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                _instance = this;
+            }
         }
-        Instance = this;
     }
 
     private void Start()

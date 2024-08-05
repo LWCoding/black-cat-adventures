@@ -8,7 +8,18 @@ using UnityEngine;
 public class WordPreview : MonoBehaviour
 {
 
-    public static WordPreview Instance;
+    private static WordPreview _instance;
+    public static WordPreview Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindAnyObjectByType<WordPreview>();
+            }
+            return _instance;
+        }
+    }
 
     [Header("Prefab Assignments")]
     [SerializeField] private GameObject _previewLetterPrefab;
@@ -38,11 +49,17 @@ public class WordPreview : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(this);
+        if (!ReferenceEquals(_instance, this)) {
+            if (_instance != null)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                _instance = this;
+            }
         }
-        Instance = this;
+
         FeedbackText.enabled = false;
 
         // Edit the feedback text based on # of letters in word, if valid

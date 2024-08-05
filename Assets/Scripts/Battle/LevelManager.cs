@@ -8,16 +8,32 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
 
-    public static LevelManager Instance;
+    private static LevelManager _instance;
+    public static LevelManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindAnyObjectByType<LevelManager>();
+            }
+            return _instance;
+        }
+    }
 
     #region Singleton Logic
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(this);
+        if (!ReferenceEquals(_instance, this)) {
+            if (_instance != null)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                _instance = this;
+            }
         }
-        Instance = this;
     }
     #endregion
 

@@ -14,7 +14,18 @@ public struct EnemyInfo
 public class EnemyInfoBox : MonoBehaviour
 {
 
-    public static EnemyInfoBox Instance;
+    private static EnemyInfoBox _instance;
+    public static EnemyInfoBox Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindAnyObjectByType<EnemyInfoBox>();
+            }
+            return _instance;
+        }
+    }
 
     [Header("Prefab Assignments")]
     [SerializeField] private GameObject _infoPrefab;
@@ -26,11 +37,17 @@ public class EnemyInfoBox : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
+        if (!ReferenceEquals(_instance, this))
         {
-            Destroy(this);
+            if (_instance != null)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                _instance = this;
+            }
         }
-        Instance = this;
     }
 
     /// <summary>

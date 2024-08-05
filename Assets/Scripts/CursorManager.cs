@@ -1,22 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CursorManager : MonoBehaviour
 {
 
-    public static CursorManager Instance;
+    private static CursorManager _instance;
+    public static CursorManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindAnyObjectByType<CursorManager>();
+            }
+            return _instance;
+        }
+    }
 
     public Texture2D BasicCursorSprite;
     public Texture2D SelectCursorSprite;
 
     private void Awake()
     {
-        if (Instance != null)
+        if (!ReferenceEquals(_instance, this))
         {
-            Destroy(this);
+            if (_instance != null)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                _instance = this;
+            }
         }
-        Instance = this;
     }
 
     // This method sets the cursor sprite

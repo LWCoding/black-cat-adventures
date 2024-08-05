@@ -6,7 +6,18 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
 
-    public static TutorialManager Instance;
+    private static TutorialManager _instance;
+    public static TutorialManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindAnyObjectByType<TutorialManager>();
+            }
+            return _instance;
+        }
+    }
     public static bool HasTutorialPlayed = false;
 
     [Header("Object Assignments")]
@@ -23,11 +34,15 @@ public class TutorialManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Destroy(this);
+        if (!ReferenceEquals(_instance, this)) {
+            if (_instance != null)
+            {
+                Destroy(this);
+            } else
+            {
+                _instance = this;
+            }
         }
-        Instance = this;
         _boardTooltipObject.SetActive(false);
         _shuffleTooltipObject.SetActive(false);
         _enemyTooltipObject.SetActive(false);
