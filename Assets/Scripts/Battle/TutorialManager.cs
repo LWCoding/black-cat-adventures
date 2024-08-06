@@ -75,81 +75,32 @@ public class TutorialManager : MonoBehaviour
         WordGrid.Instance.LetterTiles[15].SetTileText("Y");
 
         // During the player's turn, spawn tooltip
-        LevelManager.Instance.OnStateChanged += (state) =>
-        {
-            if (state is not PlayerTurnState) { return; }
-            _playerTurnTracker++;
-            switch (_playerTurnTracker) {
-                case 1:
-                    _boardTooltipObject.SetActive(true);
-                    break;
-                case 2:
-                    ShuffleButton.Instance.gameObject.SetActive(true);
-                    _shuffleTooltipObject.SetActive(true);
-                    break;
-                case 3:
-                    _enemyTooltipObject.SetActive(true);
-                    break;
-            }
-        };
-
+        LevelManager.Instance.OnStateChanged += OnStateChanged;
         // When a word is submitted, hide the tooltip
-        SubmitButton.OnClickButton += () =>
-        {
-            switch (_playerTurnTracker)
-            {
-                case 1:
-                    _boardTooltipObject.SetActive(false);
-                    StartCoroutine(WaitThenRenderTilesUseless());
-                    break;
-                case 3:
-                    _enemyTooltipObject.SetActive(false);
-                    break;
-            }
-            // If treasure is unlocked, hide tooltip when damage is dealt
-            if (_isTreasureUnlockedYet)
-            {
-                _treasureTooltipObject.SetActive(false);
-            }
-            // If status is unlocked, hide tooltip when damage is dealt
-            if (_isStatusAppliedYet)
-            {
-                _statusTooltipObject.SetActive(false);
-            }
-        };
+        SubmitButton.OnClickButton += OnSubmitButtonPressed;
         // When a word is shuffled, hide the tooltip
-        ShuffleButton.OnClickButton += () =>
-        {
-            _shuffleTooltipObject.SetActive(false);
-        };
+        ShuffleButton.OnClickButton += OnShuffleButtonPressed;
         // When an enemy is defeated, show treasure and hide status tooltip if necessary
-        LevelManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath += () =>
-        {
-            _isTreasureUnlockedYet = true;
-            TreasureSection.Instance.gameObject.SetActive(true);
-            _treasureTooltipObject.SetActive(true);
-        };
+        LevelManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath += OnEnemyDies;
         // When a status is applied for the first time, show status tooltip
-        LevelManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied += () =>
-        {
-            if (!_isStatusAppliedYet)
-            {
-                _statusTooltipObject.SetActive(true);
-                _isStatusAppliedYet = true;
-            }
-        };
+        LevelManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied += OnStatusEffectApplied;
         // When we reach the last enemy (treasure), show that tooltip
-        LevelManager.Instance.OnReachedLastEnemy += () =>
-        {
-            _endTreasureTooltipObject.SetActive(true);
-        };
+        LevelManager.Instance.OnReachedLastEnemy += OnReachedLastEnemy;
         // When we have obtained the collectible treasure, hide that tooltip
-        TreasureCollectible.OnCollect += () =>
-        {
-            _endTreasureTooltipObject.SetActive(false);
-        };
+        TreasureCollectible.OnCollect += OnCollectTreasure;
     }
-    
+
+    public void OnDisable()
+    {
+        LevelManager.Instance.OnStateChanged -= OnStateChanged;
+        SubmitButton.OnClickButton -= OnSubmitButtonPressed;
+        ShuffleButton.OnClickButton -= OnShuffleButtonPressed;
+        LevelManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath -= OnEnemyDies;
+        LevelManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied -= OnStatusEffectApplied;
+        LevelManager.Instance.OnReachedLastEnemy -= OnReachedLastEnemy;
+        TreasureCollectible.OnCollect -= OnCollectTreasure;
+    }
+
     /// <summary>
     /// Make the tiles useless after they've been submitted.
     /// Wait a frame before doing this to override properly.
@@ -164,6 +115,80 @@ public class TutorialManager : MonoBehaviour
             {
                 WordGrid.Instance.LetterTiles[i].SetTileText("W");
             }
+        }
+    }
+
+    private void OnSubmitButtonPressed()
+    {
+        switch (_playerTurnTracker)
+        {
+            case 1:
+                _boardTooltipObject.SetActive(false);
+                StartCoroutine(WaitThenRenderTilesUseless());
+                break;
+            case 3:
+                _enemyTooltipObject.SetActive(false);
+                break;
+        }
+        // If treasure is unlocked, hide tooltip when damage is dealt
+        if (_isTreasureUnlockedYet)
+        {
+            _treasureTooltipObject.SetActive(false);
+        }
+        // If status is unlocked, hide tooltip when damage is dealt
+        if (_isStatusAppliedYet)
+        {
+            _statusTooltipObject.SetActive(false);
+        }
+    }
+
+    private void OnShuffleButtonPressed()
+    {
+        _shuffleTooltipObject.SetActive(false);
+    }
+
+    private void OnEnemyDies()
+    {
+        _isTreasureUnlockedYet = true;
+        TreasureSection.Instance.gameObject.SetActive(true);
+        _treasureTooltipObject.SetActive(true);
+    }
+
+    private void OnStatusEffectApplied()
+    {
+        if (!_isStatusAppliedYet)
+        {
+            _statusTooltipObject.SetActive(true);
+            _isStatusAppliedYet = true;
+        }
+    }
+
+    private void OnReachedLastEnemy()
+    {
+        _endTreasureTooltipObject.SetActive(true);
+    }
+
+    private void OnCollectTreasure()
+    {
+        _endTreasureTooltipObject.SetActive(false);
+    }
+
+    private void OnStateChanged(State state)
+    {
+        if (state is not PlayerTurnState) { return; }
+        _playerTurnTracker++;
+        switch (_playerTurnTracker)
+        {
+            case 1:
+                _boardTooltipObject.SetActive(true);
+                break;
+            case 2:
+                ShuffleButton.Instance.gameObject.SetActive(true);
+                _shuffleTooltipObject.SetActive(true);
+                break;
+            case 3:
+                _enemyTooltipObject.SetActive(true);
+                break;
         }
     }
 
