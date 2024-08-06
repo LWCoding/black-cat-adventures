@@ -7,9 +7,9 @@ public class LuckyCatPaw : Treasure
 {
     public override void ActivateTreasure()
     {
-        LevelManager.Instance.OnPlayerAttack += () =>
+        BattleManager.Instance.OnPlayerAttack += () =>
         {
-            LevelManager.Instance.RenderAttackAgainstEnemy(1);
+            BattleManager.Instance.RenderAttackAgainstEnemy(1);
         };
     }
 

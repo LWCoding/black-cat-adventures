@@ -21,7 +21,7 @@ public class EnemyHandler : CharacterHandler
 
     private void Start()
     {
-        LevelManager.Instance.OnEnemyAttack += RenderAttack;
+        BattleManager.Instance.OnEnemyAttack += RenderAttack;
         if (_nextBattleObject != null)
         {
             // If there's a "next" object to render, transition to it
@@ -29,7 +29,7 @@ public class EnemyHandler : CharacterHandler
             {
                 StartCoroutine(FadeAwayCoroutine());
                 TransitionToNextObject();
-                LevelManager.Instance.SetState(new WaitState());
+                BattleManager.Instance.SetState(new WaitState());
             };
         } else
         {
@@ -37,7 +37,7 @@ public class EnemyHandler : CharacterHandler
             HealthHandler.OnDeath += () =>
             {
                 StartCoroutine(FadeAwayCoroutine());
-                LevelManager.Instance.SetState(new WinState());
+                BattleManager.Instance.SetState(new WinState());
             };
         }
     }
@@ -47,8 +47,8 @@ public class EnemyHandler : CharacterHandler
         if (HealthHandler.IsDead()) { return; }
         StartCoroutine(RenderAttackCoroutine(() =>
         {
-            if (LevelManager.Instance.CurrentState is EnemyTurnState) {
-                LevelManager.Instance.SetState(new PlayerTurnState());
+            if (BattleManager.Instance.CurrentState is EnemyTurnState) {
+                BattleManager.Instance.SetState(new PlayerTurnState());
             }
         }));
     }
@@ -86,7 +86,7 @@ public class EnemyHandler : CharacterHandler
                     transform.position = Vector3.Lerp(startingPos, targetPos, (0.1f - timeToWait) * 10);
                     yield return null;
                 }
-                LevelManager.Instance.RenderAttackAgainstPlayer(chosenAttack);
+                BattleManager.Instance.RenderAttackAgainstPlayer(chosenAttack);
                 yield return new WaitForSeconds(0.1f);
                 timeToWait = 0.1f;
                 while (timeToWait > 0)
@@ -106,7 +106,7 @@ public class EnemyHandler : CharacterHandler
                     Duration = 1f
                 });
                 yield return new WaitForSeconds(1.2f);
-                LevelManager.Instance.RenderAttackAgainstPlayer(chosenAttack);
+                BattleManager.Instance.RenderAttackAgainstPlayer(chosenAttack);
                 break;
 
             default:
@@ -147,12 +147,12 @@ public class EnemyHandler : CharacterHandler
             // If the enemy is fightable, set the state to be the player's
             if (!enemyHandler.ShouldStallBeforeTurn && !enemyHandler.DialogueToPlayOnMeet[0].ShouldStallState)
             {
-                LevelManager.Instance.SetState(new PlayerTurnState());
+                BattleManager.Instance.SetState(new PlayerTurnState());
             }
-            LevelManager.Instance.SetNewEnemy(enemyHandler);
+            BattleManager.Instance.SetNewEnemy(enemyHandler);
             if(enemyHandler.IsLastEnemy())
         {
-                LevelManager.Instance.OnReachedLastEnemy?.Invoke();
+                BattleManager.Instance.OnReachedLastEnemy?.Invoke();
             }
         }
         gameObject.SetActive(false);

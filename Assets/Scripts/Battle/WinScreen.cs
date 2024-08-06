@@ -11,7 +11,7 @@ public class WinScreen : MonoBehaviour
 
     private void Start()
     {
-        LevelManager.Instance.OnStateChanged += (state) =>
+        BattleManager.Instance.OnStateChanged += (state) =>
         {
             if (state is WinState)
             {

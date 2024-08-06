@@ -12,7 +12,7 @@ public class ProfanityTape : Treasure
         {
             if (WordGenerator.Instance.IsProfaneWord(WordPreview.Instance.CurrentWord))
             {
-                LevelManager.Instance.RunNextFrame(() =>
+                BattleManager.Instance.RunNextFrame(() =>
                 {
                     WordPreview.Instance.FeedbackText.enabled = true;
                     if (WordPreview.Instance.FeedbackText.text != "")
@@ -23,11 +23,11 @@ public class ProfanityTape : Treasure
                 });
             }
         };
-        LevelManager.Instance.OnPlayerAttack += () =>
+        BattleManager.Instance.OnPlayerAttack += () =>
         {
             if (WordGenerator.Instance.IsProfaneWord(WordPreview.Instance.CurrentWord))
             {
-                LevelManager.Instance.RenderAttackAgainstEnemy(WordPreview.Instance.CurrentWord.Length);
+                BattleManager.Instance.RenderAttackAgainstEnemy(WordPreview.Instance.CurrentWord.Length);
             }
         };
     }

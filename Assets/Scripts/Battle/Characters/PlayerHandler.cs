@@ -7,22 +7,22 @@ public class PlayerHandler : CharacterHandler
 { 
     private void Start()
     {
-        LevelManager.Instance.OnPlayerAttack += RenderAttack;
+        BattleManager.Instance.OnPlayerAttack += RenderAttack;
         HealthHandler.OnDeath += () =>
         {
-            LevelManager.Instance.SetState(new LoseState());
+            BattleManager.Instance.SetState(new LoseState());
         };
     }
 
     protected override void RenderAttack()
     {
         if (HealthHandler.IsDead()) { return; }
-        LevelManager.Instance.SetState(new WaitState());
+        BattleManager.Instance.SetState(new WaitState());
         StartCoroutine(RenderAttackCoroutine(() =>
         {
-            if (LevelManager.Instance.CurrentState is WaitState)
+            if (BattleManager.Instance.CurrentState is WaitState)
             {
-                LevelManager.Instance.SetState(new EnemyTurnState());
+                BattleManager.Instance.SetState(new EnemyTurnState());
             }
         }));
     }

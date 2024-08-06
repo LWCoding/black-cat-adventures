@@ -6,7 +6,7 @@ public class LoseState : State
 {
     public override void OnEnterState()
     {
-        LevelManager.Instance.ReloadCurrentLevel(1);
+        BattleManager.Instance.ReloadCurrentLevel(1);
     }
 
     public override void OnExitState()

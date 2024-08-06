@@ -16,7 +16,7 @@ public class GridLetterTile : LetterTile
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        LevelManager.Instance.OnStateChanged += (newState) =>
+        BattleManager.Instance.OnStateChanged += (newState) =>
         {
             if (newState is not PlayerTurnState)
             {
@@ -33,13 +33,13 @@ public class GridLetterTile : LetterTile
 
     private void OnMouseEnter()
     {
-        if (IsSelected || LevelManager.Instance.CurrentState is not PlayerTurnState) { return; }
+        if (IsSelected || BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }
         _animator.Play("StartHover");
     }
 
     private void OnMouseExit()
     {
-        if (IsSelected || LevelManager.Instance.CurrentState is not PlayerTurnState) { return; }
+        if (IsSelected || BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }
         _animator.Play("StopHover");
     }
 
@@ -51,7 +51,7 @@ public class GridLetterTile : LetterTile
     private void OnMouseDown()
     {
         if (IsSelected) return;
-        if (LevelManager.Instance.CurrentState is not PlayerTurnState) return;
+        if (BattleManager.Instance.CurrentState is not PlayerTurnState) return;
         AudioManager.Instance.PlayOneShot(_clickSFX, _clickSFXVolume);
         WordPreview.Instance.AppendTile(_tile);
         OnMouseExit();

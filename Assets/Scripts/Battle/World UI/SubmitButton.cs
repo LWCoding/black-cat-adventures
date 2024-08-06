@@ -60,13 +60,13 @@ public class SubmitButton : MonoBehaviour
     private void OnMouseDown()
     {
         if (!_isInteractable) { return; }  // If not interactable, don't do anything
-        if (LevelManager.Instance.CurrentState is not PlayerTurnState) { return; }
+        if (BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }
         OnClickButton?.Invoke();
         // Algorithm to determine damage from word!
         int wordLength = WordPreview.Instance.CurrentWord.Length;
         int damageDealt = WordGenerator.Instance.CalculateDamage(WordPreview.Instance.CurrentTiles);
-        LevelManager.Instance.RenderAttackAgainstEnemy(damageDealt);
-        LevelManager.Instance.OnPlayerAttack?.Invoke();
+        BattleManager.Instance.RenderAttackAgainstEnemy(damageDealt);
+        BattleManager.Instance.OnPlayerAttack?.Invoke();
         WordPreview.Instance.ConsumeTiles();
     }
 

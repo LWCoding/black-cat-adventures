@@ -7,10 +7,10 @@ public class EnemyTurnState : State
 
     public override void OnEnterState()
     {
-        if (LevelManager.Instance.CurrEnemyHandler.HealthHandler.IsDead()) { return; }  // If dead, don't render!
-        LevelManager.Instance.CurrEnemyHandler.StatusHandler.RenderStatusEffectEffects();
-        if (LevelManager.Instance.CurrEnemyHandler.HealthHandler.IsDead()) { return; }  // If dead, don't render!
-        LevelManager.Instance.OnEnemyAttack?.Invoke();
+        if (BattleManager.Instance.CurrEnemyHandler.HealthHandler.IsDead()) { return; }  // If dead, don't render!
+        BattleManager.Instance.CurrEnemyHandler.StatusHandler.RenderStatusEffectEffects();
+        if (BattleManager.Instance.CurrEnemyHandler.HealthHandler.IsDead()) { return; }  // If dead, don't render!
+        BattleManager.Instance.OnEnemyAttack?.Invoke();
     }
 
     public override void OnExitState()

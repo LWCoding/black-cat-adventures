@@ -52,12 +52,12 @@ public class ShuffleButton : MonoBehaviour
     private void Start()
     {
         // When starting, if it's player state, set interactable
-        if (LevelManager.Instance.CurrentState is PlayerTurnState)
+        if (BattleManager.Instance.CurrentState is PlayerTurnState)
         {
             ToggleInteractability(true);
         }
         // If player turn, button is interactable, else no
-        LevelManager.Instance.OnStateChanged += (state) =>
+        BattleManager.Instance.OnStateChanged += (state) =>
         {
             if (state is PlayerTurnState)
             {
@@ -90,7 +90,7 @@ public class ShuffleButton : MonoBehaviour
     private void OnMouseDown()
     {
         if (!_isInteractable) { return; }  // If not interactable, don't do anything
-        if (LevelManager.Instance.CurrentState is not PlayerTurnState) { return; }
+        if (BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }
         OnClickButton?.Invoke();
         StartCoroutine(ShuffleGridCoroutine());
         AudioManager.Instance.PlayOneShot(_shuffleSFX);
@@ -104,7 +104,7 @@ public class ShuffleButton : MonoBehaviour
         // Make sure all tiles in the preview are erased
         WordPreview.Instance.EraseTiles();
         // Set state to wait state, and shuffle the board
-        LevelManager.Instance.SetState(new WaitState());
+        BattleManager.Instance.SetState(new WaitState());
         for (int i = 0; i < 5; i++)
         {
             _wordGrid.ShuffleBoard();
@@ -112,7 +112,7 @@ public class ShuffleButton : MonoBehaviour
         }
         yield return new WaitForSeconds(1);
         // Shift turn to enemy
-        LevelManager.Instance.SetState(new EnemyTurnState());
+        BattleManager.Instance.SetState(new EnemyTurnState());
     }
 
 }

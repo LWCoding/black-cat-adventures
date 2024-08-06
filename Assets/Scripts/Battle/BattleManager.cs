@@ -5,17 +5,17 @@ using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LevelManager : MonoBehaviour
+public class BattleManager : MonoBehaviour
 {
 
-    private static LevelManager _instance;
-    public static LevelManager Instance
+    private static BattleManager _instance;
+    public static BattleManager Instance
     {
         get
         {
             if (_instance == null)
             {
-                _instance = FindAnyObjectByType<LevelManager>();
+                _instance = FindAnyObjectByType<BattleManager>();
             }
             return _instance;
         }

@@ -75,29 +75,29 @@ public class TutorialManager : MonoBehaviour
         WordGrid.Instance.LetterTiles[15].SetTileText("Y");
 
         // During the player's turn, spawn tooltip
-        LevelManager.Instance.OnStateChanged += OnStateChanged;
+        BattleManager.Instance.OnStateChanged += OnStateChanged;
         // When a word is submitted, hide the tooltip
         SubmitButton.OnClickButton += OnSubmitButtonPressed;
         // When a word is shuffled, hide the tooltip
         ShuffleButton.OnClickButton += OnShuffleButtonPressed;
         // When an enemy is defeated, show treasure and hide status tooltip if necessary
-        LevelManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath += OnEnemyDies;
+        BattleManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath += OnEnemyDies;
         // When a status is applied for the first time, show status tooltip
-        LevelManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied += OnStatusEffectApplied;
+        BattleManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied += OnStatusEffectApplied;
         // When we reach the last enemy (treasure), show that tooltip
-        LevelManager.Instance.OnReachedLastEnemy += OnReachedLastEnemy;
+        BattleManager.Instance.OnReachedLastEnemy += OnReachedLastEnemy;
         // When we have obtained the collectible treasure, hide that tooltip
         TreasureCollectible.OnCollect += OnCollectTreasure;
     }
 
     public void OnDisable()
     {
-        LevelManager.Instance.OnStateChanged -= OnStateChanged;
+        BattleManager.Instance.OnStateChanged -= OnStateChanged;
         SubmitButton.OnClickButton -= OnSubmitButtonPressed;
         ShuffleButton.OnClickButton -= OnShuffleButtonPressed;
-        LevelManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath -= OnEnemyDies;
-        LevelManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied -= OnStatusEffectApplied;
-        LevelManager.Instance.OnReachedLastEnemy -= OnReachedLastEnemy;
+        BattleManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath -= OnEnemyDies;
+        BattleManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied -= OnStatusEffectApplied;
+        BattleManager.Instance.OnReachedLastEnemy -= OnReachedLastEnemy;
         TreasureCollectible.OnCollect -= OnCollectTreasure;
     }
 

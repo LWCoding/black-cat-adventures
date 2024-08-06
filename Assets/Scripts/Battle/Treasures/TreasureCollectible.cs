@@ -64,7 +64,7 @@ public class TreasureCollectible : MonoBehaviour
         _treasureAnimator.Play("Collected");
         yield return new WaitForSeconds(0.4f);
         Vector3 startPosition = transform.position;
-        Vector3 targetPosition = LevelManager.Instance.PlayerHandler.transform.position;
+        Vector3 targetPosition = BattleManager.Instance.PlayerHandler.transform.position;
         Color startColor = _iconRenderer.color;
         Color endColor = new(startColor.r, startColor.g, startColor.b, 0);
         float currTime = 0;
@@ -80,7 +80,7 @@ public class TreasureCollectible : MonoBehaviour
         GameManager.EquippedTreasures.Add(_treasureData);
         // Go to win state afterwards
         yield return new WaitForSeconds(0.5f);
-        LevelManager.Instance.SetState(new WinState());
+        BattleManager.Instance.SetState(new WinState());
     }
 
 }

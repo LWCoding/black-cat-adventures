@@ -12,7 +12,7 @@ public class MagicSevenBall : Treasure
         {
             if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord) && WordPreview.Instance.CurrentTiles.Count == 7)
             {
-                LevelManager.Instance.RunNextFrame(() =>
+                BattleManager.Instance.RunNextFrame(() =>
                 {
                     WordPreview.Instance.FeedbackText.enabled = true;
                     if (WordPreview.Instance.FeedbackText.text != "")
@@ -23,11 +23,11 @@ public class MagicSevenBall : Treasure
                 });
             }
         };
-        LevelManager.Instance.OnPlayerAttack += () =>
+        BattleManager.Instance.OnPlayerAttack += () =>
         {
             if (WordPreview.Instance.CurrentTiles.Count == 7)
             {
-                LevelManager.Instance.RenderAttackAgainstEnemy(7);
+                BattleManager.Instance.RenderAttackAgainstEnemy(7);
             }
         };
     }
