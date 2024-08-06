@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    [Header("Object Assignments")]
+    [SerializeField] private TextMeshPro _levelText;
+    [Header("Level Properties")]
+    public int LevelNumber = 0;
+    public string LevelName;
+
+    private void Awake()
     {
-        
+        _levelText.text = "Level " + LevelNumber.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnMouseDown()
     {
-        
+        SceneManager.LoadScene(LevelName);
     }
+
 }
