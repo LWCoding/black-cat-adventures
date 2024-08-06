@@ -6,22 +6,33 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
 
-    public static AudioManager Instance;
+    private static AudioManager _instance;
+    public static AudioManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindAnyObjectByType<AudioManager>();
+            }
+            return _instance;
+        }
+    }
 
     private AudioSource _audioSource;
 
     private void Awake()
     {
-        // Set this to the Instance if it is the first one.
-        // Or else, destroy this.
-        if (Instance == null)
+        if (!ReferenceEquals(_instance, this))
         {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-            return;
+            if (_instance != null)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                _instance = this;
+            }
         }
         // Set the audio source.
         _audioSource = GetComponent<AudioSource>();
