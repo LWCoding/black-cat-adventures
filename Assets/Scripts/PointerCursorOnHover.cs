@@ -16,13 +16,13 @@ public class PointerCursorOnHover : MonoBehaviour
             // immediately call OnMouseExit()
             if (_isHoveringOver && !value)
             {
-                OnMouseExit();
+                CursorManager.Instance.ResetCursor();
             }
             // If we're enabling, and the mouse is hovering over this,
             // immediately call OnMouseEnter()
             if (_isHoveringOver && value)
             {
-                OnMouseEnter();
+                CursorManager.Instance.SetPointerCursor();
             }
             _isEnabled = value;
         }
