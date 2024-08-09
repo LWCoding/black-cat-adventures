@@ -27,10 +27,13 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject _treasureTooltipObject;
     [SerializeField] private GameObject _statusTooltipObject;
     [SerializeField] private GameObject _endTreasureTooltipObject;
+    [SerializeField] private GameObject _specialTileTooltipObject;
 
     private int _playerTurnTracker = 0;  // Increments by one each time the player's turn arrives
+    private int _enemiesDefeated = 0;  // Increments by one each time an enemy is defeated
     private bool _isStatusAppliedYet = false;  // Becomes true after receiving effect once
     private bool _isTreasureUnlockedYet = false;  // Becomes true after unlocking treasure
+    private bool _isSpecialTileUnlockedYet = false;  // Becomes true after unlocking special tiles
 
     private void Awake()
     {
@@ -48,6 +51,7 @@ public class TutorialManager : MonoBehaviour
         _enemyTooltipObject.SetActive(false);
         _treasureTooltipObject.SetActive(false);
         _endTreasureTooltipObject.SetActive(false);
+        _specialTileTooltipObject.SetActive(false);
         // If we've never played the tutorial before, hide certain objects
         if (!HasTutorialPlayed)
         {
@@ -84,14 +88,15 @@ public class TutorialManager : MonoBehaviour
         SubmitButton.OnClickButton += OnSubmitButtonPressed;
         // When a word is shuffled, hide the tooltip
         ShuffleButton.OnClickButton += OnShuffleButtonPressed;
-        // When an enemy is defeated, show treasure and hide status tooltip if necessary
-        BattleManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath += OnEnemyDies;
         // When a status is applied for the first time, show status tooltip
         BattleManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied += OnStatusEffectApplied;
         // When we reach the last enemy (treasure), show that tooltip
         BattleManager.Instance.OnReachedLastEnemy += OnReachedLastEnemy;
         // When we have obtained the collectible treasure, hide that tooltip
         TreasureCollectible.OnCollect += OnCollectTreasure;
+        // When a new enemy is set, make sure we render the OnEnemyDies function
+        BattleManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath += OnEnemyDies;
+        BattleManager.Instance.OnNewEnemySet += OnNewEnemyArrives;
     }
 
     public void OnDisable()
@@ -99,7 +104,6 @@ public class TutorialManager : MonoBehaviour
         BattleManager.Instance.OnStateChanged -= OnStateChanged;
         SubmitButton.OnClickButton -= OnSubmitButtonPressed;
         ShuffleButton.OnClickButton -= OnShuffleButtonPressed;
-        BattleManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath -= OnEnemyDies;
         BattleManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied -= OnStatusEffectApplied;
         BattleManager.Instance.OnReachedLastEnemy -= OnReachedLastEnemy;
         TreasureCollectible.OnCollect -= OnCollectTreasure;
@@ -144,6 +148,29 @@ public class TutorialManager : MonoBehaviour
         {
             _statusTooltipObject.SetActive(false);
         }
+        // If special tiles are unlocked, hide tooltip when damage is dealt
+        if (_isSpecialTileUnlockedYet)
+        {
+            _specialTileTooltipObject.SetActive(false);
+        } else
+        {
+            // If we haven't unlocked special tiles yet, restrict player from getting any
+            StartCoroutine(WaitThenRenderTilesBoring());
+        }
+    }
+
+    /// <summary>
+    /// Make the tiles not have tile effects after they've been submitted.
+    /// Wait a frame before doing this to override properly.
+    /// </summary>
+    private IEnumerator WaitThenRenderTilesBoring()
+    {
+        yield return new WaitForEndOfFrame();
+        // Initialize board with bad tiles... again!
+        for (int i = 0; i < WordGrid.Instance.LetterTiles.Count; i++)
+        {
+            WordGrid.Instance.LetterTiles[i].SetTileType(TileTypeName.NORMAL);
+        }
     }
 
     private void OnShuffleButtonPressed()
@@ -151,11 +178,37 @@ public class TutorialManager : MonoBehaviour
         _shuffleTooltipObject.SetActive(false);
     }
 
+    private void OnNewEnemyArrives(EnemyHandler currEnemy)
+    {
+        currEnemy.HealthHandler.OnDeath += OnEnemyDies;
+    }
+
     private void OnEnemyDies()
     {
-        _isTreasureUnlockedYet = true;
-        TreasureSection.Instance.gameObject.SetActive(true);
-        _treasureTooltipObject.SetActive(true);
+        _enemiesDefeated++;
+        if (_enemiesDefeated == 1)  // After defeating dummy
+        {
+            _isTreasureUnlockedYet = true;
+            TreasureSection.Instance.gameObject.SetActive(true);
+            _treasureTooltipObject.SetActive(true);
+        }
+        if (_enemiesDefeated == 3)
+        {
+            _isSpecialTileUnlockedYet = true;
+            _specialTileTooltipObject.SetActive(true);
+            StartCoroutine(WaitThenSpawnPoisonTile());
+        }
+    }
+
+    /// <summary>
+    /// Make the tiles useless after they've been submitted.
+    /// Wait a frame before doing this to override properly.
+    /// </summary>
+    private IEnumerator WaitThenSpawnPoisonTile()
+    {
+        yield return new WaitForEndOfFrame();
+        // Spawn poison tile!
+        WordGrid.Instance.LetterTiles[9].SetTileType(TileTypeName.POISON);
     }
 
     private void OnStatusEffectApplied()

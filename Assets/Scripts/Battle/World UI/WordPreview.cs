@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WordPreview : MonoBehaviour
 {
@@ -119,9 +120,14 @@ public class WordPreview : MonoBehaviour
     /// Remove all preview tiles currently showing at the top.
     /// Refresh the tiles in the word grid to be different letters,
     /// but discourage letters that appear twice or more.
+    /// 
+    /// Optionally takes a tile to spawn with the new tiles
+    /// that are randomized.
     /// </summary>
-    public void ConsumeTiles()
+    public void ConsumeTiles(TileTypeName tileToSpawn = TileTypeName.NORMAL)
     {
+        int randomIdxForSpecTile = Random.Range(0, _currTiles.Count);  // Get random tile for special tile
+                                                                       // if one should spawn!
         for (int i = _currTiles.Count - 1; i >= 0; i--)
         {
             Tile t = _currTiles[i];
@@ -143,7 +149,14 @@ public class WordPreview : MonoBehaviour
                 }
             }
             // Randomize the tile, given these discouraged letters
-            WordGrid.Instance.LetterTiles[t.TileIndex].RandomizeTile(discouragedLetters.ToString());
+            if (randomIdxForSpecTile == i)
+            {
+                WordGrid.Instance.LetterTiles[t.TileIndex].RandomizeTile(discouragedLetters.ToString(), tileToSpawn);
+            }
+            else
+            {
+                WordGrid.Instance.LetterTiles[t.TileIndex].RandomizeTile(discouragedLetters.ToString());
+            }
             RemoveTile(t);
         }
     }

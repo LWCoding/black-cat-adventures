@@ -6,9 +6,12 @@ using UnityEngine;
 public class PoisonTile : TileType
 {
 
+    [Header("Poison Properties")]
+    [SerializeField] private StatusEffect _poisonEffect;
+
     public override void ActivateTileEffects()
     {
-        Debug.Log("used poison tile lol");
+        BattleManager.Instance.CurrEnemyHandler.StatusHandler.GainStatusEffect(_poisonEffect, 3);
     }
 
 }

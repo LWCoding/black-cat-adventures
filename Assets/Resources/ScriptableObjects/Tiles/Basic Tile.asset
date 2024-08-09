@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileTypeName: 0
   TileSprite: {fileID: 21300000, guid: 1a170c03f4d64784491e7a54307fe2a3, type: 3}
+  TileSpriteColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}

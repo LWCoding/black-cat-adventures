@@ -103,4 +103,12 @@ public class StatusHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Toggle the visibility of the status effects.
+    /// </summary>
+    public void ToggleEffectVisibility(bool isVisible)
+    {
+        _statusParentTransform.gameObject.SetActive(isVisible);
+    }
+
 }

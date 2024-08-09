@@ -29,15 +29,15 @@ MonoBehaviour:
   - IconSprite: {fileID: 21300000, guid: dd7f451d594bf304397139d704047a89, type: 3}
     AttackName: Nibble
     _attackDescription: Does a big chomp, dealing %d damage.
-    Damage: 5
+    Damage: 2
     AnimType: 0
     InflictedStatuses: []
   - IconSprite: {fileID: 21300000, guid: 1c04494dd6f48f2488cdacce0226af60, type: 3}
     AttackName: Cut the Cheese
-    _attackDescription: Deals %d damage. Inflicts Poison.
-    Damage: 2
+    _attackDescription: Not very sharp. Inflicts Bruise.
+    Damage: 0
     AnimType: 0
     InflictedStatuses:
     - Target: 0
-      Status: {fileID: 11400000, guid: 64cc14e7bf7499847a1472647ddc5647, type: 2}
+      Status: {fileID: 11400000, guid: 10a67663f471ab44a9691e5145894c21, type: 2}
       Amplifier: 3

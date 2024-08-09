@@ -47,6 +47,7 @@ public class BattleManager : MonoBehaviour
     public Action OnPlayerAttack = null;
     public Action OnEnemyAttack = null;
     public Action<State> OnStateChanged = null;  // Parameter is the state to transition to
+    public Action<EnemyHandler> OnNewEnemySet = null;  // Parameter is the new enemy entering
     public Action OnReachedLastEnemy = null;
 
     private void Start()
@@ -79,6 +80,12 @@ public class BattleManager : MonoBehaviour
         {
             SubmitButton.Instance.TrySubmitCurrentWord();
         }
+
+        // If left/right shift is pressed, try to shuffle
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        {
+            ShuffleButton.Instance.TryShuffleBoard();
+        }
     }
 
     void OnGUI()
@@ -108,6 +115,7 @@ public class BattleManager : MonoBehaviour
     /// </summary>
     public void SetNewEnemy(EnemyHandler newEnemyHandler)
     {
+        OnNewEnemySet?.Invoke(newEnemyHandler);
         CurrEnemyHandler = newEnemyHandler;
         _enemyInfoBox.SetInfo((EnemyData)(newEnemyHandler.CharData));
         // If there's any dialogue to play, play it!

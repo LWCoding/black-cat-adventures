@@ -44,13 +44,18 @@ public class Tile
 
     public int TileIndex;
     public TileDamage DamageType;
-    public TileType Type;
+    public TileType CurrTileType;
 
     public Tile(string letters, int idx, TileTypeName tileTypeName)
     {
         Letters = letters;
         TileIndex = idx;
-        Type = WordGenerator.TileTypes[tileTypeName];
+        CurrTileType = WordGenerator.TileTypes[tileTypeName];
+    }
+
+    public void SetType(TileTypeName tileTypeName)
+    {
+        CurrTileType = WordGenerator.TileTypes[tileTypeName];
     }
 
 }

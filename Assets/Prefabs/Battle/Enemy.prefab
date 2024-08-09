@@ -57,7 +57,7 @@ Transform:
   m_GameObject: {fileID: 826484772557556074}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.47, y: -2.1799998, z: 0}
+  m_LocalPosition: {x: 1.3, y: 2.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -406,7 +406,7 @@ MonoBehaviour:
   _nextBattleObject: {fileID: 0}
   _timeToNextObject: 1.3
   DialogueToPlayOnMeet: []
-  IsFightable: 1
+  ShouldStallBeforeTurn: 0
 --- !u!114 &8210151533360207702
 MonoBehaviour:
   m_ObjectHideFlags: 0

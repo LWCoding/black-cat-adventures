@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
   m_Name: Ryan
   m_EditorClassIdentifier: 
-  StartingHealth: 30
+  StartingHealth: 25
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 87f8a1d40cd62ee4a800f3ea086116a0, type: 3}
     Offset: {x: 0.5, y: 0.8}
@@ -29,7 +29,7 @@ MonoBehaviour:
   - IconSprite: {fileID: 21300000, guid: 3670043e85d27c544b487ac39ce73fe1, type: 3}
     AttackName: Star Punch
     _attackDescription: Fists you, dealing %d damage. Inflicts Bruise.
-    Damage: 3
+    Damage: 2
     AnimType: 0
     InflictedStatuses:
     - Target: 0
@@ -38,6 +38,6 @@ MonoBehaviour:
   - IconSprite: {fileID: 21300000, guid: d23980e3c5c69d04fa099919c2241196, type: 3}
     AttackName: Wooden Justice
     _attackDescription: Full-force whacks you, dealing %d damage.
-    Damage: 5
+    Damage: 4
     AnimType: 0
     InflictedStatuses: []

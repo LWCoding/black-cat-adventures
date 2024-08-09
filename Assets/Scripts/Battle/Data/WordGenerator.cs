@@ -164,16 +164,16 @@ public class WordGenerator : MonoBehaviour
     {
         if (damageDealt > 40)
         {
-
+            return TileTypeName.POISON;
         } else if (damageDealt > 30)
         {
-
+            return TileTypeName.POISON;
         } else if (damageDealt > 20)
         {
-
+            return TileTypeName.POISON;
         } else if (damageDealt > 10)
         {
-
+            return TileTypeName.POISON;
         }
         return TileTypeName.NORMAL;
     }

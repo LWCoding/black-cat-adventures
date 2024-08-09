@@ -163,6 +163,7 @@ public class EnemyHandler : CharacterHandler
     /// </summary>
     private IEnumerator FadeAwayCoroutine()
     {
+        StatusHandler.ToggleEffectVisibility(false);
         for (int i = 0; i < 25; i++)
         {
             _spriteRenderer.color -= new Color(0, 0, 0, 0.04f);

@@ -43,8 +43,8 @@ public abstract class LetterTile : MonoBehaviour
     {
         float savedTileBGAlpha = _bgRenderer.color.a;  // Don't override alpha value in case toggled off
 
-        _bgRenderer.sprite = tile.Type.TileSprite;
-        _bgRenderer.color = new Color(tile.Type.TileSpriteColor.r, tile.Type.TileSpriteColor.g, tile.Type.TileSpriteColor.b, savedTileBGAlpha);
+        _bgRenderer.sprite = tile.CurrTileType.TileSprite;
+        _bgRenderer.color = new Color(tile.CurrTileType.TileSpriteColor.r, tile.CurrTileType.TileSpriteColor.g, tile.CurrTileType.TileSpriteColor.b, savedTileBGAlpha);
         _tile = tile;
         _letterText.text = tile.Letters;
 
@@ -68,7 +68,7 @@ public abstract class LetterTile : MonoBehaviour
     /// appear like that tile. May take in a list of tiles to discourage certain
     /// tiles from appearing. Must be initialized first.
     /// </summary>
-    public void RandomizeTile(string discouragedLetters = "")
+    public void RandomizeTile(string discouragedLetters = "", TileTypeName tileType = TileTypeName.NORMAL)
     {
         if (discouragedLetters == "")
         {
@@ -85,8 +85,18 @@ public abstract class LetterTile : MonoBehaviour
             {
                 newTile = WordGenerator.Instance.GetRandomTile(_tile.TileIndex, discouragedLetters);
             }
+            newTile.SetType(tileType);
             InitializeTile(newTile);
         }
+    }
+
+    /// <summary>
+    /// Set the type of an already existing tile to something else.
+    /// </summary>
+    public void SetTileType(TileTypeName tileType)
+    {
+        _tile.SetType(tileType);
+        InitializeTile(_tile);
     }
 
     /// <summary>

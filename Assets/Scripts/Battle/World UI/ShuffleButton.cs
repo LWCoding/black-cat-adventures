@@ -89,6 +89,11 @@ public class ShuffleButton : MonoBehaviour
 
     private void OnMouseDown()
     {
+        TryShuffleBoard();
+    }
+
+    public void TryShuffleBoard()
+    {
         if (!_isInteractable) { return; }  // If not interactable, don't do anything
         if (BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }
         OnClickButton?.Invoke();

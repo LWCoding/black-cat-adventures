@@ -84,6 +84,7 @@ public class HealthHandler : MonoBehaviour
         {
             CurrentHealth = 0;
             OnDeath?.Invoke();
+            OnDeath = null;  // Don't invoke this anymore
         }
     }
 
