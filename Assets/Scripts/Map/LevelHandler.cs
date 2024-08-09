@@ -108,7 +108,7 @@ public class LevelHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!IsCurrentLevel && !_isLevelVisitable) { return; }
+        if (IsCurrentLevel || !_isLevelVisitable) { return; }
         LevelsManager.Instance.SelectNewLevel(this);
     }
 
