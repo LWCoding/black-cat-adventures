@@ -118,6 +118,8 @@ public class BattleManager : MonoBehaviour
         OnNewEnemySet?.Invoke(newEnemyHandler);
         CurrEnemyHandler = newEnemyHandler;
         _enemyInfoBox.SetInfo((EnemyData)(newEnemyHandler.CharData));
+        // If the player is dead, stop here.
+        if (CurrentState is LoseState) { return; }
         // If there's any dialogue to play, play it!
         if (newEnemyHandler.DialogueToPlayOnMeet.Count > 0)
         {

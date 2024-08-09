@@ -1350,6 +1350,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 866444753}
     m_Modifications:
+    - target: {fileID: 958771918092839361, guid: db67044af50412c46b57ed173b8b05cc, type: 3}
+      propertyPath: _treasureData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6a7ae92855eb33441bf833bfaff9f271, type: 2}
     - target: {fileID: 4318563916981795719, guid: db67044af50412c46b57ed173b8b05cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 45.54
@@ -2394,6 +2398,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1162266259212744125, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 776731264905236147, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
