@@ -44,7 +44,7 @@ public abstract class LetterTile : MonoBehaviour
         _tile = tile;
         _letterText.text = tile.Letters;
 
-        byte savedAlpha = (byte)_dmgIndRenderer.color.a;  // Don't override alpha value in case toggled off
+        byte savedAlpha = (byte)(255 * _dmgIndRenderer.color.a);  // Don't override alpha value in case toggled off
         switch (tile.DamageType)
         {
             case TileDamage.LOW:
