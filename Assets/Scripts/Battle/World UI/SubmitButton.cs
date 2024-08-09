@@ -8,6 +8,19 @@ using System;
 public class SubmitButton : MonoBehaviour
 {
 
+    private static SubmitButton _instance;
+    public static SubmitButton Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindAnyObjectByType<SubmitButton>();
+            }
+            return _instance;
+        }
+    }
+
     [Header("Object Assignments")]
     [SerializeField] protected TextMeshPro _letterText;
     [SerializeField] protected SpriteRenderer _bgRenderer;
@@ -58,6 +71,11 @@ public class SubmitButton : MonoBehaviour
     }
 
     private void OnMouseDown()
+    {
+        TrySubmitCurrentWord();
+    }
+
+    public void TrySubmitCurrentWord()
     {
         if (!_isInteractable) { return; }  // If not interactable, don't do anything
         if (BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }

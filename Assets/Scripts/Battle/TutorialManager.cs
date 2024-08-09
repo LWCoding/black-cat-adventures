@@ -48,6 +48,12 @@ public class TutorialManager : MonoBehaviour
         _enemyTooltipObject.SetActive(false);
         _treasureTooltipObject.SetActive(false);
         _endTreasureTooltipObject.SetActive(false);
+        // If we've never played the tutorial before, hide certain objects
+        if (!HasTutorialPlayed)
+        {
+            ShuffleButton.Instance.gameObject.SetActive(false);
+            TreasureSection.Instance.gameObject.SetActive(false);
+        }
     }
 
     private void Start()
@@ -61,8 +67,6 @@ public class TutorialManager : MonoBehaviour
 
     public void StartTutorial()
     {
-        ShuffleButton.Instance.gameObject.SetActive(false);
-        TreasureSection.Instance.gameObject.SetActive(false);
         HasTutorialPlayed = true;
         // Initialize board with bad tiles initially
         for (int i = 0; i < WordGrid.Instance.LetterTiles.Count; i++)

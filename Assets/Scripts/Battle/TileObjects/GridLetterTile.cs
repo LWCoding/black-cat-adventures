@@ -43,19 +43,27 @@ public class GridLetterTile : LetterTile
         _animator.Play("StopHover");
     }
 
-    /// <summary>
-    /// When clicked, IF this tile is not selected and it is the
-    /// player's turn to move, append this tile to the preview tiles
-    /// and mark as selected.
-    /// </summary>
     private void OnMouseDown()
     {
-        if (IsSelected) return;
-        if (BattleManager.Instance.CurrentState is not PlayerTurnState) return;
+        TrySelectTile();
+    }
+
+    /// <summary>
+    /// IF this tile is not selected and it is the
+    /// player's turn to move, append this tile to the preview tiles
+    /// and mark as selected. 
+    /// 
+    /// Returns True if it worked, else False.
+    /// </summary>
+    public bool TrySelectTile()
+    {
+        if (IsSelected) return false;
+        if (BattleManager.Instance.CurrentState is not PlayerTurnState) return false;
         AudioManager.Instance.PlayOneShot(_clickSFX, _clickSFXVolume);
         WordPreview.Instance.AppendTile(_tile);
         OnMouseExit();
         IsSelected = true;  // Set this letter to selected
+        return true;
     }
 
 }

@@ -64,6 +64,45 @@ public class BattleManager : MonoBehaviour
     }
 
     /// <summary>
+    /// QOL improvements with rendering specific actions through key presses.
+    /// </summary>
+    private void Update()
+    {
+        // If backspace is pressed, remove last letter
+        if (Input.GetKeyDown(KeyCode.Backspace) && WordPreview.Instance.CurrentTiles.Count > 0)
+        {
+            WordPreview.Instance.RemoveTile(WordPreview.Instance.CurrentTiles[^1]);
+        }
+
+        // If return is pressed, try to submit word
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            SubmitButton.Instance.TrySubmitCurrentWord();
+        }
+    }
+
+    void OnGUI()
+    {
+        // If a letter is pressed, try to find that letter in the grid and add it
+        Event e = Event.current;
+        if (e.type == EventType.KeyDown && e.keyCode.ToString().Length == 1 && char.IsLetter(e.keyCode.ToString()[0]))
+        {
+            char keyChar = e.keyCode.ToString()[0];
+            // Look for a letter with that matching letter
+            for (int i = 0; i <  WordGrid.Instance.LetterTiles.Count; i++)
+            {
+                if (WordGrid.Instance.LetterTiles[i].GetLetters()[0] == keyChar) 
+                {
+                    if (((GridLetterTile)(WordGrid.Instance.LetterTiles[i])).TrySelectTile())
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// Render a new enemy, updating any UI if needed.
     /// Also queues any dialogue to be played if applicable.
     /// </summary>
