@@ -41,20 +41,24 @@ public abstract class LetterTile : MonoBehaviour
     /// </summary>
     public void InitializeTile(Tile tile)
     {
+        float savedTileBGAlpha = _bgRenderer.color.a;  // Don't override alpha value in case toggled off
+
+        _bgRenderer.sprite = tile.Type.TileSprite;
+        _bgRenderer.color = new Color(tile.Type.TileSpriteColor.r, tile.Type.TileSpriteColor.g, tile.Type.TileSpriteColor.b, savedTileBGAlpha);
         _tile = tile;
         _letterText.text = tile.Letters;
 
-        byte savedAlpha = (byte)(255 * _dmgIndRenderer.color.a);  // Don't override alpha value in case toggled off
+        byte savedTileIndAlpha = (byte)(255 * _dmgIndRenderer.color.a);  // Don't override alpha value in case toggled off
         switch (tile.DamageType)
         {
             case TileDamage.LOW:
-                _dmgIndRenderer.color = new Color32(186, 141, 114, savedAlpha);
+                _dmgIndRenderer.color = new Color32(186, 141, 114, savedTileIndAlpha);
                 break;
             case TileDamage.MEDIUM:
-                _dmgIndRenderer.color = new Color32(159, 168, 168, savedAlpha);
+                _dmgIndRenderer.color = new Color32(159, 168, 168, savedTileIndAlpha);
                 break;
             case TileDamage.HIGH:
-                _dmgIndRenderer.color = new Color32(255, 237, 100, savedAlpha);
+                _dmgIndRenderer.color = new Color32(255, 237, 100, savedTileIndAlpha);
                 break;
         }
     }

@@ -18,6 +18,23 @@ public class WordGenerator : MonoBehaviour
         }
     }
 
+    private readonly static Dictionary<TileTypeName, TileType> _tileTypes = new();
+    public static Dictionary<TileTypeName, TileType> TileTypes
+    {
+        get
+        {
+            // If we don't have any treasures, give the player the default treasure
+            if (_tileTypes.Count == 0)
+            {
+                foreach (TileType tt in Resources.LoadAll<TileType>("ScriptableObjects/Tiles").ToList())
+                {
+                    _tileTypes.Add(tt.TileTypeName, tt);
+                }
+            }
+            return _tileTypes;
+        }
+    }
+
     private readonly List<string> _validWords = new();
     private readonly List<string> _profaneWords = new();
 
@@ -100,7 +117,7 @@ public class WordGenerator : MonoBehaviour
         // Modified characters from Boggle but stringed together
         string randomChar = GetRandomLetter(bannedLetters);
         // Create a tile object
-        Tile t = new(randomChar.ToString(), tileIdx);
+        Tile t = new(randomChar.ToString(), tileIdx, TileTypeName.NORMAL);
         return t;
     }
 
@@ -135,8 +152,30 @@ public class WordGenerator : MonoBehaviour
         string chars = "AAEEIIOU";
         char randomChar = chars[Random.Range(0, chars.Length)];
         // Create a tile object
-        Tile t = new(randomChar.ToString(), tileIdx);
+        Tile t = new(randomChar.ToString(), tileIdx, TileTypeName.NORMAL);
         return t;
+    }
+
+    /// <summary>
+    /// Given an integer representing the number of damage a word
+    /// deals, returns a type for a tile that spawns next.
+    /// </summary>
+    public TileTypeName GetTileTypeNameByDamage(int damageDealt)
+    {
+        if (damageDealt > 40)
+        {
+
+        } else if (damageDealt > 30)
+        {
+
+        } else if (damageDealt > 20)
+        {
+
+        } else if (damageDealt > 10)
+        {
+
+        }
+        return TileTypeName.NORMAL;
     }
 
     /// <summary>

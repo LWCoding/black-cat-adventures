@@ -8,11 +8,6 @@ public enum TileDamage
     LOW = 0, MEDIUM = 1, HIGH = 2
 }
 
-public enum TileType
-{
-    NORMAL = 0
-}
-
 [System.Serializable]
 public class Tile 
 {
@@ -51,10 +46,11 @@ public class Tile
     public TileDamage DamageType;
     public TileType Type;
 
-    public Tile(string letters, int idx)
+    public Tile(string letters, int idx, TileTypeName tileTypeName)
     {
         Letters = letters;
-        TileIndex = idx; 
+        TileIndex = idx;
+        Type = WordGenerator.TileTypes[tileTypeName];
     }
 
 }

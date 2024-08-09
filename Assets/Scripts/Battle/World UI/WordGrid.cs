@@ -61,7 +61,7 @@ public class WordGrid : MonoBehaviour
                 GameObject letter = Instantiate(_letterPrefab, _letterParentTransform, false);
                 letter.transform.position += new Vector3(SPACE_BETWEEN_TILES * r, -SPACE_BETWEEN_TILES * c);
 
-                Tile newTile = new("A", r * NUM_ROWS + c);
+                Tile newTile = new("A", r * NUM_ROWS + c, TileTypeName.NORMAL);
 
                 letter.GetComponent<LetterTile>().InitializeTile(newTile);
                 _letterTiles.Add(letter.GetComponent<LetterTile>());
