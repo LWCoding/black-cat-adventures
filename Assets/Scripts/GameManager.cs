@@ -29,4 +29,6 @@ public static class GameManager
         }
     }
 
+    public static List<string> LevelsCompleted = new();
+
 }

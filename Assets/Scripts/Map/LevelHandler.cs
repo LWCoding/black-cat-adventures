@@ -29,12 +29,13 @@ public class LevelHandler : MonoBehaviour
             _isCurrentLevel = value;
             if (IsCurrentLevel)
             {
-                // If this is now the current level, make prev and next visitable
+                // If this is now the current level, make prev visitable
                 if (_prevLevel != null)
                 {
                     _prevLevel.IsLevelVisitable = true;
                 }
-                if (_nextLevel != null)
+                // If we've completed the current level, allow access to next level
+                if (_nextLevel != null && GameManager.LevelsCompleted.Contains(LevelName))
                 {
                     _nextLevel.IsLevelVisitable = true;
                 }

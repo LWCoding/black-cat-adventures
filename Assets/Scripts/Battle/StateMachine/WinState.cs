@@ -8,12 +8,13 @@ public class WinState : State
 
     public override void OnEnterState()
     {
-
+        // Register that we won this level
+        GameManager.LevelsCompleted.Add(SceneManager.GetActiveScene().name);
     }
 
     public override void OnExitState()
     {
-        
+
     }
 
 }
