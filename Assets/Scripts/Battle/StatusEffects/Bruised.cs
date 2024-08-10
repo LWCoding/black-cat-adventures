@@ -6,6 +6,8 @@ using UnityEngine;
 public class Bruised : StatusEffect
 {
 
+    private bool _justApplied = true;
+
     public override void ApplyEffect(CharacterHandler handler, int amplifier)
     {
         CurrAmplifier = amplifier;
@@ -15,9 +17,9 @@ public class Bruised : StatusEffect
     public override bool UpdateEffect(CharacterHandler handler)
     {
         // Skip the first turn of effect
-        if (JustApplied)
+        if (_justApplied)
         {
-            JustApplied = false;
+            _justApplied = false;
             return CurrAmplifier == 0;
         }
         handler.HealthHandler.TakeDamage(1);

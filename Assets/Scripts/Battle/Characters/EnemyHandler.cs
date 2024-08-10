@@ -140,12 +140,12 @@ public class EnemyHandler : CharacterHandler
             currTime += Time.deltaTime; 
             yield return null;
         }
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
         // If this is an enemy object, register the enemy
         if (_nextBattleObject.TryGetComponent(out EnemyHandler enemyHandler))
         {
             // If the enemy is fightable, set the state to be the player's
-            if (!enemyHandler.ShouldStallBeforeTurn && !enemyHandler.DialogueToPlayOnMeet[0].ShouldStallState)
+            if (!enemyHandler.ShouldStallBeforeTurn && (enemyHandler.DialogueToPlayOnMeet.Count == 0 || !enemyHandler.DialogueToPlayOnMeet[0].ShouldStallState))
             {
                 BattleManager.Instance.SetState(new PlayerTurnState());
             }

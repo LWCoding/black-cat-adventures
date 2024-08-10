@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Poison", menuName = "Status Effects/Poison")]
-public class Poison : StatusEffect
+[CreateAssetMenu(fileName = "Waterlogged", menuName = "Status Effects/Waterlogged")]
+public class Waterlogged : StatusEffect
 {
 
     private bool _justApplied = true;
@@ -22,7 +22,6 @@ public class Poison : StatusEffect
             _justApplied = false;
             return CurrAmplifier == 0;
         }
-        handler.HealthHandler.TakeDamage(CurrAmplifier);
         CurrAmplifier--;
         return CurrAmplifier == 0;
     }

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
+  m_Name: Bui
+  m_EditorClassIdentifier: 
+  StartingHealth: 1
+  AliveSprite:
+    Sprite: {fileID: 21300000, guid: 171c650ccf527bb4d88860a9271669e1, type: 3}
+    Offset: {x: 0.7, y: 0.9}
+  AttackSprite:
+    Sprite: {fileID: 21300000, guid: 171c650ccf527bb4d88860a9271669e1, type: 3}
+    Offset: {x: 0.7, y: 0.9}
+  DeadSprite:
+    Sprite: {fileID: 21300000, guid: d98c4764c8d39e54aa51e21848710a50, type: 3}
+    Offset: {x: 0.7, y: 0.9}
+  SpriteScale: {x: 0.85, y: 0.85}
+  EnemyDescription: Spray painted his trident after playing too much of a specific
+    block game.
+  Attacks:
+  - IconSprite: {fileID: 21300000, guid: 661f460c56974844ca9a2748f8a9a2d1, type: 3}
+    AttackName: Pierce
+    _attackDescription: fgg
+    Damage: 0
+    AnimType: 0
+    InflictedStatuses:
+    - Target: 0
+      Status: {fileID: 11400000, guid: 8157d86778283a542acecf088bd7a052, type: 2}
+      Amplifier: 3
+  - IconSprite: {fileID: 21300000, guid: 72b3fc3a151c537499dbd209ea2c0cd2, type: 3}
+    AttackName: Water Spout
+    _attackDescription: sdfg
+    Damage: 0
+    AnimType: 0
+    InflictedStatuses: []
