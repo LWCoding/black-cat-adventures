@@ -381,8 +381,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_text
-      value: Use special tiles in a word to aid in battle. Get more by spelling long
-        words.
+      value: Use <color="purple">special tiles</color> in a word for cool effects!
+        Spell long words to get more <color="purple">special tiles</color>!
       objectReference: {fileID: 0}
     - target: {fileID: 6748022944440307023, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_Name
@@ -435,7 +435,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1377439466573852872, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
 --- !u!4 &55060268 stripped
 Transform:
@@ -509,7 +512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_text
-      value: Treasures give passive buffs in battle! (hover)
+      value: <color="orange">Treasures</color> give passive buffs in battle! (hover)
       objectReference: {fileID: 0}
     - target: {fileID: 6748022944440307023, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_Name
@@ -574,7 +577,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1377439466573852872, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
 --- !u!4 &146524997 stripped
 Transform:
@@ -1227,13 +1233,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1377439466573852872, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2247529224090921242, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_text
-      value: Statuses effect you every turn. Hover for more info!
+      value: <color="red">Statuses</color> effect you every turn. Hover for more
+        info!
       objectReference: {fileID: 0}
     - target: {fileID: 6748022944440307023, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_Name
@@ -1330,7 +1341,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1377439466573852872, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
 --- !u!4 &937710088 stripped
 Transform:
@@ -1431,7 +1445,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_text
-      value: This is the enemy's health. Longer words = more damage!
+      value: This is the enemy's <color="red>health</color>. Longer words = more
+        damage!
       objectReference: {fileID: 0}
     - target: {fileID: 6748022944440307023, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_Name
@@ -1484,7 +1499,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1377439466573852872, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
 --- !u!4 &1161912985 stripped
 Transform:
@@ -1639,7 +1657,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_text
-      value: Treasure, wow! Click on it to collect it and win the level.
+      value: <color="orange">Treasure</color>! Click on it to collect it and win
+        the level.
       objectReference: {fileID: 0}
     - target: {fileID: 6748022944440307023, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_Name
@@ -1700,7 +1719,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1377439466573852872, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
 --- !u!4 &1224420343 stripped
 Transform:
@@ -1781,7 +1803,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_text
-      value: Your letter grid. Spell out words by clicking on tiles!
+      value: Your <color="purple">letter grid</color>. Spell out words by clicking
+        on tiles!
       objectReference: {fileID: 0}
     - target: {fileID: 6748022944440307023, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_Name
@@ -1834,7 +1857,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1377439466573852872, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
 --- !u!1 &1594612094
 GameObject:
@@ -2283,7 +2309,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_text
-      value: Bad choices? Shuffle them! Uses up your turn.
+      value: Bad choices? <color=#1B6400>Scramble</color> them! Uses up your turn.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4135507437639833257, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
       objectReference: {fileID: 0}
     - target: {fileID: 6748022944440307023, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_Name
@@ -2340,7 +2382,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1377439466573852872, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
 --- !u!1001 &2830677907597432991
 PrefabInstance:

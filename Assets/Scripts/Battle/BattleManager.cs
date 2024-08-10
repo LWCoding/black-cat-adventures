@@ -81,8 +81,8 @@ public class BattleManager : MonoBehaviour
             SubmitButton.Instance.TrySubmitCurrentWord();
         }
 
-        // If left/right shift is pressed, try to shuffle
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        // If tab is pressed, try to shuffle
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             ShuffleButton.Instance.TryShuffleBoard();
         }
