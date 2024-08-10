@@ -87,17 +87,17 @@ public class StatusHandler : MonoBehaviour
         if (_effects.Count % 2 == 0)
         {
             // Even number
-            startingOffset = new Vector3(-(_effects.Count / 2f) * spacePerStatus, 0);
+            startingOffset = new Vector3(0, -(_effects.Count / 2f) * spacePerStatus);
         }
         else
         {
             // Odd number
-            startingOffset = new Vector3(-(_effects.Count / 2f) * spacePerStatus, 0);
+            startingOffset = new Vector3(0, -(_effects.Count / 2f) * spacePerStatus);
         }
-        startingOffset += new Vector3(spacePerStatus / 2, 0);
+        startingOffset += new Vector3(0, spacePerStatus / 2);
         for (int i = 0; i < _effects.Count; i++) {
             // Calculate position based on # of letters
-            _statusObjects[i].transform.localPosition = startingOffset + new Vector3(spacePerStatus * i, 0, 0);
+            _statusObjects[i].transform.localPosition = startingOffset + new Vector3(0, spacePerStatus * i, 0);
             // Update the status information
             _statusObjects[i].UpdateStatusInfo(_effects[i]);
         }

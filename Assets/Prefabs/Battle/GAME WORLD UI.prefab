@@ -438,7 +438,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 230868370614572689}
-  - component: {fileID: 3439155538793221789}
   m_Layer: 0
   m_Name: Status Container
   m_TagString: Untagged
@@ -455,24 +454,12 @@ Transform:
   m_GameObject: {fileID: 1030966653344398579}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.51, y: 2.05, z: 0}
+  m_LocalPosition: {x: -1.51, y: 1.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1335532183028059603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3439155538793221789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1030966653344398579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a449f489b329a604b9157b9308a2f638, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1211203964635474899
 GameObject:
   m_ObjectHideFlags: 0
