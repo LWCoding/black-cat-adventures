@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f204c6d25f974b341b97368615df185c, type: 3}
+  m_Name: Strength Tile
+  m_EditorClassIdentifier: 
+  TileTypeName: 2
+  TileSprite: {fileID: 21300000, guid: f70f983b62a4ffb41946089bc5f1d774, type: 3}
+  TileSpriteColor: {r: 1, g: 1, b: 1, a: 1}
+  _strengthEffect: {fileID: 11400000, guid: 10a67663f471ab44a9691e5145894c21, type: 2}
