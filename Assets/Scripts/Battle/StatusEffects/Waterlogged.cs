@@ -11,6 +11,8 @@ public class Waterlogged : StatusEffect
     public override void ApplyEffect(CharacterHandler handler, int amplifier)
     {
         CurrAmplifier = amplifier;
+        // Subscribe to effect when applied
+        WordPreview.Instance.OnLetterTilesChanged += WaterlogEffect;
         return;
     }
 
@@ -23,7 +25,24 @@ public class Waterlogged : StatusEffect
             return CurrAmplifier == 0;
         }
         CurrAmplifier--;
+        // Unsubscribe from effect when it's time to remove
+        if (CurrAmplifier == 0)
+        {
+            WordPreview.Instance.OnLetterTilesChanged -= WaterlogEffect;
+        }
         return CurrAmplifier == 0;
+    }
+
+    private void WaterlogEffect()
+    {
+        if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord) && WordPreview.Instance.CurrentTiles.Count < 5)
+        {
+            DamageCalculator.RegisterScaledModifier("waterlogged", 0);
+        }
+        else
+        {
+            DamageCalculator.RegisterScaledModifier("waterlogged", 1);
+        }
     }
 
 }

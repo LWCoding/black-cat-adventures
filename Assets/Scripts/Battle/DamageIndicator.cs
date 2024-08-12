@@ -25,22 +25,25 @@ public class DamageIndicator : MonoBehaviour
     /// </summary>
     public void WhenDamageChanged()
     {
-        string word = WordPreview.Instance.CurrentWord;
-        bool isWordReal = WordGenerator.Instance.IsValidWord(word);
-        _objectToShow.SetActive(isWordReal);
-        if (isWordReal)
+        BattleManager.Instance.RunNextFrame(() =>
         {
-            int damage = DamageCalculator.CalculateDamage(WordPreview.Instance.CurrentTiles);
-            int damageFromMods = DamageCalculator.CalculateDamageFromModifiers(WordPreview.Instance.CurrentTiles);
-            if (damageFromMods == 0)
+            string word = WordPreview.Instance.CurrentWord;
+            bool isWordReal = WordGenerator.Instance.IsValidWord(word);
+            _objectToShow.SetActive(isWordReal);
+            if (isWordReal)
             {
-                _damageText.text = StringLayout.Replace("%d", damage.ToString());
-            } 
-            else
-            {
-                _damageText.text = StringLayout.Replace("%d", damage.ToString() + " <color='orange'>(" + (damageFromMods > 0 ? "+" : "-") + damageFromMods.ToString() + ")</color>");
+                int damage = DamageCalculator.CalculateDamage(WordPreview.Instance.CurrentTiles);
+                int damageFromMods = DamageCalculator.CalculateDamageFromModifiers(WordPreview.Instance.CurrentTiles);
+                if (damageFromMods == 0)
+                {
+                    _damageText.text = StringLayout.Replace("%d", damage.ToString());
+                }
+                else
+                {
+                    _damageText.text = StringLayout.Replace("%d", damage.ToString() + " <color=\"orange\">(" + (damageFromMods > 0 ? "+" : "") + damageFromMods.ToString() + ")</color>");
+                }
             }
-        }
+        });
     }
 
 }
