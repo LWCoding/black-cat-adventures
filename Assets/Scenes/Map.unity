@@ -491,7 +491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
       propertyPath: LevelName
-      value: Level2
+      value: Level3
       objectReference: {fileID: 0}
     - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
       propertyPath: _nextLevel
@@ -742,7 +742,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 3 and 4 are a WIP! They load level 2 :'')
+  m_text: 'Level 4 is a WIP! It loads level 3 :'')
 
     - LWCoding'
   m_isRightToLeft: 0
@@ -916,7 +916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
       propertyPath: LevelName
-      value: Level2
+      value: Level3
       objectReference: {fileID: 0}
     - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
       propertyPath: _prevLevel

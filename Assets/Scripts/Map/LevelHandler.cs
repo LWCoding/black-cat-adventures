@@ -12,6 +12,7 @@ public class LevelHandler : MonoBehaviour
     [Header("Object Assignments")]
     [SerializeField] private SpriteRenderer _moundSprite;
     [SerializeField] private TextMeshPro _levelText;
+    [SerializeField] private GameObject _lockObject;
     [Header("Level Properties")]
     public int LevelNumber = 0;
     public string LevelName;
@@ -83,6 +84,16 @@ public class LevelHandler : MonoBehaviour
         _pointerCursorOnHover = GetComponent<PointerCursorOnHover>();
         _animator.Play("Disabled");
         _levelText.text = LevelNumber.ToString();
+
+        // If we haven't completed this level, nor the previous level,
+        // then this level is locked
+        if (!GameManager.LevelsCompleted.Contains(LevelName) && _prevLevel != null && !GameManager.LevelsCompleted.Contains(_prevLevel.LevelName))
+        {
+            _lockObject.SetActive(true);
+        } else
+        {
+            _lockObject.SetActive(false);
+        }
     }
 
     /// <summary>

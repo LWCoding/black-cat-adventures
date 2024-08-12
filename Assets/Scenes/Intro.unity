@@ -1457,6 +1457,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1790409366}
   - component: {fileID: 1790409367}
+  - component: {fileID: 1790409368}
   m_Layer: 0
   m_Name: SCRIPTS
   m_TagString: Untagged
@@ -1492,6 +1493,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cutsceneAnimator: {fileID: 295034623}
+  _sceneNameAfterCutscene: Level1
+--- !u!114 &1790409368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790409365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a99a0af7597e8143bbcd6e91946f165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _sceneNameAfterCutscene: Level1
 --- !u!1 &1884748293
 GameObject:
