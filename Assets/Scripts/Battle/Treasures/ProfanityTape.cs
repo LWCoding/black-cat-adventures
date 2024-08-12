@@ -21,13 +21,10 @@ public class ProfanityTape : Treasure
                     }
                     WordPreview.Instance.FeedbackText.text += "Profane!";
                 });
-            }
-        };
-        BattleManager.Instance.OnPlayerAttack += () =>
-        {
-            if (WordGenerator.Instance.IsProfaneWord(WordPreview.Instance.CurrentWord))
+                DamageCalculator.RegisterFlatModifier("profanitytape", WordPreview.Instance.CurrentWord.Length);
+            } else
             {
-                BattleManager.Instance.RenderAttackAgainstEnemy(WordPreview.Instance.CurrentWord.Length);
+                DamageCalculator.RegisterFlatModifier("profanitytape", 0);
             }
         };
     }

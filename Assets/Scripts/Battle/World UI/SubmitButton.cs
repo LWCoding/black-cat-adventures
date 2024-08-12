@@ -81,8 +81,7 @@ public class SubmitButton : MonoBehaviour
         if (BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }
         OnClickButton?.Invoke();
         // Algorithm to determine damage from word!
-        int wordLength = WordPreview.Instance.CurrentWord.Length;
-        int damageDealt = WordGenerator.Instance.CalculateDamage(WordPreview.Instance.CurrentTiles);
+        int damageDealt = DamageCalculator.CalculateDamage(WordPreview.Instance.CurrentTiles);
         // See if we should spawn any special tile in the next roll
         TileTypeName specialTile = WordGenerator.Instance.GetTileTypeNameByDamage(damageDealt);
         // For every letter, render tile effects if any exist

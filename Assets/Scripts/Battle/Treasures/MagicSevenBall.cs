@@ -21,13 +21,10 @@ public class MagicSevenBall : Treasure
                     }
                     WordPreview.Instance.FeedbackText.text += "Seven!";
                 });
-            }
-        };
-        BattleManager.Instance.OnPlayerAttack += () =>
-        {
-            if (WordPreview.Instance.CurrentTiles.Count == 7)
+                DamageCalculator.RegisterFlatModifier("magicsevenball", 7);
+            } else
             {
-                BattleManager.Instance.RenderAttackAgainstEnemy(7);
+                DamageCalculator.RegisterFlatModifier("magicsevenball", 0);
             }
         };
     }

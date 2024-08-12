@@ -7,10 +7,7 @@ public class LuckyCatPaw : Treasure
 {
     public override void ActivateTreasure()
     {
-        BattleManager.Instance.OnPlayerAttack += () =>
-        {
-            BattleManager.Instance.RenderAttackAgainstEnemy(1);
-        };
+        DamageCalculator.RegisterFlatModifier("luckycatpaw", 1);
     }
 
 }

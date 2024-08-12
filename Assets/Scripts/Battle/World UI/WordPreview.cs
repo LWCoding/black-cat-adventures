@@ -68,10 +68,18 @@ public class WordPreview : MonoBehaviour
         {
             FeedbackText.enabled = false;
             if (!WordGenerator.Instance.IsValidWord(CurrentWord)) { return; }
-            float wordDamage = WordGenerator.Instance.CalculateDamage(CurrentTiles);
+            float wordDamage = DamageCalculator.CalculateDamage(CurrentTiles, true);
             if (wordDamage < 7) { return; }
             FeedbackText.enabled = true;
-            if (wordDamage >= 20)
+            if (wordDamage >= 45)
+            {
+                FeedbackText.text = "Otherworldly...";
+            }
+            else if (wordDamage >= 30)
+            {
+                FeedbackText.text = "Insanity!";
+            }
+            else if (wordDamage >= 20)
             {
                 FeedbackText.text = "Spectacular!";
             } 
