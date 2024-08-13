@@ -1102,7 +1102,7 @@ PrefabInstance:
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: _charData
       value: 
-      objectReference: {fileID: 11400000, guid: 2b9fdc57ab124aa43ab2c5361d794609, type: 2}
+      objectReference: {fileID: 11400000, guid: 715314df37b44d542a33d3bd8fa89785, type: 2}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: _nextEnemyObject
       value: 
