@@ -11,6 +11,7 @@ public class Waterlogged : StatusEffect
     public override void ApplyEffect(CharacterHandler handler, int amplifier)
     {
         CurrAmplifier = amplifier;
+        if (handler is not PlayerHandler) { return; }  // If not player, ignore subscribing
         // Subscribe to effect when applied
         WordPreview.Instance.OnLetterTilesChanged += WaterlogEffect;
         return;
@@ -28,6 +29,7 @@ public class Waterlogged : StatusEffect
         // Unsubscribe from effect when it's time to remove
         if (CurrAmplifier == 0)
         {
+            if (handler is not PlayerHandler) { return true; }  // If not player, ignore subscribing
             WordPreview.Instance.OnLetterTilesChanged -= WaterlogEffect;
         }
         return CurrAmplifier == 0;
@@ -38,6 +40,14 @@ public class Waterlogged : StatusEffect
         if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord) && WordPreview.Instance.CurrentTiles.Count < 5)
         {
             DamageCalculator.RegisterScaledModifier("waterlogged", 0);
+            BattleManager.Instance.RunNextFrame(() =>
+            {
+                if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord))
+                {
+                    WordPreview.Instance.FeedbackText.enabled = true;
+                    WordPreview.Instance.FeedbackText.text = "Waterlogged...";
+                }
+            });
         }
         else
         {

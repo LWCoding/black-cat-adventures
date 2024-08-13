@@ -37,7 +37,7 @@ public class TreasureItem : MonoBehaviour
     {
         TreasureData = treasureData;
         _iconRenderer.sprite = TreasureData.TreasureIcon;
-        _tooltipText.text = "<b>" + TreasureData.TreasureName + "</b>:\n" + TreasureData.TreasureDescription;
+        _tooltipText.text = "<b><color=\"orange\">" + TreasureData.TreasureName + "</color></b>:\n" + TreasureData.TreasureDescription;
         TreasureData.ActivateTreasure();
         OnMouseExit();
     }

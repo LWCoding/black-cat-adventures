@@ -170,7 +170,7 @@ public class WordGenerator : MonoBehaviour
             return TileTypeName.POISON;
         } else if (damageDealt > 12)
         {
-            return TileTypeName.STRENGTH;
+            return TileTypeName.HEAL;
         } else if (damageDealt > 8)
         {
             return TileTypeName.POISON;

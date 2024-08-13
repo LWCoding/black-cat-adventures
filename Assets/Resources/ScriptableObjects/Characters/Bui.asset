@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
   m_Name: Bui
   m_EditorClassIdentifier: 
-  StartingHealth: 1
+  StartingHealth: 25
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 171c650ccf527bb4d88860a9271669e1, type: 3}
     Offset: {x: 0.7, y: 0.9}
@@ -28,16 +28,16 @@ MonoBehaviour:
   Attacks:
   - IconSprite: {fileID: 21300000, guid: 661f460c56974844ca9a2748f8a9a2d1, type: 3}
     AttackName: Pierce
-    _attackDescription: fgg
+    _attackDescription: Pokes you with the pokey stick, dealing %d damage.
+    Damage: 3
+    AnimType: 0
+    InflictedStatuses: []
+  - IconSprite: {fileID: 21300000, guid: 72b3fc3a151c537499dbd209ea2c0cd2, type: 3}
+    AttackName: Geyser Pressure
+    _attackDescription: Blub-blub-blub! Inflicts Waterlogged.
     Damage: 0
     AnimType: 0
     InflictedStatuses:
     - Target: 0
       Status: {fileID: 11400000, guid: 8157d86778283a542acecf088bd7a052, type: 2}
-      Amplifier: 3
-  - IconSprite: {fileID: 21300000, guid: 72b3fc3a151c537499dbd209ea2c0cd2, type: 3}
-    AttackName: Water Spout
-    _attackDescription: sdfg
-    Damage: 0
-    AnimType: 0
-    InflictedStatuses: []
+      Amplifier: 2

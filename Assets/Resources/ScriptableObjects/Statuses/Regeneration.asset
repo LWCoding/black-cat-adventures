@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 426e616f127ca6942817a52a3d47db9b, type: 3}
-  m_Name: Poison
+  m_Script: {fileID: 11500000, guid: 26d005fd853567643b3c11fc40e0396f, type: 3}
+  m_Name: Regeneration
   m_EditorClassIdentifier: 
-  Name: Poison
-  Description: Every turn, take damage equal to turn count (%d).
-  Icon: {fileID: 21300000, guid: 56611bd15b94732499231d9b57258700, type: 3}
+  Name: Regeneration
+  Description: Every turn, heal health equal to turn count (%d).
+  Icon: {fileID: 21300000, guid: 92ac50f76d0692547b36c9edefda0fd6, type: 3}
   CurrAmplifier: 0

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f204c6d25f974b341b97368615df185c, type: 3}
-  m_Name: Strength Tile
+  m_Name: Heal Tile
   m_EditorClassIdentifier: 
   TileTypeName: 2
-  TileSprite: {fileID: 21300000, guid: f70f983b62a4ffb41946089bc5f1d774, type: 3}
-  TileSpriteColor: {r: 1, g: 1, b: 1, a: 1}
-  _strengthEffect: {fileID: 11400000, guid: 10a67663f471ab44a9691e5145894c21, type: 2}
+  TileSprite: {fileID: 21300000, guid: 98efca216223f00479fa4eef009f863e, type: 3}
+  TileSpriteColor: {r: 0.8039216, g: 0.8039216, b: 0.8039216, a: 1}
+  _regenEffect: {fileID: 11400000, guid: 6d5b6d6fa9b9035408af7792396941fa, type: 2}

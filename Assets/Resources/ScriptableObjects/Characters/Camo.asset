@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
   m_Name: Camo
   m_EditorClassIdentifier: 
-  StartingHealth: 20
+  StartingHealth: 30
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 3cca3f354b1afbb44aebf83c469a18ea, type: 3}
     Offset: {x: 0.7, y: 0.9}
@@ -23,11 +23,24 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 471a2f4531e78f0489c43e35abfe7b9e, type: 3}
     Offset: {x: 0.7, y: 0.7}
   SpriteScale: {x: 0.85, y: 0.85}
-  EnemyDescription: cadfkasjdflkasdf
+  EnemyDescription: Stop asking! They're an axolotl mixed with a dutch angel dragon,
+    sheesh.
   Attacks:
-  - IconSprite: {fileID: 0}
-    AttackName: 
-    _attackDescription: 
-    Damage: 0
+  - IconSprite: {fileID: 21300000, guid: 43c7249dfdfb98641b933ea371586bee, type: 3}
+    AttackName: Chucked
+    _attackDescription: Nun-chucks you, dealing %d damage. Inflicts Bruise.
+    Damage: 3
     AnimType: 0
-    InflictedStatuses: []
+    InflictedStatuses:
+    - Target: 0
+      Status: {fileID: 11400000, guid: 10a67663f471ab44a9691e5145894c21, type: 2}
+      Amplifier: 2
+  - IconSprite: {fileID: 21300000, guid: cacd7b43b99420e499b30f9f24792060, type: 3}
+    AttackName: Water Gun
+    _attackDescription: Deals %d damage. Inflicts Waterlogged.
+    Damage: 2
+    AnimType: 0
+    InflictedStatuses:
+    - Target: 0
+      Status: {fileID: 11400000, guid: 8157d86778283a542acecf088bd7a052, type: 2}
+      Amplifier: 2

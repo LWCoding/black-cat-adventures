@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Strength Tile", menuName = "Tile Type/Strength Tile")]
-public class StrengthTile : TileType
+[CreateAssetMenu(fileName = "Heal Tile", menuName = "Tile Type/Heal Tile")]
+public class HealTile : TileType
 {
 
-    [Header("Strength Properties")]
-    [SerializeField] private StatusEffect _strengthEffect;
+    [Header("Heal Properties")]
+    [SerializeField] private StatusEffect _regenEffect;
 
     public override void ActivateTileEffects()
     {
-        BattleManager.Instance.CurrEnemyHandler.StatusHandler.GainStatusEffect(_strengthEffect, 3);
+        BattleManager.Instance.PlayerHandler.StatusHandler.GainStatusEffect(_regenEffect, 3);
     }
 
 }

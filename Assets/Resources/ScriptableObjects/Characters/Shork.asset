@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
   m_Name: Shork
   m_EditorClassIdentifier: 
-  StartingHealth: 2
+  StartingHealth: 25
   AliveSprite:
     Sprite: {fileID: 21300000, guid: cf2e706d3681c5040869bf394968da62, type: 3}
     Offset: {x: 0.7, y: 0.9}
@@ -23,17 +23,21 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: df97ec0ada0232940aa06776b74c4fba, type: 3}
     Offset: {x: 0.7, y: 0.9}
   SpriteScale: {x: 0.85, y: 0.85}
-  EnemyDescription: 
+  EnemyDescription: Hasn't been able to eat sashimi ever since he joined the marine
+    society.
   Attacks:
   - IconSprite: {fileID: 21300000, guid: fed926d6648f2aa499f49f359ab18c90, type: 3}
-    AttackName: asgdf
-    _attackDescription: dfg
-    Damage: 0
+    AttackName: Chomp
+    _attackDescription: Bites down on you, dealing %d damage.
+    Damage: 4
     AnimType: 0
     InflictedStatuses: []
   - IconSprite: {fileID: 21300000, guid: cf208220763272a47962bcccb7035f1f, type: 3}
-    AttackName: rg
-    _attackDescription: fgsdfg
-    Damage: 0
+    AttackName: Whirlpool Punch
+    _attackDescription: Deals %d damage. Inflicts Waterlogged.
+    Damage: 2
     AnimType: 0
-    InflictedStatuses: []
+    InflictedStatuses:
+    - Target: 0
+      Status: {fileID: 11400000, guid: 8157d86778283a542acecf088bd7a052, type: 2}
+      Amplifier: 1

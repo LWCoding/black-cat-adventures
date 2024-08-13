@@ -99,6 +99,9 @@ public class HealthHandler : MonoBehaviour
         {
             CurrentHealth = _maxHealth;
         }
+        // Spawn a falling text prefab to emphasize damage taken
+        GameObject fallingText = Instantiate(_fallingTextPrefab, _fallingTextSpawnpoint);
+        fallingText.GetComponent<FallingText>().Initialize("+" + healthHealed.ToString(), new Color(0.02f, 1, 0.02f));
     }
 
 }
