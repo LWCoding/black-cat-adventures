@@ -7,7 +7,7 @@ public static class DamageCalculator
 
     private readonly static Dictionary<string, int> _flatModifiers = new();  // Modifiers that add/subtract
     private readonly static Dictionary<string, float> _scaleModifiers = new();  // Modifiers that mult/divide
-    private static int _currLevel;
+    private static string _currLevelSceneName;
 
     /// <summary>
     /// Register a new flat modifier onto the damage value.
@@ -16,11 +16,11 @@ public static class DamageCalculator
     /// </summary>
     public static void RegisterFlatModifier(string key, int mod, bool addOntoPreexistingValue = false)
     {
-        if (_currLevel != GameManager.CurrLevel)
+        if (_currLevelSceneName != GameManager.CurrLevelSceneName)
         {
             ResetModifiers();
         }
-        _currLevel = GameManager.CurrLevel;
+        _currLevelSceneName = GameManager.CurrLevelSceneName;
         if (!_flatModifiers.ContainsKey(key))
         {
             _flatModifiers[key] = 0;
@@ -35,11 +35,11 @@ public static class DamageCalculator
     /// </summary>
     public static void RegisterScaledModifier(string key, float mod, bool multiplyByPreexistingValue = false)
     {
-        if (_currLevel != GameManager.CurrLevel)
+        if (_currLevelSceneName != GameManager.CurrLevelSceneName)
         {
             ResetModifiers();
         }
-        _currLevel = GameManager.CurrLevel;
+        _currLevelSceneName = GameManager.CurrLevelSceneName;
         if (!_scaleModifiers.ContainsKey(key))
         {
             _scaleModifiers[key] = 0;

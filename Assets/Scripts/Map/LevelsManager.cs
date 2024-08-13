@@ -27,13 +27,32 @@ public class LevelsManager : MonoBehaviour
     [SerializeField] private Vector3 _iconOffsetFromLevel;  // Offset between player icon and level
 
     private LevelHandler _currSelectedLevel;
+    private List<LevelHandler> _allLevelHandlers;
     public string GetCurrentLevelString() => _currSelectedLevel.LevelName;  // Scene name of level selected
 
     public Action<int> OnLevelChanged = null;
 
+    private void Awake()
+    {
+        _allLevelHandlers = new(FindObjectsOfType<LevelHandler>());
+    }
+
     private void Start()
     {
-        SelectNewLevel(_firstLevel);
+        // Find current level, start at it
+        foreach (LevelHandler lh in _allLevelHandlers)
+        {
+            if (lh.LevelName == GameManager.CurrLevelSceneName)
+            {
+                SelectNewLevel(lh);
+                break;
+            }
+        }
+        // Animate player to next level, since they've completed this
+        if (_currSelectedLevel.NextLevel != null)
+        {
+            SelectNewLevel(_currSelectedLevel.NextLevel);
+        }
     }
 
     /// <summary>

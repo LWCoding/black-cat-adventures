@@ -31,6 +31,6 @@ public static class GameManager
 
     public static List<string> LevelsCompleted = new();
 
-    public static int CurrLevel = 0;
+    public static string CurrLevelSceneName = "";
 
 }

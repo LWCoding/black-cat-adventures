@@ -494,6 +494,10 @@ PrefabInstance:
       value: Level3
       objectReference: {fileID: 0}
     - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
+      propertyPath: NextLevel
+      value: 
+      objectReference: {fileID: 1524067134}
+    - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
       propertyPath: _nextLevel
       value: 
       objectReference: {fileID: 1524067134}
@@ -505,6 +509,10 @@ PrefabInstance:
       propertyPath: LevelNumber
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
+      propertyPath: PreviousLevel
+      value: 
+      objectReference: {fileID: 1578365503}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -742,7 +750,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 4 is a WIP! It loads level 3 :'')
+  m_text: 'Level 4 is a challenge level lol
 
     - LWCoding'
   m_isRightToLeft: 0
@@ -926,6 +934,10 @@ PrefabInstance:
       propertyPath: LevelNumber
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
+      propertyPath: PreviousLevel
+      value: 
+      objectReference: {fileID: 506515321}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1453,6 +1465,10 @@ PrefabInstance:
       value: Level2
       objectReference: {fileID: 0}
     - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
+      propertyPath: NextLevel
+      value: 
+      objectReference: {fileID: 506515321}
+    - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
       propertyPath: _nextLevel
       value: 
       objectReference: {fileID: 506515321}
@@ -1464,6 +1480,10 @@ PrefabInstance:
       propertyPath: LevelNumber
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
+      propertyPath: PreviousLevel
+      value: 
+      objectReference: {fileID: 1021857347}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1990,6 +2010,10 @@ PrefabInstance:
       propertyPath: LevelName
       value: Level1
       objectReference: {fileID: 0}
+    - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
+      propertyPath: NextLevel
+      value: 
+      objectReference: {fileID: 1578365503}
     - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
       propertyPath: _nextLevel
       value: 

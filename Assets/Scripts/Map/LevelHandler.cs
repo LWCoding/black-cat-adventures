@@ -17,8 +17,8 @@ public class LevelHandler : MonoBehaviour
     public int LevelNumber = 0;
     public string LevelName;
     [Header("Level Assignments")]
-    [SerializeField] private LevelHandler _prevLevel;
-    [SerializeField] private LevelHandler _nextLevel;
+    public LevelHandler PreviousLevel;
+    public LevelHandler NextLevel;
 
     private bool _isCurrentLevel = false;   // True if this level is current selected level, else False
     
@@ -31,25 +31,25 @@ public class LevelHandler : MonoBehaviour
             if (IsCurrentLevel)
             {
                 // If this is now the current level, make prev visitable
-                if (_prevLevel != null)
+                if (PreviousLevel != null)
                 {
-                    _prevLevel.IsLevelVisitable = true;
+                    PreviousLevel.IsLevelVisitable = true;
                 }
                 // If we've completed the current level, allow access to next level
-                if (_nextLevel != null && GameManager.LevelsCompleted.Contains(LevelName))
+                if (NextLevel != null && GameManager.LevelsCompleted.Contains(LevelName))
                 {
-                    _nextLevel.IsLevelVisitable = true;
+                    NextLevel.IsLevelVisitable = true;
                 }
             } else 
             {
                 // If this is no longer the current level, disable prev and next
-                if (_prevLevel != null)
+                if (PreviousLevel != null)
                 {
-                    _prevLevel.IsLevelVisitable = false;
+                    PreviousLevel.IsLevelVisitable = false;
                 }
-                if (_nextLevel != null)
+                if (NextLevel != null)
                 {
-                    _nextLevel.IsLevelVisitable = false;
+                    NextLevel.IsLevelVisitable = false;
                 }
             }
         }
@@ -87,7 +87,7 @@ public class LevelHandler : MonoBehaviour
 
         // If we haven't completed this level, nor the previous level,
         // then this level is locked
-        if (!GameManager.LevelsCompleted.Contains(LevelName) && _prevLevel != null && !GameManager.LevelsCompleted.Contains(_prevLevel.LevelName))
+        if (!GameManager.LevelsCompleted.Contains(LevelName) && PreviousLevel != null && !GameManager.LevelsCompleted.Contains(PreviousLevel.LevelName))
         {
             _lockObject.SetActive(true);
         } else
