@@ -519,7 +519,7 @@ PrefabInstance:
     - target: {fileID: 958771918092839361, guid: db67044af50412c46b57ed173b8b05cc, type: 3}
       propertyPath: _treasureData
       value: 
-      objectReference: {fileID: 11400000, guid: fc881eb429299984398219c42713d5b5, type: 2}
+      objectReference: {fileID: 11400000, guid: f1d790f6c729dde41a589b0a167ec9d7, type: 2}
     - target: {fileID: 4318563916981795719, guid: db67044af50412c46b57ed173b8b05cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21.54
@@ -759,7 +759,7 @@ PrefabInstance:
       objectReference: {fileID: 1076895839}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[0].Text
@@ -767,7 +767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[1].Text
-      value: ...
+      value: This is a robbery, give me all you got.
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[2].Text
@@ -807,7 +807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: DialogueToPlayOnMeet.Array.data[1].ShouldStallState
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3562384217587314728, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -895,7 +895,7 @@ PrefabInstance:
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: _charData
       value: 
-      objectReference: {fileID: 11400000, guid: b15e60c37da61264ab419c604beac0ac, type: 2}
+      objectReference: {fileID: 11400000, guid: 802e5aa283fd2a841a4aa0c83dd7d2c7, type: 2}
     - target: {fileID: 3112551711344366463, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: _nextEnemyObject
       value: 

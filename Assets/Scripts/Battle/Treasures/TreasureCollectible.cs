@@ -29,7 +29,7 @@ public class TreasureCollectible : MonoBehaviour
     public void Initialize()
     {
         _iconRenderer.sprite = _treasureData.TreasureIcon;
-        _tooltipText.text = "<b>" + _treasureData.TreasureName + "</b>:\n" + _treasureData.TreasureDescription;
+        _tooltipText.text = "<color=\"orange\"><b>" + _treasureData.TreasureName + "</b></color>:\n" + _treasureData.TreasureDescription;
     }
 
     public void OnMouseOver()
@@ -78,6 +78,10 @@ public class TreasureCollectible : MonoBehaviour
         }
         // Make the player obtain the treasure
         GameManager.EquippedTreasures.Add(_treasureData);
+        if (GameManager.EquippedTreasures.Count > 3)
+        {
+            GameManager.EquippedTreasures.RemoveAt(0);  // TODO: REMOVE THIS!! THIS REPLACES OLD TREASURES
+        }
         // Go to win state afterwards
         yield return new WaitForSeconds(0.5f);
         BattleManager.Instance.SetState(new WinState());

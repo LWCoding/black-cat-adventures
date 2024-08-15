@@ -67,6 +67,7 @@ public class WordPreview : MonoBehaviour
         OnLetterTilesChanged += () =>
         {
             FeedbackText.enabled = false;
+            FeedbackText.text = "";
             if (!WordGenerator.Instance.IsValidWord(CurrentWord)) { return; }
             float wordDamage = DamageCalculator.CalculateDamage(CurrentTiles, true);
             if (wordDamage < 7) { return; }

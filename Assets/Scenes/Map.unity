@@ -750,7 +750,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Level 4 is a challenge level lol
+  m_text: 'Treasures cap at three so new treasures replace old treasures for now,
+    will fix later
 
     - LWCoding'
   m_isRightToLeft: 0
@@ -924,7 +925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
       propertyPath: LevelName
-      value: Level3
+      value: Level4
       objectReference: {fileID: 0}
     - target: {fileID: 8762918941323845813, guid: 420e1e0ecb5e33c43931efa8c52f37f5, type: 3}
       propertyPath: _prevLevel

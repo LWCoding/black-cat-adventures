@@ -27,18 +27,7 @@ public class Tile
         set
         {
             _letters = value.ToLower();
-            if ("jkxzq".Contains(_letters))
-            {
-                DamageType = TileDamage.HIGH;
-            }
-            else if ("bcfgmpvwy".Contains(_letters))
-            {
-                DamageType = TileDamage.MEDIUM;
-            }
-            else
-            {
-                DamageType = TileDamage.LOW;
-            }
+            DamageType = GetTileDamageFromLetters(_letters);
         }
     }
 
@@ -56,6 +45,23 @@ public class Tile
     public void SetType(TileTypeName tileTypeName)
     {
         CurrTileType = WordGenerator.TileTypes[tileTypeName];
+    }
+
+    public static TileDamage GetTileDamageFromLetters(string letters)
+    {
+        letters = letters.ToLower();
+        if ("jkxzq".Contains(letters))
+        {
+            return TileDamage.HIGH;
+        }
+        else if ("bcfgmpvwy".Contains(letters))
+        {
+            return TileDamage.MEDIUM;
+        }
+        else
+        {
+            return TileDamage.LOW;
+        }
     }
 
 }
