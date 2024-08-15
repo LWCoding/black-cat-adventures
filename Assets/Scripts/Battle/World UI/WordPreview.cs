@@ -66,8 +66,6 @@ public class WordPreview : MonoBehaviour
         // Edit the feedback text based on # of letters in word, if valid
         OnLetterTilesChanged += () =>
         {
-            FeedbackText.enabled = false;
-            FeedbackText.text = "";
             if (!WordGenerator.Instance.IsValidWord(CurrentWord)) { return; }
             float wordDamage = DamageCalculator.CalculateDamage(CurrentTiles, true);
             if (wordDamage < 7) { return; }
@@ -194,6 +192,10 @@ public class WordPreview : MonoBehaviour
         {
             Destroy(o);
         }
+        // Hide preview text (this should be updated after the function)
+        FeedbackText.enabled = false;
+        FeedbackText.text = "";
+        // Clear list of tiles
         _previewLetterTiles.Clear();
         // Calculate starting position based on # of letters
         float spacePerTile = _previewLetterPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.bounds.size.x * _previewLetterPrefab.transform.localScale.x + SPACE_BETWEEN_TILES;

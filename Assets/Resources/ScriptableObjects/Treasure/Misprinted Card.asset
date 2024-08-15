@@ -15,4 +15,4 @@ MonoBehaviour:
   TreasureName: Misprinted Card
   TreasureDescription: Using duplicate tiles in a word deals extra damage!
   TreasureIcon: {fileID: 21300000, guid: b4b50ceef7b347f4e8b8bbcef65a4727, type: 3}
-  IsUnlockedByDefault: 0
+  IsUnlockedByDefault: 1

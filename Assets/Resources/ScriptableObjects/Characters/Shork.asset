@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
   m_Name: Shork
   m_EditorClassIdentifier: 
-  StartingHealth: 25
+  StartingHealth: 40
   AliveSprite:
     Sprite: {fileID: 21300000, guid: cf2e706d3681c5040869bf394968da62, type: 3}
     Offset: {x: 0.7, y: 0.9}

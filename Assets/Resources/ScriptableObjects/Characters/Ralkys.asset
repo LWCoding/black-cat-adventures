@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
   m_Name: Ralkys
   m_EditorClassIdentifier: 
-  StartingHealth: 20
+  StartingHealth: 30
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 344df69b3b1b5cf4795c24c27cb7bc36, type: 3}
     Offset: {x: 0.7, y: 0.9}
@@ -28,7 +28,7 @@ MonoBehaviour:
   - IconSprite: {fileID: 21300000, guid: 107d6143752bdd14b8867f686f8325ae, type: 3}
     AttackName: Poison Arrow
     _attackDescription: Fling! Deals %d damage and inflicts Poison.
-    Damage: 1
+    Damage: 2
     AnimType: 0
     InflictedStatuses:
     - Target: 0

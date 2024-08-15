@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
   m_Name: Bui
   m_EditorClassIdentifier: 
-  StartingHealth: 25
+  StartingHealth: 30
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 171c650ccf527bb4d88860a9271669e1, type: 3}
     Offset: {x: 0.7, y: 0.9}
