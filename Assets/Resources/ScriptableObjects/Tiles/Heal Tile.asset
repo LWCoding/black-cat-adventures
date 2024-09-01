@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Heal Tile
   m_EditorClassIdentifier: 
   TileTypeName: 2
-  TileSprite: {fileID: 21300000, guid: 98efca216223f00479fa4eef009f863e, type: 3}
+  TileSprite: {fileID: 21300000, guid: 5c8567a2e157cd44a94684e42215c882, type: 3}
   TileSpriteColor: {r: 1, g: 1, b: 1, a: 1}
   _regenEffect: {fileID: 11400000, guid: 6d5b6d6fa9b9035408af7792396941fa, type: 2}
