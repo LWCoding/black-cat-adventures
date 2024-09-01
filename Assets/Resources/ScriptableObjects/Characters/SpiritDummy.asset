@@ -27,12 +27,6 @@ MonoBehaviour:
     Heart moment?
   Attacks:
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
-    AttackName: Stare
-    _attackDescription: Does nothing.
-    Damage: 0
-    AnimType: 2
-    InflictedStatuses: []
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Ultra-Stare
     _attackDescription: Does everything. And %d damage cuz screw you.
     Damage: 5
