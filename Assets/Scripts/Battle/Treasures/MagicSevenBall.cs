@@ -10,9 +10,9 @@ public class MagicSevenBall : Treasure
     {
         WordPreview.Instance.OnLetterTilesChanged += () =>
         {
-            if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord) && WordPreview.Instance.CurrentTiles.Count == 7)
+            BattleManager.Instance.RunNextFrame(() =>
             {
-                BattleManager.Instance.RunNextFrame(() =>
+                if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord) && WordPreview.Instance.CurrentTiles.Count == 7)
                 {
                     WordPreview.Instance.FeedbackText.enabled = true;
                     if (WordPreview.Instance.FeedbackText.text != "")
@@ -20,12 +20,13 @@ public class MagicSevenBall : Treasure
                         WordPreview.Instance.FeedbackText.text += " ";
                     }
                     WordPreview.Instance.FeedbackText.text += "Seven!";
-                });
-                DamageCalculator.RegisterFlatModifier("magicsevenball", 7);
-            } else
-            {
-                DamageCalculator.RegisterFlatModifier("magicsevenball", 0);
-            }
+                    DamageCalculator.RegisterFlatModifier("magicsevenball", 7);
+                }
+                else
+                {
+                    DamageCalculator.RegisterFlatModifier("magicsevenball", 0);
+                }
+            });
         };
     }
 

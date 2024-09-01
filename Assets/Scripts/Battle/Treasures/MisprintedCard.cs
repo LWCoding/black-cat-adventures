@@ -10,9 +10,9 @@ public class MisprintedCard : Treasure
     {
         WordPreview.Instance.OnLetterTilesChanged += () =>
         {
-            if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord) && ContainsDuplicateLetters(WordPreview.Instance.CurrentWord))
+            BattleManager.Instance.RunNextFrame(() =>
             {
-                BattleManager.Instance.RunNextFrame(() =>
+                if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord) && ContainsDuplicateLetters(WordPreview.Instance.CurrentWord))
                 {
                     WordPreview.Instance.FeedbackText.enabled = true;
                     if (WordPreview.Instance.FeedbackText.text != "")
@@ -20,13 +20,13 @@ public class MisprintedCard : Treasure
                         WordPreview.Instance.FeedbackText.text += " ";
                     }
                     WordPreview.Instance.FeedbackText.text += "Misprint!";
-                });
-                DamageCalculator.RegisterFlatModifier("misprintcard", 3);
-            }
-            else
-            {
-                DamageCalculator.RegisterFlatModifier("misprintcard", 0);
-            }
+                    DamageCalculator.RegisterFlatModifier("misprintcard", 3);
+                }
+                else
+                {
+                    DamageCalculator.RegisterFlatModifier("misprintcard", 0);
+                }
+            });
         };
     }
 

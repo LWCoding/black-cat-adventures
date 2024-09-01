@@ -10,9 +10,10 @@ public class ProfanityTape : Treasure
     {
         WordPreview.Instance.OnLetterTilesChanged += () =>
         {
-            if (WordGenerator.Instance.IsProfaneWord(WordPreview.Instance.CurrentWord))
+
+            BattleManager.Instance.RunNextFrame(() =>
             {
-                BattleManager.Instance.RunNextFrame(() =>
+                if (WordGenerator.Instance.IsProfaneWord(WordPreview.Instance.CurrentWord))
                 {
                     WordPreview.Instance.FeedbackText.enabled = true;
                     if (WordPreview.Instance.FeedbackText.text != "")
@@ -20,12 +21,14 @@ public class ProfanityTape : Treasure
                         WordPreview.Instance.FeedbackText.text += " ";
                     }
                     WordPreview.Instance.FeedbackText.text += "Profane!";
-                });
-                DamageCalculator.RegisterFlatModifier("profanitytape", WordPreview.Instance.CurrentWord.Length);
-            } else
-            {
-                DamageCalculator.RegisterFlatModifier("profanitytape", 0);
-            }
+
+                    DamageCalculator.RegisterFlatModifier("profanitytape", WordPreview.Instance.CurrentWord.Length);
+                }
+                else
+                {
+                    DamageCalculator.RegisterFlatModifier("profanitytape", 0);
+                }
+            });
         };
     }
 
