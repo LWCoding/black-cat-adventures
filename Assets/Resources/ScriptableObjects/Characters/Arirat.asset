@@ -29,7 +29,7 @@ MonoBehaviour:
   - IconSprite: {fileID: 21300000, guid: dd7f451d594bf304397139d704047a89, type: 3}
     AttackName: Nibble
     _attackDescription: Does a big chomp, dealing %d damage.
-    Damage: 2
+    Damage: 3
     AnimType: 0
     InflictedStatuses: []
   - IconSprite: {fileID: 21300000, guid: 1c04494dd6f48f2488cdacce0226af60, type: 3}

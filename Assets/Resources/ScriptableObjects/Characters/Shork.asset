@@ -35,7 +35,7 @@ MonoBehaviour:
   - IconSprite: {fileID: 21300000, guid: cf208220763272a47962bcccb7035f1f, type: 3}
     AttackName: Whirlpool Punch
     _attackDescription: Deals %d damage. Inflicts Waterlogged.
-    Damage: 2
+    Damage: 3
     AnimType: 0
     InflictedStatuses:
     - Target: 0

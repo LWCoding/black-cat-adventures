@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Regeneration
   m_EditorClassIdentifier: 
   Name: Regeneration
-  Description: Every turn, heal health equal to turn count (%d).
+  Description: Every turn, heal health equal to turn count, capped at 3.
   Icon: {fileID: 21300000, guid: 92ac50f76d0692547b36c9edefda0fd6, type: 3}
   CurrAmplifier: 0

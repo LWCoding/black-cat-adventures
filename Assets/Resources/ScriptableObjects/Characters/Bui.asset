@@ -29,7 +29,7 @@ MonoBehaviour:
   - IconSprite: {fileID: 21300000, guid: 661f460c56974844ca9a2748f8a9a2d1, type: 3}
     AttackName: Pierce
     _attackDescription: Pokes you with the pokey stick, dealing %d damage.
-    Damage: 3
+    Damage: 5
     AnimType: 0
     InflictedStatuses: []
   - IconSprite: {fileID: 21300000, guid: 72b3fc3a151c537499dbd209ea2c0cd2, type: 3}

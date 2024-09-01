@@ -28,7 +28,7 @@ MonoBehaviour:
   - IconSprite: {fileID: 21300000, guid: 107d6143752bdd14b8867f686f8325ae, type: 3}
     AttackName: Poison Arrow
     _attackDescription: Fling! Deals %d damage and inflicts Poison.
-    Damage: 2
+    Damage: 3
     AnimType: 0
     InflictedStatuses:
     - Target: 0

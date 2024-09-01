@@ -14,7 +14,7 @@ public class Regeneration : StatusEffect
 
     public override bool UpdateEffect(CharacterHandler handler)
     {
-        handler.HealthHandler.HealHealth(CurrAmplifier);
+        handler.HealthHandler.HealHealth(Mathf.Min(3, CurrAmplifier));
         CurrAmplifier--;
         return CurrAmplifier == 0;
     }
