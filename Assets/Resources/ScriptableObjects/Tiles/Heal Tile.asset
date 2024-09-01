@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileTypeName: 2
   TileSprite: {fileID: 21300000, guid: 5c8567a2e157cd44a94684e42215c882, type: 3}
-  TileSpriteColor: {r: 1, g: 1, b: 1, a: 1}
+  TileSpriteColor: {r: 0.25882354, g: 0.6117647, b: 0.20392157, a: 1}
   _regenEffect: {fileID: 11400000, guid: 6d5b6d6fa9b9035408af7792396941fa, type: 2}
