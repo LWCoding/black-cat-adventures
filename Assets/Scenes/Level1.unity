@@ -1469,11 +1469,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9212215338475219214, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.5354476
+      value: 6.2
       objectReference: {fileID: 0}
     - target: {fileID: 9212215338475219214, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.67
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 9212215338475219214, guid: 4f68fff377a2fb34f8d6a026702fe5f2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2260,7 +2260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5679498944273742369, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.54
+      value: 6.2
       objectReference: {fileID: 0}
     - target: {fileID: 5679498944273742369, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2418,6 +2418,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GAME WORLD UI
       objectReference: {fileID: 0}
+    - target: {fileID: 4960702506784518481, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960702506784518481, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8337462543216234507, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2471,10 +2479,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6591903568078008175, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5160052117927967682, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 2473980240121414269, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 2473980240121414269, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 5160052117927967682, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 1549250669383169084, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
