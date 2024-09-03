@@ -19,7 +19,7 @@ public class UICompletionBar : MonoBehaviour
     private int _eventsEncountered = 0;
     private int _totalNumEvents = 0;
 
-    private const int _notchXOffset = 0;  // X offset for each notch spawned
+    private Dictionary<int, Image> _notchImages = new();  // Key = event encountered #
 
     private void Awake()
     {
@@ -53,14 +53,21 @@ public class UICompletionBar : MonoBehaviour
         {
             float ratio = (float)i / _totalNumEvents;
             Image notchImage = new GameObject("Ratio").AddComponent<Image>();
-            notchImage.transform.localPosition = new Vector3(_fillBarTransform.position.x + _progressBarLength * ratio + _notchXOffset, _fillBarTransform.position.y);
+            notchImage.transform.localPosition = new Vector3(_fillBarTransform.position.x + _progressBarLength * ratio, _fillBarTransform.position.y);
             notchImage.transform.SetParent(transform, true);
+            notchImage.transform.localScale = new(0.8f, 0.8f);
             notchImage.sprite = _notchSprite;
+            _notchImages.Add(i, notchImage);
         }
     }
 
     private void OnNewEnemySet(EnemyHandler enemy)
     {
+        // Fade out already-visited events
+        if (_notchImages.ContainsKey(_eventsEncountered))
+        {
+            _notchImages[_eventsEncountered].color = new Color(1, 1, 1, 0.5f);
+        }
         _eventsEncountered++;
         GoToProgress((float)_eventsEncountered / _totalNumEvents);
     }
