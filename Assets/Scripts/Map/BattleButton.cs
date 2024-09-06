@@ -37,12 +37,18 @@ public class BattleButton : MonoBehaviour
 
     private void OnEnable()
     {
-        LevelsManager.Instance.OnLevelChanged += ChangeBattleTextToLevel;
+        if (LevelsManager.Instance != null)
+        {
+            LevelsManager.Instance.OnLevelChanged += ChangeBattleTextToLevel;
+        }
     }
 
     private void OnDisable()
     {
-        LevelsManager.Instance.OnLevelChanged -= ChangeBattleTextToLevel;
+        if (LevelsManager.Instance != null)
+        {
+            LevelsManager.Instance.OnLevelChanged -= ChangeBattleTextToLevel;
+        }
     }
 
     private void OnMouseDown()

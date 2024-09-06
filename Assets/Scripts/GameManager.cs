@@ -23,6 +23,7 @@ public static class GameManager
             _equippedTreasures = _equippedTreasures.Distinct().ToList();
             return _equippedTreasures;
         }
+        set => _equippedTreasures = value;
     }
 
     public static List<string> LevelsCompleted = new();

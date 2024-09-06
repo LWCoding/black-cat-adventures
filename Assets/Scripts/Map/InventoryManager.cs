@@ -15,6 +15,23 @@ public class InventoryManager : MonoBehaviour
         _allSlotsObject.SetActive(false);
     }
 
+    /// <summary>
+    /// When we leave this scene, set the treasures to the
+    /// equipped treasures.
+    /// </summary>
+    private void OnDisable()
+    {
+        List<Treasure> equipped = new();
+        foreach (InventorySlot slot in _inventorySlots)
+        {
+            if (slot.CachedTreasure != null)
+            {
+                equipped.Add(slot.CachedTreasure);
+            }
+        }
+        GameManager.EquippedTreasures = equipped;
+    }
+
     private void Start()
     {
         // Initialize all equipped slots to equipped treasures
