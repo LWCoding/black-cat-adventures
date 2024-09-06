@@ -10,6 +10,8 @@ public class InventorySlot : MonoBehaviour
     [Header("Object Assignments")]
     [SerializeField] private Image _relicImage;
     [SerializeField] private TextMeshProUGUI _tooltipText;
+    [Header("Draggable Icon (optional)")]
+    [SerializeField] private UISlotDraggable _draggable;
 
     public bool IsSlotUsed
     {
@@ -42,6 +44,44 @@ public class InventorySlot : MonoBehaviour
         _tooltipText.text = "<b><color=\"orange\">" + treasure.TreasureName + "</color></b>:\n" + treasure.TreasureDescription;
         _relicImage.sprite = treasure.TreasureIcon;
         IsSlotUsed = true;
+    }
+
+    private void OnEnable()
+    {
+        if (_draggable != null)
+        {
+            _draggable.OnDragStart += InventorySlot_OnDragStart;
+            _draggable.OnDragEnd += InventorySlot_OnDragEnd;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_draggable != null)
+        {
+            _draggable.OnDragStart -= InventorySlot_OnDragStart;
+            _draggable.OnDragEnd -= InventorySlot_OnDragEnd;
+        }
+    }
+
+    public void InventorySlot_OnDragStart()
+    {
+        // Hide tooltip if applicable
+        if (TryGetComponent(out UITooltipOnHover tooltipOnHover))
+        {
+            IsSlotUsed = false;
+            tooltipOnHover.OnPointerExit(null);
+        }
+    }
+
+    public void InventorySlot_OnDragEnd(Vector3 placePosition)
+    {
+        // Hide tooltip if applicable
+        if (TryGetComponent(out UITooltipOnHover tooltipOnHover))
+        {
+            IsSlotUsed = true;
+            tooltipOnHover.OnPointerEnter(null);
+        }
     }
 
 }
