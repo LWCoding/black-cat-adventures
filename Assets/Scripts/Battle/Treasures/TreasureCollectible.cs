@@ -77,11 +77,7 @@ public class TreasureCollectible : MonoBehaviour
             yield return null;
         }
         // Make the player obtain the treasure
-        GameManager.EquippedTreasures.Add(_treasureData);
-        if (GameManager.EquippedTreasures.Count > 3)
-        {
-            GameManager.EquippedTreasures.RemoveAt(0);  // TODO: REMOVE THIS!! THIS REPLACES OLD TREASURES
-        }
+        GameManager.UnlockedTreasures.Add(_treasureData);
         // Go to win state afterwards
         yield return new WaitForSeconds(0.5f);
         BattleManager.Instance.SetState(new WinState());
