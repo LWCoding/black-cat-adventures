@@ -15,6 +15,14 @@ public class UICompletionBar : MonoBehaviour
 
     private Vector3 _playerIconOffset;
     private float _progressBarLength;
+    private float ProgressBarLength
+    {
+        get
+        {
+            return _progressBarLength * transform.localScale.x;
+        }
+        set => _progressBarLength = value;
+    }
 
     private int _eventsEncountered = 0;
     private int _totalNumEvents = 0;
@@ -59,7 +67,7 @@ public class UICompletionBar : MonoBehaviour
         {
             float ratio = (float)i / _totalNumEvents;
             Image notchImage = new GameObject("Ratio").AddComponent<Image>();
-            notchImage.transform.localPosition = new Vector3(_fillBarTransform.position.x + _progressBarLength * ratio, _fillBarTransform.position.y);
+            notchImage.transform.localPosition = new Vector3(_fillBarTransform.position.x + ProgressBarLength * ratio, _fillBarTransform.position.y);
             notchImage.transform.SetParent(transform, true);
             notchImage.transform.localScale = new(0.8f, 0.8f);
             notchImage.sprite = _notchSprite;
@@ -91,7 +99,7 @@ public class UICompletionBar : MonoBehaviour
     {
         Vector3 currIconPos = _playerIconTransform.localPosition;
         Vector3 currBarFill = _fillBarTransform.localScale;
-        Vector3 targetIconPos = new Vector3(_progressBarLength * ratio, _playerIconTransform.localPosition.y) + _playerIconOffset;
+        Vector3 targetIconPos = new Vector3(ProgressBarLength * ratio, _playerIconTransform.localPosition.y) + _playerIconOffset;
         Vector3 targetBarFill = new Vector3(ratio, _fillBarTransform.localScale.y);
         float currTime = 0;
         float timeToWait = 1;
