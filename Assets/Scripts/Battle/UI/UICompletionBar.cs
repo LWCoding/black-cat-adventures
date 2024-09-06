@@ -32,12 +32,18 @@ public class UICompletionBar : MonoBehaviour
 
     private void OnEnable()
     {
-        BattleManager.Instance.OnNewEnemySet += OnNewEnemySet;
+        if (BattleManager.Instance != null)
+        {
+            BattleManager.Instance.OnNewEnemySet += OnNewEnemySet;
+        }
     }
 
     private void OnDisable()
     {
-        BattleManager.Instance.OnNewEnemySet -= OnNewEnemySet;
+        if (BattleManager.Instance != null)
+        {
+            BattleManager.Instance.OnNewEnemySet -= OnNewEnemySet;
+        }
     }
 
     /// <summary>

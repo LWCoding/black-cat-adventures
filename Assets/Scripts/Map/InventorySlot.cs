@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
@@ -12,6 +13,8 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _tooltipText;
     [Header("Draggable Icon (optional)")]
     [SerializeField] private UISlotDraggable _draggable;
+
+    public Treasure CachedTreasure;
 
     public bool IsSlotUsed
     {
@@ -40,10 +43,15 @@ public class InventorySlot : MonoBehaviour
     /// </summary>
     public void Initialize(Treasure treasure)
     {
-        _relicImage.enabled = true;
+        _relicImage.enabled = treasure != null;
+        IsSlotUsed = treasure != null;
+        CachedTreasure = treasure;
+        if (treasure == null)
+        {
+            return;
+        }
         _tooltipText.text = "<b><color=\"orange\">" + treasure.TreasureName + "</color></b>:\n" + treasure.TreasureDescription;
         _relicImage.sprite = treasure.TreasureIcon;
-        IsSlotUsed = true;
     }
 
     private void OnEnable()
@@ -76,11 +84,32 @@ public class InventorySlot : MonoBehaviour
 
     public void InventorySlot_OnDragEnd(Vector3 placePosition)
     {
-        // Hide tooltip if applicable
+        // Reset tooltip's data
         if (TryGetComponent(out UITooltipOnHover tooltipOnHover))
         {
             IsSlotUsed = true;
-            tooltipOnHover.OnPointerEnter(null);
+        }
+        // If we're colliding with another InventorySlot, swap these items
+        PointerEventData pointerData = new(EventSystem.current)
+        {
+            pointerId = -1,
+            position = Input.mousePosition
+        };
+        List<RaycastResult> results = new();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        if (results.Count != 0 && results[0].gameObject.transform.parent.TryGetComponent(out InventorySlot invSlot))
+        {
+            Treasure thisTreasure = CachedTreasure;
+            // Take the other inventory slot's information if applicable
+            Initialize(invSlot.CachedTreasure);
+            // Make the other inventory slot absorb this information
+            invSlot.Initialize(thisTreasure);
+            // Hide tooltip if applicable
+            if (invSlot.TryGetComponent(out tooltipOnHover))
+            {
+                tooltipOnHover.OnPointerEnter(null);
+            }
         }
     }
 

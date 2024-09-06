@@ -317,6 +317,7 @@ GameObject:
   - component: {fileID: 6629674556582883332}
   - component: {fileID: 503062106117628061}
   - component: {fileID: 3938790089059588084}
+  - component: {fileID: 7256693515071559116}
   m_Layer: 5
   m_Name: Treasure
   m_TagString: Untagged
@@ -393,6 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea6ccdd887b5c0479575dcf60189efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 7256693515071559116}
 --- !u!223 &503062106117628061
 Canvas:
   m_ObjectHideFlags: 0
@@ -433,6 +435,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &7256693515071559116
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5682645802796961166}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6648961371569577633
 GameObject:
   m_ObjectHideFlags: 0

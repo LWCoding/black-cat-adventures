@@ -11,10 +11,14 @@ public class UISlotDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     [HideInInspector] public Action<Vector3> OnDragging = null;
     [HideInInspector] public Action<Vector3> OnDragEnd = null;
 
+    [Header("Object Assignments")]
+    [SerializeField] private CanvasGroup _canvasGroup;
+
     private Vector3 _originalPosition;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        _canvasGroup.blocksRaycasts = false;
         _originalPosition = transform.position;
         OnDragStart?.Invoke();
     }
@@ -27,6 +31,7 @@ public class UISlotDraggable : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        _canvasGroup.blocksRaycasts = true;
         transform.position = _originalPosition;
         OnDragEnd?.Invoke(transform.position);
     }
