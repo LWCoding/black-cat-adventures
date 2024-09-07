@@ -42,7 +42,7 @@ public class LevelsManager : MonoBehaviour
         // Find current level, start at it
         foreach (LevelHandler lh in _allLevelHandlers)
         {
-            if (lh.LevelName == GameManager.CurrLevelSceneName)
+            if (lh.LevelName == GameManager.GameData.RecentLevelCompleted)
             {
                 SelectNewLevel(lh);
                 break;

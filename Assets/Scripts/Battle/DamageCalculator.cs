@@ -16,11 +16,11 @@ public static class DamageCalculator
     /// </summary>
     public static void RegisterFlatModifier(string key, int mod, bool addOntoPreexistingValue = false)
     {
-        if (_currLevelSceneName != GameManager.CurrLevelSceneName)
+        if (_currLevelSceneName != GameManager.GameData.RecentLevelCompleted)
         {
             ResetModifiers();
         }
-        _currLevelSceneName = GameManager.CurrLevelSceneName;
+        _currLevelSceneName = GameManager.GameData.RecentLevelCompleted;
         if (!_flatModifiers.ContainsKey(key))
         {
             _flatModifiers[key] = 0;
@@ -35,11 +35,11 @@ public static class DamageCalculator
     /// </summary>
     public static void RegisterScaledModifier(string key, float mod, bool multiplyByPreexistingValue = false)
     {
-        if (_currLevelSceneName != GameManager.CurrLevelSceneName)
+        if (_currLevelSceneName != GameManager.GameData.RecentLevelCompleted)
         {
             ResetModifiers();
         }
-        _currLevelSceneName = GameManager.CurrLevelSceneName;
+        _currLevelSceneName = GameManager.GameData.RecentLevelCompleted;
         if (!_scaleModifiers.ContainsKey(key))
         {
             _scaleModifiers[key] = 0;

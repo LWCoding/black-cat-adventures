@@ -77,7 +77,7 @@ public class TreasureCollectible : MonoBehaviour
             yield return null;
         }
         // Make the player obtain the treasure
-        GameManager.UnlockedTreasures.Add(_treasureData);
+        GameManager.GameData.UnlockedTreasures.Add(_treasureData);
         // Go to win state afterwards
         yield return new WaitForSeconds(0.5f);
         BattleManager.Instance.SetState(new WinState());

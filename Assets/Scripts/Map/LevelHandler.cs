@@ -36,7 +36,7 @@ public class LevelHandler : MonoBehaviour
                     PreviousLevel.IsLevelVisitable = true;
                 }
                 // If we've completed the current level, allow access to next level
-                if (NextLevel != null && GameManager.LevelsCompleted.Contains(LevelName))
+                if (NextLevel != null && GameManager.GameData.LevelsCompleted.Contains(LevelName))
                 {
                     NextLevel.IsLevelVisitable = true;
                 }
@@ -87,7 +87,7 @@ public class LevelHandler : MonoBehaviour
 
         // If we haven't completed this level, nor the previous level,
         // then this level is locked
-        if (!GameManager.LevelsCompleted.Contains(LevelName) && PreviousLevel != null && !GameManager.LevelsCompleted.Contains(PreviousLevel.LevelName))
+        if (!GameManager.GameData.LevelsCompleted.Contains(LevelName) && PreviousLevel != null && !GameManager.GameData.LevelsCompleted.Contains(PreviousLevel.LevelName))
         {
             _lockObject.SetActive(true);
         } else

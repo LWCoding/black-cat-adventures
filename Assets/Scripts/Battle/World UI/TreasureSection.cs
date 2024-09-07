@@ -58,12 +58,12 @@ public class TreasureSection : MonoBehaviour
         // Initialize all items inside
         for (int i = 0; i < _treasureObjects.Count; i++)
         {
-            if (i >= GameManager.UnlockedTreasures.Count)
+            if (i >= GameManager.GameData.UnlockedTreasures.Count)
             {
                 _treasureObjects[i].Initialize(_noneTreasure);
                 continue;
             }
-            _treasureObjects[i].Initialize(GameManager.UnlockedTreasures[i]);
+            _treasureObjects[i].Initialize(GameManager.GameData.UnlockedTreasures[i]);
         }
     }
 

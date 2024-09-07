@@ -52,7 +52,7 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.CurrLevelSceneName = SceneManager.GetActiveScene().name;  // Set curr level to current scene
+        GameManager.GameData.RecentLevelCompleted = SceneManager.GetActiveScene().name;  // Set curr level to current scene
         SetState(new PlayerTurnState()); // Start off as player turn
         SetNewEnemy(CurrEnemyHandler);
     }

@@ -13,6 +13,13 @@ public class IntroCutscene : MonoBehaviour
 
     private void Start()
     {
+        // If we have a save, load the save instead!
+        GameData gData = SaveManager.LoadGame();
+        if (gData != null)
+        {
+            GameManager.GameData = gData;
+            SceneManager.LoadScene("Map");
+        }
         StartCoroutine(PlayCutsceneCoroutine());
     }
 

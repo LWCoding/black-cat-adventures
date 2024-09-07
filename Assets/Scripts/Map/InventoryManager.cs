@@ -11,7 +11,7 @@ public class InventoryManager : MonoBehaviour
     [Header("Object Assignments")]
     [SerializeField] private GameObject _allSlotsObject;
 
-    private List<InventorySlot> _allSlots = new();
+    private readonly List<InventorySlot> _allSlots = new();
 
     private void Awake()
     {
@@ -49,21 +49,21 @@ public class InventoryManager : MonoBehaviour
             }
         }
         equipped.AddRange(other);
-        GameManager.UnlockedTreasures = equipped;
+        GameManager.GameData.UnlockedTreasures = equipped;
     }
 
     private void Start()
     {
         // Initialize all equipped slots to equipped treasures
-        for (int i = 0; i < GameManager.UnlockedTreasures.Count; i++)
+        for (int i = 0; i < GameManager.GameData.UnlockedTreasures.Count; i++)
         {
             if (i < _equippedSlots.Count)
             {
-                _equippedSlots[i].Initialize(GameManager.UnlockedTreasures[i]);
+                _equippedSlots[i].Initialize(GameManager.GameData.UnlockedTreasures[i]);
             } 
             else
             {
-                _allSlots[i - 3].Initialize(GameManager.UnlockedTreasures[i]);
+                _allSlots[i - 3].Initialize(GameManager.GameData.UnlockedTreasures[i]);
             }
         }
     }
