@@ -22,7 +22,6 @@ public class SaveManager
         }
         else
         {
-            Debug.LogError("Save file not found!");
             return null;
         }
     }
