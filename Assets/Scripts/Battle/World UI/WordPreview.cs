@@ -102,6 +102,7 @@ public class WordPreview : MonoBehaviour
     /// </summary>
     public void AppendTile(Tile tile)
     {
+        tile.CurrTileType.OnTileAdded();
         _currTiles.Add(tile);
         UpdatePreviewLetters();
         OnLetterTilesChanged.Invoke();
@@ -116,6 +117,7 @@ public class WordPreview : MonoBehaviour
         int tileIdx = _currTiles.FindIndex((t) => t.TileIndex == tile.TileIndex);
         while (tileIdx < _currTiles.Count)
         {
+            WordGrid.Instance.LetterTiles[_currTiles[tileIdx].TileIndex].Tile.CurrTileType.OnTileRemoved();
             WordGrid.Instance.LetterTiles[_currTiles[tileIdx].TileIndex].IsSelected = false;
             _currTiles.RemoveAt(tileIdx);
         }
@@ -155,6 +157,7 @@ public class WordPreview : MonoBehaviour
                     discouragedLetters.Append(currTileLetters);
                 }
             }
+            RemoveTile(t);
             // Randomize the tile, given these discouraged letters
             if (randomIdxForSpecTile == i)
             {
@@ -164,7 +167,6 @@ public class WordPreview : MonoBehaviour
             {
                 WordGrid.Instance.LetterTiles[t.TileIndex].RandomizeTile(discouragedLetters.ToString());
             }
-            RemoveTile(t);
         }
     }
 

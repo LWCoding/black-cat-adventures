@@ -26,14 +26,15 @@ public abstract class LetterTile : MonoBehaviour
     }
 
     protected bool IsVisibilityLocked = false;  // If true, visibility cannot be changed
-    protected Tile _tile;
+    
+    [HideInInspector] public Tile Tile;
 
     private void Start()
     {
         IsSelected = false;
     }
 
-    public string GetLetters() => _tile.Letters;
+    public string GetLetters() => Tile.Letters;
 
     /// <summary>
     /// Initializes this tile object to a specified tile. Saves the tile index.
@@ -45,7 +46,7 @@ public abstract class LetterTile : MonoBehaviour
 
         _bgRenderer.sprite = tile.CurrTileType.TileSprite;
         _bgRenderer.color = new Color(tile.CurrTileType.TileSpriteColor.r, tile.CurrTileType.TileSpriteColor.g, tile.CurrTileType.TileSpriteColor.b, savedTileBGAlpha);
-        _tile = tile;
+        Tile = tile;
         _letterText.text = tile.Letters;
 
         byte savedTileIndAlpha = (byte)(255 * _dmgIndRenderer.color.a);  // Don't override alpha value in case toggled off
@@ -72,18 +73,18 @@ public abstract class LetterTile : MonoBehaviour
     {
         if (discouragedLetters == "")
         {
-            Tile newTile = WordGenerator.Instance.GetRandomTile(_tile.TileIndex);
+            Tile newTile = WordGenerator.Instance.GetRandomTile(Tile.TileIndex);
             InitializeTile(newTile);
         } else {
             // If we have discouraged tiles, 40% chance to allow them to show up
             Tile newTile;
             if (Random.Range(0f, 1f) < 0.4f)
             {
-                newTile = WordGenerator.Instance.GetRandomTile(_tile.TileIndex);
+                newTile = WordGenerator.Instance.GetRandomTile(Tile.TileIndex);
             }
             else
             {
-                newTile = WordGenerator.Instance.GetRandomTile(_tile.TileIndex, discouragedLetters);
+                newTile = WordGenerator.Instance.GetRandomTile(Tile.TileIndex, discouragedLetters);
             }
             newTile.SetType(tileType);
             InitializeTile(newTile);
@@ -95,8 +96,8 @@ public abstract class LetterTile : MonoBehaviour
     /// </summary>
     public void SetTileType(TileTypeName tileType)
     {
-        _tile.SetType(tileType);
-        InitializeTile(_tile);
+        Tile.SetType(tileType);
+        InitializeTile(Tile);
     }
 
     /// <summary>
@@ -105,13 +106,13 @@ public abstract class LetterTile : MonoBehaviour
     /// </summary>
     public void RandomizeVowel()
     {
-        Tile newTile = WordGenerator.Instance.GetRandomVowel(_tile.TileIndex);
+        Tile newTile = WordGenerator.Instance.GetRandomVowel(Tile.TileIndex);
         InitializeTile(newTile);
     }
 
     public void SetTileText(string letters)
     {
-        Tile newTile = WordGenerator.Instance.GetRandomTile(_tile.TileIndex);
+        Tile newTile = WordGenerator.Instance.GetRandomTile(Tile.TileIndex);
         newTile.Letters = letters;
         InitializeTile(newTile);
     }

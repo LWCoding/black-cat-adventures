@@ -8,17 +8,17 @@ public class PreviewLetterTile : LetterTile
 
     private void OnMouseEnter()
     {
-        WordPreview.Instance.ToggleTilesFromIndex(_tile.TileIndex, false);
+        WordPreview.Instance.ToggleTilesFromIndex(Tile.TileIndex, false);
     }
 
     private void OnMouseExit()
     {
-        WordPreview.Instance.ToggleTilesFromIndex(_tile.TileIndex, true);
+        WordPreview.Instance.ToggleTilesFromIndex(Tile.TileIndex, true);
     }
 
     private void OnMouseDown()
     {
-        WordPreview.Instance.RemoveTile(_tile);
+        WordPreview.Instance.RemoveTile(Tile);
     }
 
 }

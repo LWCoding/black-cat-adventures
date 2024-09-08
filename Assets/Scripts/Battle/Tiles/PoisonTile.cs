@@ -14,4 +14,14 @@ public class PoisonTile : TileType
         BattleManager.Instance.CurrEnemyHandler.StatusHandler.GainStatusEffect(_poisonEffect, 3);
     }
 
+    public override void OnTileAdded()
+    {
+        DamageCalculator.RegisterFlatModifier("poisontile", 3, true);
+    }
+
+    public override void OnTileRemoved()
+    {
+        DamageCalculator.RegisterFlatModifier("poisontile", -3, true);
+    }
+
 }

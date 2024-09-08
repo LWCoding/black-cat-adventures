@@ -60,7 +60,7 @@ public class GridLetterTile : LetterTile
         if (IsSelected) return false;
         if (BattleManager.Instance.CurrentState is not PlayerTurnState) return false;
         AudioManager.Instance.PlayOneShot(_clickSFX, _clickSFXVolume);
-        WordPreview.Instance.AppendTile(_tile);
+        WordPreview.Instance.AppendTile(Tile);
         OnMouseExit();
         IsSelected = true;  // Set this letter to selected
         return true;

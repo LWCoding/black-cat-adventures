@@ -11,4 +11,14 @@ public class BasicTile : TileType
         
     }
 
+    public override void OnTileAdded()
+    {
+
+    }
+
+    public override void OnTileRemoved()
+    {
+
+    }
+
 }

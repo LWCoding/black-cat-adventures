@@ -16,6 +16,16 @@ public abstract class TileType : ScriptableObject
     public Color TileSpriteColor = Color.white;
 
     /// <summary>
+    /// Is called when this tile is added to the player's word.
+    /// </summary>
+    public abstract void OnTileAdded();
+
+    /// <summary>
+    /// Is called when this tile is removed from the word.
+    /// </summary>
+    public abstract void OnTileRemoved();
+
+    /// <summary>
     /// Activates the tile's effects when used.
     /// </summary>
     public abstract void ActivateTileEffects();
