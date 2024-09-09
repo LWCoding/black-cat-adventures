@@ -15,7 +15,6 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake()
     {
-        _allSlotsObject.SetActive(false);
         // Loop over all additional slots, cache them for storage purposes
         for (int i = 0; i < _allSlotsObject.transform.childCount; i++)
         {
@@ -54,18 +53,8 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        // Initialize all equipped slots to equipped treasures
-        for (int i = 0; i < GameManager.GameData.UnlockedTreasures.Count; i++)
-        {
-            if (i < _equippedSlots.Count)
-            {
-                _equippedSlots[i].Initialize(GameManager.GameData.UnlockedTreasures[i]);
-            } 
-            else
-            {
-                _allSlots[i - 3].Initialize(GameManager.GameData.UnlockedTreasures[i]);
-            }
-        }
+        RenderInventory();
+        _allSlotsObject.SetActive(false);
     }
 
     /// <summary>
@@ -83,6 +72,22 @@ public class InventoryManager : MonoBehaviour
     public void SetInventoryVisibility(bool isShown)
     {
         _allSlotsObject.SetActive(isShown);
+    }
+
+    private void RenderInventory()
+    {
+        // Initialize all equipped slots to equipped treasures
+        for (int i = 0; i < GameManager.GameData.UnlockedTreasures.Count; i++)
+        {
+            if (i < _equippedSlots.Count)
+            {
+                _equippedSlots[i].Initialize(GameManager.GameData.UnlockedTreasures[i]);
+            }
+            else
+            {
+                _allSlots[i - 3].Initialize(GameManager.GameData.UnlockedTreasures[i]);
+            }
+        }
     }
 
 }
