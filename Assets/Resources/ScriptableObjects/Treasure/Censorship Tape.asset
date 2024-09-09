@@ -15,3 +15,4 @@ MonoBehaviour:
   TreasureName: Censorship Tape
   TreasureDescription: Profanities deal extra damage!
   TreasureIcon: {fileID: 21300000, guid: 4e39e986787d4704aaa7fd94387f86bd, type: 3}
+  IsUnlockedByDefault: 0
