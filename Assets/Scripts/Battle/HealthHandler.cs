@@ -36,7 +36,7 @@ public class HealthHandler : MonoBehaviour
         }
     }
 
-    public Action OnDeath = null;  // Called when this enemy hits zero health
+    public Action OnDeath = null;  // Called when this hits zero health
 
     private int _currentHealth;
     private int _maxHealth;
@@ -94,6 +94,7 @@ public class HealthHandler : MonoBehaviour
     /// </summary>
     public void HealHealth(int healthHealed)
     {
+        if (CurrentHealth == 0) { return; }  // If already dead, don't heal
         CurrentHealth += healthHealed;
         if (CurrentHealth > _maxHealth)
         {
