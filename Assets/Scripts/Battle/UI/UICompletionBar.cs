@@ -62,7 +62,10 @@ public class UICompletionBar : MonoBehaviour
         {
             Image notchImage = new GameObject("Ratio").AddComponent<Image>();
             notchImage.transform.localPosition = new Vector3(_barStart.position.x + section * i, _fillBarTransform.position.y);
-            notchImage.transform.localScale = new(0.8f, 0.8f);
+            notchImage.GetComponent<RectTransform>().sizeDelta = new(80, 80);
+#if UNITY_WEBGL && !UNITY_EDITOR
+            notchImage.GetComponent<RectTransform>().sizeDelta = new(60, 60);
+#endif
             notchImage.transform.SetParent(transform, true);
             notchImage.sprite = _notchSprite;
             _notchImages.Add(i, notchImage);
