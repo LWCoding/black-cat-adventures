@@ -39,7 +39,7 @@ public class Waterlogged : StatusEffect
     {
         if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord) && WordPreview.Instance.CurrentTiles.Count < 5)
         {
-            DamageCalculator.RegisterScaledModifier("waterlogged", 0);
+            DamageCalculator.RegisterScaledModifier("waterlogged", 0.5f);
             BattleManager.Instance.RunNextFrame(() =>
             {
                 if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord))
