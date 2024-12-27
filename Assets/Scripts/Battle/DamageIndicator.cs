@@ -40,7 +40,7 @@ public class DamageIndicator : MonoBehaviour
                 }
                 else
                 {
-                    _damageText.text = StringLayout.Replace("%d", damage.ToString() + " <color=\"orange\">(" + (damageFromMods > 0 ? "+" : "") + damageFromMods.ToString() + ")</color>");
+                    _damageText.text = StringLayout.Replace("%d", damage.ToString() + " <color=\"orange\">(" + (damage - damageFromMods).ToString() + (damageFromMods > 0 ? "+" : "") + damageFromMods.ToString() + ")</color>");
                 }
             }
         });
