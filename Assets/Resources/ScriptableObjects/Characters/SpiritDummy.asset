@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
   m_Name: SpiritDummy
   m_EditorClassIdentifier: 
-  StartingHealth: 120
+  StartingHealth: 100
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 8f8f4a57a0698f24f9e7c836bc765a20, type: 3}
     Offset: {x: 0.7, y: 0.9}
@@ -29,7 +29,7 @@ MonoBehaviour:
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Ultra-Stare
     _attackDescription: Does everything. And %d damage cuz screw you.
-    Damage: 5
+    Damage: 4
     AnimType: 0
     InflictedStatuses:
     - Target: 0
@@ -43,4 +43,4 @@ MonoBehaviour:
       Amplifier: 2
     - Target: 0
       Status: {fileID: 11400000, guid: 8157d86778283a542acecf088bd7a052, type: 2}
-      Amplifier: 3
+      Amplifier: 2
