@@ -9,8 +9,11 @@ public class BypassIntro : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private string _sceneNameAfterCutscene;
 
+    public bool IsActive = false;
+
     private void Update()
     {
+        if (!IsActive) { return; }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(_sceneNameAfterCutscene);

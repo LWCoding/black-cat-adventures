@@ -11,25 +11,17 @@ public class IntroCutscene : MonoBehaviour
     [Header("Cutscene Properties")]
     [SerializeField] private string _sceneNameAfterCutscene;
 
-    private void Start()
-    {
-        // If we have a save, load the save instead!
-        GameData gData = SaveManager.LoadGame();
-        if (gData != null)
-        {
-            GameManager.GameData = gData;
-            SceneManager.LoadScene("Map");
-        }
-        StartCoroutine(PlayCutsceneCoroutine());
-    }
-
     /// <summary>
     /// Starts the cutscene denoted by the `Play` animation.
     /// Afterwards, switches to an `Idle` animation and waits
     /// for a click. The click will bring the player to the
     /// next scene.
     /// </summary>
-    /// <returns></returns>
+    public void BeginCutscene()
+    {
+        StartCoroutine(PlayCutsceneCoroutine());
+    }
+
     private IEnumerator PlayCutsceneCoroutine()
     {
         _cutsceneAnimator.Play("Play");
