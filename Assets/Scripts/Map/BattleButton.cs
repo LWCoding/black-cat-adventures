@@ -41,7 +41,8 @@ public class BattleButton : MonoBehaviour
     private void OnMouseDown()
     {
         if (!_isInteractable) { return; }
-        SceneManager.LoadScene(LevelsManager.Instance.GetCurrentLevelString());
+        GameManager.GameData.RecentLevelCompleted = LevelsManager.Instance.GetCurrentLevelString();
+        SceneManager.LoadScene("Level");
     }
 
     /// <summary>

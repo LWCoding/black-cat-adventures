@@ -27,9 +27,6 @@ public class UICompletionBar : MonoBehaviour
     {
         _progressBarLength = _fillBarTransform.rect.width;
         _playerIconOffset = _playerIconTransform.localPosition;
-
-        EnemyHandler[] enemies = FindObjectsOfType<EnemyHandler>(true);
-        Initialize(enemies.Length);
     }
 
     private void OnEnable()

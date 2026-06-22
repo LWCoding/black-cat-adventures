@@ -26,7 +26,6 @@ public class BattleManager : Singleton<BattleManager>
 
     private void Start()
     {
-        GameManager.GameData.RecentLevelCompleted = SceneManager.GetActiveScene().name;  // Set curr level to current scene
         SetState(new PlayerTurnState()); // Start off as player turn
         SetNewEnemy(CurrEnemyHandler);
     }

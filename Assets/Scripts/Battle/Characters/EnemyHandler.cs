@@ -19,6 +19,10 @@ public class EnemyHandler : CharacterHandler
 
     public bool IsLastEnemy() => _nextBattleObject == null;
 
+    public void SetNextBattleObject(GameObject nextBattleObject) => _nextBattleObject = nextBattleObject;
+
+    public void SetTimeToNextObject(float timeToNextObject) => _timeToNextObject = timeToNextObject;
+
     private void Start()
     {
         BattleManager.Instance.OnEnemyAttack += RenderAttack;

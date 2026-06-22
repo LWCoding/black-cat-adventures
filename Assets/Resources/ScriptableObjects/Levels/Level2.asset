@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f09b01bdfcd89596d2250fbbae52cc1, type: 3}
+  m_Name: Level2
+  m_EditorClassIdentifier:
+  LevelId: Level2
+  LevelNumber: 2
+  Encounters:
+  - EnemyData: {fileID: 11400000, guid: dfb97d8c0475ebf48a1b7ee496415a06, type: 2}
+    DialogueToPlayOnMeet:
+    - Text: Hey, you look like you have some money on ya!
+      Duration: 2
+      Speaker: 1
+      ShouldStallState: 1
+    - Text: This is a robbery, give me all you got.
+      Duration: 2
+      Speaker: 1
+      ShouldStallState: 0
+    ShouldStallBeforeTurn: 0
+    TimeToNextObject: 1.3
+    SpawnOffset: {x: 0, y: 0}
+  - EnemyData: {fileID: 11400000, guid: 802e5aa283fd2a841a4aa0c83dd7d2c7, type: 2}
+    DialogueToPlayOnMeet:
+    - Text: Fork over the goods!
+      Duration: 2
+      Speaker: 1
+      ShouldStallState: 0
+    ShouldStallBeforeTurn: 0
+    TimeToNextObject: 1.3
+    SpawnOffset: {x: 0, y: 0}
+  RewardTreasure: {fileID: 11400000, guid: f1d790f6c729dde41a589b0a167ec9d7, type: 2}

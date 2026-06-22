@@ -2715,7 +2715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cutsceneAnimator: {fileID: 2043502718}
-  _sceneNameAfterCutscene: Level1
+  _levelIdAfterCutscene: Level1
 --- !u!114 &1790409368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2728,7 +2728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a99a0af7597e8143bbcd6e91946f165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneNameAfterCutscene: Level1
+  _levelIdAfterCutscene: Level1
   IsActive: 0
 --- !u!114 &1790409369
 MonoBehaviour:

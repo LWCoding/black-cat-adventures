@@ -7,7 +7,7 @@ public class BypassIntro : MonoBehaviour
 {
 
     [Header("Properties")]
-    [SerializeField] private string _sceneNameAfterCutscene;
+    [SerializeField] private string _levelIdAfterCutscene;
 
     public bool IsActive = false;
 
@@ -16,7 +16,8 @@ public class BypassIntro : MonoBehaviour
         if (!IsActive) { return; }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene(_sceneNameAfterCutscene);
+            GameManager.GameData.RecentLevelCompleted = _levelIdAfterCutscene;
+            SceneManager.LoadScene("Level");
         }
     }
 

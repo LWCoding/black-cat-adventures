@@ -18,6 +18,8 @@ public class TreasureCollectible : MonoBehaviour
 
     private bool _isInteractable = true;
 
+    public void SetTreasureData(Treasure treasureData) => _treasureData = treasureData;
+
     private void Start()
     {
         Initialize();

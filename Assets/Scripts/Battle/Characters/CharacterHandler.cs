@@ -33,7 +33,12 @@ public abstract class CharacterHandler : MonoBehaviour
         // Initialize required components
         HealthHandler = GetComponent<HealthHandler>();
         StatusHandler = GetComponent<StatusHandler>();
-        InitializeInfo(_charData);
+        // If data hasn't been assigned yet (e.g. a procedurally spawned enemy
+        // awaiting SetCharacterData), defer initialization until it is.
+        if (_charData != null)
+        {
+            InitializeInfo(_charData);
+        }
         // Set the character's sprite to be dead when reaching zero health.
         HealthHandler.OnDeath += () =>
         {
@@ -41,6 +46,17 @@ public abstract class CharacterHandler : MonoBehaviour
         };
         // Ensure the status effect handler knows what to refer to
         StatusHandler.Initialize(this);
+    }
+
+    /// <summary>
+    /// Assigns this character's data after instantiation (e.g. for
+    /// procedurally spawned enemies) and runs the same initialization
+    /// that Awake() would have run had the data been present from the start.
+    /// </summary>
+    public void SetCharacterData(CharacterData charInfo)
+    {
+        CharData = charInfo;
+        InitializeInfo(charInfo);
     }
 
     /// <summary>

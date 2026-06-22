@@ -9,7 +9,7 @@ public class IntroCutscene : MonoBehaviour
     [Header("Object Assignments")]
     [SerializeField] private Animator _cutsceneAnimator;
     [Header("Cutscene Properties")]
-    [SerializeField] private string _sceneNameAfterCutscene;
+    [SerializeField] private string _levelIdAfterCutscene;
 
     /// <summary>
     /// Starts the cutscene denoted by the `Play` animation.
@@ -43,7 +43,8 @@ public class IntroCutscene : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitWhile(() => _cutsceneAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
 
-        SceneManager.LoadScene(_sceneNameAfterCutscene);
+        GameManager.GameData.RecentLevelCompleted = _levelIdAfterCutscene;
+        SceneManager.LoadScene("Level");
     }
 
 }
