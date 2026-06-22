@@ -52,7 +52,10 @@ public class LevelSpawner : MonoBehaviour
         }
 
         BattleManager.Instance.CurrEnemyHandler = spawnedEnemies[0];
-        FindAnyObjectByType<UICompletionBar>(FindObjectsInactive.Include).Initialize(levelData.Encounters.Count);
+        // The reward also carries its own EnemyHandler (see Reward.prefab) so the existing
+        // transition/SetNewEnemy machinery treats it as one final "enemy" - count it to match.
+        int totalEvents = levelData.Encounters.Count + (levelData.RewardTreasure != null ? 1 : 0);
+        FindAnyObjectByType<UICompletionBar>(FindObjectsInactive.Include).Initialize(totalEvents);
     }
 
 }
