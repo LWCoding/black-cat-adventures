@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3291,6 +3290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerIconTransform: {fileID: 1027887389}
   _firstLevel: {fileID: 1021857347}
+  _battleButton: {fileID: 139891112}
   _iconOffsetFromLevel: {x: 0.05, y: 1.7, z: 0}
 --- !u!114 &1470311607
 MonoBehaviour:

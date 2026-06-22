@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : Singleton<InventoryManager>
 {
 
     [Header("Equipped Slots")]
@@ -13,8 +13,9 @@ public class InventoryManager : MonoBehaviour
 
     private readonly List<InventorySlot> _allSlots = new();
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         // Loop over all additional slots, cache them for storage purposes
         for (int i = 0; i < _allSlotsObject.transform.childCount; i++)
         {

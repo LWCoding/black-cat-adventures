@@ -3,21 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TutorialManager : MonoBehaviour
+public class TutorialManager : Singleton<TutorialManager>
 {
 
-    private static TutorialManager _instance;
-    public static TutorialManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindAnyObjectByType<TutorialManager>();
-            }
-            return _instance;
-        }
-    }
     public static bool HasTutorialPlayed = false;
 
     [Header("Object Assignments")]
@@ -35,17 +23,9 @@ public class TutorialManager : MonoBehaviour
     private bool _isTreasureUnlockedYet = false;  // Becomes true after unlocking treasure
     private bool _isSpecialTileUnlockedYet = false;  // Becomes true after unlocking special tiles
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (!ReferenceEquals(_instance, this)) {
-            if (_instance != null)
-            {
-                Destroy(this);
-            } else
-            {
-                _instance = this;
-            }
-        }
+        base.Awake();
         _boardTooltipObject.SetActive(false);
         _shuffleTooltipObject.SetActive(false);
         _enemyTooltipObject.SetActive(false);
@@ -55,7 +35,7 @@ public class TutorialManager : MonoBehaviour
         // If we've never played the tutorial before, hide certain objects
         if (!HasTutorialPlayed)
         {
-            ShuffleButton.Instance.gameObject.SetActive(false);
+            BattleManager.Instance.ShuffleButton.gameObject.SetActive(false);
             TreasureSection.Instance.gameObject.SetActive(false);
         }
     }
@@ -240,7 +220,7 @@ public class TutorialManager : MonoBehaviour
                 _boardTooltipObject.SetActive(true);
                 break;
             case 2:
-                ShuffleButton.Instance.gameObject.SetActive(true);
+                BattleManager.Instance.ShuffleButton.gameObject.SetActive(true);
                 _shuffleTooltipObject.SetActive(true);
                 break;
             case 3:

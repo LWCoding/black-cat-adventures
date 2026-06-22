@@ -8,19 +8,6 @@ using UnityEngine;
 public class ShuffleButton : MonoBehaviour
 {
 
-    private static ShuffleButton _instance;
-    public static ShuffleButton Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindAnyObjectByType<ShuffleButton>();
-            }
-            return _instance;
-        }
-    }
-
     [Header("Object Assignments")]
     [SerializeField] private WordGrid _wordGrid;
     [SerializeField] private TextMeshPro _letterText;
@@ -35,17 +22,6 @@ public class ShuffleButton : MonoBehaviour
 
     private void Awake()
     {
-        if (!ReferenceEquals(_instance, this))
-        {
-            if (_instance != null)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                _instance = this;
-            }
-        }
         _pointerCursorOnHover = GetComponent<PointerCursorOnHover>();
     }
 

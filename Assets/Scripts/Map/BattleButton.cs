@@ -8,19 +8,6 @@ using UnityEngine.SceneManagement;
 public class BattleButton : MonoBehaviour
 {
 
-    private static BattleButton _instance;
-    public static BattleButton Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindAnyObjectByType<BattleButton>();
-            }
-            return _instance;
-        }
-    }
-
     [Header("Object Assignments")]
     [SerializeField] private TextMeshPro _battleText;
     [SerializeField] private SpriteRenderer _bgRenderer;

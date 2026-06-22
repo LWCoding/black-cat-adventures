@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -229,6 +228,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95158033d5117754da7c85e7b498fb36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &430682940 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5940265543084217191, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
+  m_PrefabInstance: {fileID: 430682937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c2e63783308cbd4b8248b05d9c6ce40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &430682941 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 423428307425698556, guid: 43ff934a6911d0a43ba773ed2c89b629, type: 3}
+  m_PrefabInstance: {fileID: 430682937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 455c9c1657cd3d643b1504c551687815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &435124567
@@ -493,6 +514,8 @@ MonoBehaviour:
   PlayerHandler: {fileID: 430682939}
   CurrEnemyHandler: {fileID: 1008314451}
   _enemyInfoBox: {fileID: 430682938}
+  _submitButton: {fileID: 430682941}
+  _shuffleButton: {fileID: 430682940}
 --- !u!4 &462665127
 Transform:
   m_ObjectHideFlags: 0

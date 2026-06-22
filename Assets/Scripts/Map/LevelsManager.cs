@@ -3,25 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelsManager : MonoBehaviour
+public class LevelsManager : Singleton<LevelsManager>
 {
-
-    private static LevelsManager _instance;
-    public static LevelsManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindAnyObjectByType<LevelsManager>();
-            }
-            return _instance;
-        }
-    }
 
     [Header("Object Assignments")]
     [SerializeField] private Transform _playerIconTransform;
     [SerializeField] private LevelHandler _firstLevel;
+    [SerializeField] private BattleButton _battleButton;
 
     [Header("Other Properties")]
     [SerializeField] private Vector3 _iconOffsetFromLevel;  // Offset between player icon and level
@@ -32,8 +20,9 @@ public class LevelsManager : MonoBehaviour
 
     public Action<int> OnLevelChanged = null;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _allLevelHandlers = new(FindObjectsOfType<LevelHandler>());
     }
 
@@ -69,11 +58,11 @@ public class LevelsManager : MonoBehaviour
             _currSelectedLevel.SetAsSelectedLevel();
             _playerIconTransform.position = newLevelHandler.transform.position + _iconOffsetFromLevel;
             OnLevelChanged.Invoke(newLevelHandler.LevelNumber);
-            BattleButton.Instance.ToggleInteractability(true);
+            _battleButton.ToggleInteractability(true);
             return;
         }
         // Animate our icon to the new position, and then set the new selected level
-        BattleButton.Instance.ToggleInteractability(false);
+        _battleButton.ToggleInteractability(false);
         StartCoroutine(AnimateIconToLevelCoroutine(newLevelHandler.transform.position + _iconOffsetFromLevel, () =>
         {
             _currSelectedLevel.IsCurrentLevel = false;  // If there was a "current" level, disable that
@@ -81,7 +70,7 @@ public class LevelsManager : MonoBehaviour
             _currSelectedLevel.IsCurrentLevel = true;
             _currSelectedLevel.SetAsSelectedLevel();
             OnLevelChanged.Invoke(newLevelHandler.LevelNumber);
-            BattleButton.Instance.ToggleInteractability(true);
+            _battleButton.ToggleInteractability(true);
         }));
     }
 

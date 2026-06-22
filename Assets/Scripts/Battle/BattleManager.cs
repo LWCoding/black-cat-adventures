@@ -5,42 +5,16 @@ using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BattleManager : MonoBehaviour
+public class BattleManager : Singleton<BattleManager>
 {
-
-    private static BattleManager _instance;
-    public static BattleManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindAnyObjectByType<BattleManager>();
-            }
-            return _instance;
-        }
-    }
-
-    #region Singleton Logic
-    private void Awake()
-    {
-        if (!ReferenceEquals(_instance, this)) {
-            if (_instance != null)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                _instance = this;
-            }
-        }
-    }
-    #endregion
 
     [Header("Object Assignments")]
     public PlayerHandler PlayerHandler;
     public EnemyHandler CurrEnemyHandler;
     [SerializeField] private EnemyInfoBox _enemyInfoBox;
+    [SerializeField] private SubmitButton _submitButton;
+    [SerializeField] private ShuffleButton _shuffleButton;
+    public ShuffleButton ShuffleButton => _shuffleButton;
 
     public State CurrentState;
 
@@ -79,13 +53,13 @@ public class BattleManager : MonoBehaviour
         // If return is pressed, try to submit word
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SubmitButton.Instance.TrySubmitCurrentWord();
+            _submitButton.TrySubmitCurrentWord();
         }
 
         // If tab is pressed, try to shuffle
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            ShuffleButton.Instance.TryShuffleBoard();
+            _shuffleButton.TryShuffleBoard();
         }
     }
 

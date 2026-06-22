@@ -4,21 +4,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TreasureSection : MonoBehaviour
+public class TreasureSection : Singleton<TreasureSection>
 {
-
-    private static TreasureSection _instance;
-    public static TreasureSection Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindAnyObjectByType<TreasureSection>();
-            }
-            return _instance;
-        }
-    }
 
     [Header("Object Assignments")]
     [SerializeField] private List<TreasureItem> _treasureObjects;
@@ -27,21 +14,6 @@ public class TreasureSection : MonoBehaviour
 
     public Action OnTreasureSelected = null;
     private bool _wasSectionInitialized = false;
-
-    private void Awake()
-    {
-        if (_instance != this)
-        {
-            if (_instance != null)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                _instance = this;
-            }
-        }
-    }
 
     private void Start()
     {

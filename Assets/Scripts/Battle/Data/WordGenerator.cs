@@ -2,21 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class WordGenerator : MonoBehaviour
+public class WordGenerator : Singleton<WordGenerator>
 {
-
-    private static WordGenerator _instance;
-    public static WordGenerator Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindAnyObjectByType<WordGenerator>();
-            }
-            return _instance;
-        }
-    }
 
     private readonly static Dictionary<TileTypeName, TileType> _tileTypes = new();
     public static Dictionary<TileTypeName, TileType> TileTypes
@@ -38,19 +25,9 @@ public class WordGenerator : MonoBehaviour
     private readonly List<string> _validWords = new();
     private readonly List<string> _profaneWords = new();
 
-    public void Awake()
+    protected override void Awake()
     {
-        if (!ReferenceEquals(_instance, this))
-        {
-            if (_instance != null)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                _instance = this;
-            }
-        }
+        base.Awake();
         AssembleWords();  // Assemble once initialized
     }
 

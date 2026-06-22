@@ -11,21 +11,8 @@ public struct EnemyInfo
     public string Description;
 }
 
-public class EnemyInfoBox : MonoBehaviour
+public class EnemyInfoBox : Singleton<EnemyInfoBox>
 {
-
-    private static EnemyInfoBox _instance;
-    public static EnemyInfoBox Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindAnyObjectByType<EnemyInfoBox>();
-            }
-            return _instance;
-        }
-    }
 
     [Header("Prefab Assignments")]
     [SerializeField] private GameObject _infoPrefab;
@@ -34,21 +21,6 @@ public class EnemyInfoBox : MonoBehaviour
     [SerializeField] private TextMeshPro _enemyDescText;
 
     private readonly List<Tuple<string, EnemyInfoHandler>> _instantiatedAttacks = new();
-
-    private void Awake()
-    {
-        if (!ReferenceEquals(_instance, this))
-        {
-            if (_instance != null)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                _instance = this;
-            }
-        }
-    }
 
     /// <summary>
     /// Given an Enemy's data, sets the info box's description to

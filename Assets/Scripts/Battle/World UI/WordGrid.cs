@@ -4,21 +4,8 @@ using System.Text;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
-public class WordGrid : MonoBehaviour
+public class WordGrid : Singleton<WordGrid>
 {
-
-    private static WordGrid _instance;
-    public static WordGrid Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindAnyObjectByType<WordGrid>();
-            }
-            return _instance;
-        }
-    }
 
     [Header("Prefab Assignments")]
     [SerializeField] private GameObject _letterPrefab;
@@ -33,18 +20,9 @@ public class WordGrid : MonoBehaviour
     private readonly List<LetterTile> _letterTiles = new();  // Instantiated letters
     public List<LetterTile> LetterTiles => _letterTiles;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (!ReferenceEquals(_instance, this)) {
-            if (_instance != null)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                _instance = this;
-            }
-        }
+        base.Awake();
         InitializeBoard();
     }
 

@@ -6,21 +6,8 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class WordPreview : MonoBehaviour
+public class WordPreview : Singleton<WordPreview>
 {
-
-    private static WordPreview _instance;
-    public static WordPreview Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindAnyObjectByType<WordPreview>();
-            }
-            return _instance;
-        }
-    }
 
     [Header("Prefab Assignments")]
     [SerializeField] private GameObject _previewLetterPrefab;
@@ -48,18 +35,9 @@ public class WordPreview : MonoBehaviour
     private readonly List<Tile> _currTiles = new();
     private readonly float SPACE_BETWEEN_TILES = 0.1f;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (!ReferenceEquals(_instance, this)) {
-            if (_instance != null)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                _instance = this;
-            }
-        }
+        base.Awake();
 
         FeedbackText.enabled = false;
 
