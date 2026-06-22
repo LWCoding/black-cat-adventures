@@ -24,6 +24,7 @@ public class IntroCutscene : MonoBehaviour
 
     private IEnumerator PlayCutsceneCoroutine()
     {
+        _cutsceneAnimator.enabled = true;
         _cutsceneAnimator.Play("Play");
 
         // Wait until play animation is done
