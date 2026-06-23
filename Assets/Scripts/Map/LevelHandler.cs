@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(PointerCursorOnHover))]
@@ -22,57 +21,46 @@ public class LevelHandler : MonoBehaviour
     public int LevelNumber = 0;
     public string LevelName;
     [Header("Level Assignments")]
-    public LevelHandler PreviousLevel;
-    public LevelHandler NextLevel;
+    public List<LevelHandler> PreviousLevels = new();
+    public List<LevelHandler> NextLevels = new();
+
+    private static readonly Color CompletedTint = new Color(0.4f, 0.85f, 0.45f);
 
     private bool _isCurrentLevel = false;
-    
+
     public bool IsCurrentLevel
     {
         get => _isCurrentLevel;
         set
         {
             _isCurrentLevel = value;
-            if (IsCurrentLevel)
+            if (_isCurrentLevel)
             {
-                if (PreviousLevel != null)
-                {
-                    PreviousLevel.IsLevelVisitable = true;
-                }
-                if (NextLevel != null && GameManager.GameData.CompletedNodeIds.Contains(SpaceNodeId))
-                {
-                    NextLevel.IsLevelVisitable = true;
-                }
-            } else 
+                _animator.Play("Selected");
+            }
+            else
             {
-                if (PreviousLevel != null)
-                {
-                    PreviousLevel.IsLevelVisitable = false;
-                }
-                if (NextLevel != null)
-                {
-                    NextLevel.IsLevelVisitable = false;
-                }
+                // Return to the correct idle state when deselected.
+                _animator.Play(_isLevelVisitable ? "StopHover" : "Disabled");
             }
         }
     }
 
     private bool _isLevelVisitable = false;
-    public bool IsLevelVisitable
-    {
-        get => _isLevelVisitable;
-        set
-        {
-            _pointerCursorOnHover.IsEnabled = value;
-            _isLevelVisitable = value;
+    public bool IsLevelVisitable => _isLevelVisitable;
 
-            if (_isLevelVisitable)
-            {
-                _animator.Play(_isHovering ? "StartHover" : "StopHover");
-            } else
-            {
-                _animator.Play("Disabled");
-            }
+    public void SetVisitable(bool visitable)
+    {
+        _isLevelVisitable = visitable;
+        _pointerCursorOnHover.IsEnabled = visitable;
+
+        if (_isLevelVisitable)
+        {
+            _animator.Play(_isHovering ? "StartHover" : "StopHover");
+        }
+        else if (!_isCurrentLevel)
+        {
+            _animator.Play("Disabled");
         }
     }
 
@@ -88,16 +76,46 @@ public class LevelHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Called by LevelsManager after all fields (SpaceNodeId, LevelNumber, PreviousLevel, etc.)
-    /// have been set. Applies the initial lock/text display state.
+    /// Called by LevelsManager after all fields (SpaceNodeId, AuthoredSpace, PreviousLevels, etc.)
+    /// have been set. Applies the initial label, lock, and completion state.
     /// </summary>
     public void Initialize()
     {
-        _levelText.text = LevelNumber.ToString();
+        // Determine label from space type: "?" for Unknown, "B" for Battle, empty for Start/null.
+        if (AuthoredSpace == null)
+        {
+            _levelText.text = "";
+        }
+        else if (AuthoredSpace.SpaceTypeId == "Unknown")
+        {
+            _levelText.text = "?";
+        }
+        else
+        {
+            _levelText.text = "B";
+        }
 
-        bool prevCompleted = PreviousLevel == null || GameManager.GameData.CompletedNodeIds.Contains(PreviousLevel.SpaceNodeId);
-        bool thisCompleted = GameManager.GameData.CompletedNodeIds.Contains(SpaceNodeId);
-        _lockObject.SetActive(!thisCompleted && !prevCompleted && PreviousLevel != null);
+        bool completed = GameManager.GameData.CompletedNodeIds.Contains(SpaceNodeId);
+        ApplyCompletedAppearance(completed);
+
+        RefreshLockState();
+
+        // Always start Disabled; LevelsManager will set the correct state on the
+        // selected node and its visitable neighbours after all nodes are generated.
+        _animator.Play("Disabled");
+    }
+
+    /// <summary>
+    /// Re-evaluates the lock icon based on current completion data. A node is unlocked
+    /// (no lock icon) as soon as it is completed or any parent is completed (travellable).
+    /// Call this whenever CompletedNodeIds changes.
+    /// </summary>
+    public void RefreshLockState()
+    {
+        bool completed = GameManager.GameData.CompletedNodeIds.Contains(SpaceNodeId);
+        bool reachable = PreviousLevels.Count == 0
+            || PreviousLevels.Exists(p => GameManager.GameData.CompletedNodeIds.Contains(p.SpaceNodeId));
+        _lockObject.SetActive(!completed && !reachable && PreviousLevels.Count > 0);
     }
 
     /// <summary>
@@ -112,6 +130,21 @@ public class LevelHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tints the mound sprite and hides the lock icon for completed nodes.
+    /// </summary>
+    public void ApplyCompletedAppearance(bool completed)
+    {
+        if (_moundSprite != null)
+        {
+            _moundSprite.color = completed ? CompletedTint : Color.white;
+        }
+        if (completed)
+        {
+            _lockObject.SetActive(false);
+        }
+    }
+
     public void SetAsSelectedLevel()
     {
         _animator.Play("Selected");
@@ -120,20 +153,20 @@ public class LevelHandler : MonoBehaviour
     private void OnMouseEnter()
     {
         _isHovering = true;
-        if (!_isLevelVisitable || IsCurrentLevel) { return; }
+        if (!_isLevelVisitable || _isCurrentLevel) { return; }
         _animator.Play("StartHover");
     }
 
     private void OnMouseExit()
     {
         _isHovering = false;
-        if (!_isLevelVisitable || IsCurrentLevel) { return; } 
+        if (!_isLevelVisitable || _isCurrentLevel) { return; }
         _animator.Play("StopHover");
     }
 
     private void OnMouseDown()
     {
-        if (IsCurrentLevel || !_isLevelVisitable) { return; }
+        if (_isCurrentLevel || !_isLevelVisitable) { return; }
         LevelsManager.Instance.SelectNewLevel(this);
     }
 

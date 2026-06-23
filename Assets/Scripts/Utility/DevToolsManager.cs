@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
 public class DevToolsManager : Singleton<DevToolsManager>
@@ -18,6 +19,21 @@ public class DevToolsManager : Singleton<DevToolsManager>
         {
             KillCurrentEnemy();
         }
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            SkipCurrentLevel();
+        }
+    }
+
+    // Cheat: marks the level/node complete via the normal WinState flow, then
+    // jumps straight back to the map (skipping the win screen delay).
+    private void SkipCurrentLevel()
+    {
+        if (BattleManager.Instance != null)
+        {
+            BattleManager.Instance.SetState(new WinState());
+        }
+        SceneManager.LoadScene("Map");
     }
 
     // Cheat: routes full damage through the normal TakeDamage flow so

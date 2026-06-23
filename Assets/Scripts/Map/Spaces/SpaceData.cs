@@ -24,6 +24,8 @@ public abstract class SpaceData : ScriptableObject
     [Tooltip("Stable identifier for this space type (e.g. 'Battle', 'Unknown'). Used in ResolvedSpaceEntry.")]
     public string SpaceTypeId;
     public string DisplayName;
+    [Tooltip("Label shown on the action button when the player is on this space (e.g. 'Battle!', 'Explore').")]
+    public string ActionLabel;
     [Tooltip("Sprite shown on the map node when this space type is revealed.")]
     public Sprite NodeSprite;
     [Tooltip("Unity scene name loaded when the player enters this space.")]

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpaceTypeId: Unknown
   DisplayName: Unknown
+  ActionLabel: Explore
   NodeSprite: {fileID: 0}
   SceneToLoad: 
   ResolutionRegistry: {fileID: 11400000, guid: 58e68cfe1c6b46aa8eafc15b5eb5288e, type: 2}

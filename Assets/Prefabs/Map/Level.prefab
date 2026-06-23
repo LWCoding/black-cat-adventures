@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.038, y: -0.345}
+  m_AnchoredPosition: {x: 0.038, y: 0.29}
   m_SizeDelta: {x: 2, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3199654434311700897
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4288393435
+    rgba: 4294967295
   m_fontColor: {r: 0.85882354, g: 0.6901961, b: 0.60784316, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -221,13 +221,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e1869c683218674598fc4f269b684d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moundSprite: {fileID: 0}
+  _moundSprite: {fileID: 1885883077051328287}
   _levelText: {fileID: 5598692156122381041}
   _lockObject: {fileID: 7916291943464587589}
+  SpaceNodeId: 
+  AuthoredSpace: {fileID: 0}
   LevelNumber: 0
   LevelName: 
-  _prevLevel: {fileID: 0}
-  _nextLevel: {fileID: 0}
+  PreviousLevels: []
+  NextLevels: []
 --- !u!50 &7799419439577093533
 Rigidbody2D:
   serializedVersion: 4
@@ -314,7 +316,7 @@ Transform:
   m_GameObject: {fileID: 7916291943464587589}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -399,7 +401,7 @@ Transform:
   m_GameObject: {fileID: 8146389037513921997}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.17, z: 0}
+  m_LocalPosition: {x: 0, y: -0.42, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
