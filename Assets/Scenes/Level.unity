@@ -207,6 +207,7 @@ MonoBehaviour:
   _enemyInfoBox: {fileID: 240218984}
   _submitButton: {fileID: 2830677907597432993}
   _shuffleButton: {fileID: 2830677907597432992}
+  _battleMusic: {fileID: 8300000, guid: a435f68166e504090912c136f70efa00, type: 3}
 --- !u!114 &54262480
 MonoBehaviour:
   m_ObjectHideFlags: 0

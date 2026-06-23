@@ -930,6 +930,7 @@ MonoBehaviour:
   PlayerHandler: {fileID: 492836197}
   CurrEnemyHandler: {fileID: 2062458130}
   _enemyInfoBox: {fileID: 492836198}
+  _battleMusic: {fileID: 8300000, guid: a435f68166e504090912c136f70efa00, type: 3}
 --- !u!4 &1851157830
 Transform:
   m_ObjectHideFlags: 0

@@ -25,6 +25,7 @@ public class BattleButton : MonoBehaviour, IPointerClickHandler
         if (LevelsManager.Instance != null)
         {
             LevelsManager.Instance.OnLevelChanged += OnLevelChanged;
+            OnLevelChanged(LevelsManager.Instance.CurrentLevel);
         }
     }
 

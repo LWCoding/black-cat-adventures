@@ -41,6 +41,7 @@ public class LevelsManager : Singleton<LevelsManager>
 
     public string GetCurrentLevelString() => _currSelectedLevel.LevelName;
     public string GetCurrentNodeId() => _currSelectedLevel?.SpaceNodeId;
+    public LevelHandler CurrentLevel => _currSelectedLevel;
 
     public Action<LevelHandler> OnLevelChanged = null;
 

@@ -16,6 +16,9 @@ public class BattleManager : Singleton<BattleManager>
     [SerializeField] private ShuffleButton _shuffleButton;
     public ShuffleButton ShuffleButton => _shuffleButton;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip _battleMusic;
+
     public State CurrentState;
 
     public Action OnPlayerAttack = null;
@@ -26,6 +29,10 @@ public class BattleManager : Singleton<BattleManager>
 
     private void Start()
     {
+        // Kick off looping battle music. The AudioManager keeps this playing
+        // seamlessly across scene reloads (e.g. advancing between enemies) and
+        // stops it automatically once we leave the battle scene.
+        AudioManager.Instance.PlayMusic(_battleMusic);
         SetState(new PlayerTurnState()); // Start off as player turn
         SetNewEnemy(CurrEnemyHandler);
     }
