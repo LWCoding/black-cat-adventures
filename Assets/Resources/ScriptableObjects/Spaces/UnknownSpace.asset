@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b0b33d4a5c4a77bd931158f38c4fb9, type: 3}
+  m_Name: UnknownSpace
+  m_EditorClassIdentifier: 
+  SpaceTypeId: Unknown
+  DisplayName: Unknown
+  NodeSprite: {fileID: 0}
+  SceneToLoad: 
+  ResolutionRegistry: {fileID: 11400000, guid: 58e68cfe1c6b46aa8eafc15b5eb5288e, type: 2}
