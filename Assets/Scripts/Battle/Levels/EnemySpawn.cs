@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class EnemyEncounter
+public class EnemySpawn
 {
 
     public EnemyData EnemyData;

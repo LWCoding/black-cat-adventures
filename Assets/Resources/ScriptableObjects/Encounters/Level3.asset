@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Level3
   m_EditorClassIdentifier:
   LevelId: Level3
-  LevelNumber: 3
   Encounters:
   - EnemyData: {fileID: 11400000, guid: fc8ec49997e333c44911ed046d5a8dd6, type: 2}
     DialogueToPlayOnMeet:
