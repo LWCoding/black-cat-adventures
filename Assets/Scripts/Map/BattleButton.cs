@@ -41,25 +41,27 @@ public class BattleButton : MonoBehaviour
     private void OnMouseDown()
     {
         if (!_isInteractable) { return; }
-        GameManager.GameData.RecentLevelCompleted = LevelsManager.Instance.GetCurrentLevelString();
-        SceneManager.LoadScene("Level");
+
+        GameManager.GameData.RecentNodeEntered = LevelsManager.Instance.GetCurrentNodeId();
+
+        ResolvedSpaceEntry resolved = LevelsManager.Instance.GetCurrentResolvedSpace();
+        if (resolved != null && !string.IsNullOrEmpty(resolved.SceneToLoad))
+        {
+            GameManager.GameData.RecentLevelCompleted = resolved.PayloadId;
+            SceneManager.LoadScene(resolved.SceneToLoad);
+        }
+        else
+        {
+            GameManager.GameData.RecentLevelCompleted = LevelsManager.Instance.GetCurrentLevelString();
+            SceneManager.LoadScene("Level");
+        }
     }
 
-    /// <summary>
-    /// Change the battle button text to represent a specific level.
-    /// </summary>
-    /// <param name="levelNumber"></param>
     private void ChangeBattleTextToLevel(int levelNumber)
     {
         _battleText.text = "Play Level " + levelNumber.ToString();
     }
 
-    /// <summary>
-    /// Toggle whether this tile is clickable or not.
-    /// 
-    /// isInteractable = true -> Button looks like it is interactable
-    /// isInteractable = false -> Button looks like it isn't interactable
-    /// </summary>
     public void ToggleInteractability(bool isInteractable)
     {
         _isInteractable = isInteractable;
@@ -67,7 +69,6 @@ public class BattleButton : MonoBehaviour
         Color textColor = _battleText.color;
         _bgRenderer.color = new Color(bgColor.r, bgColor.g, bgColor.b, isInteractable ? 1 : 0.2f);
         _battleText.color = new Color(textColor.r, textColor.g, textColor.b, isInteractable ? 1 : 0.3f);
-        // Toggle cursor activation based on interactability
         _pointerCursorOnHover.IsEnabled = isInteractable;
     }
 

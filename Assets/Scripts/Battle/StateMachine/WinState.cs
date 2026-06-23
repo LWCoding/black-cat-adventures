@@ -7,8 +7,11 @@ public class WinState : State
 
     public override void OnEnterState()
     {
-        // Register that we won this level
         GameManager.GameData.LevelsCompleted.Add(GameManager.GameData.RecentLevelCompleted);
+        if (!string.IsNullOrEmpty(GameManager.GameData.RecentNodeEntered))
+        {
+            GameManager.GameData.CompletedNodeIds.Add(GameManager.GameData.RecentNodeEntered);
+        }
     }
 
     public override void OnExitState()
