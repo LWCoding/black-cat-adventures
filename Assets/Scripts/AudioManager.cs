@@ -107,4 +107,14 @@ public class AudioManager : PersistentSingleton<AudioManager>
         _musicScene = null;
     }
 
+    /// <summary>
+    /// Halves the global audio listener volume while paused, or restores it
+    /// to full. Applies to both the SFX and music channels simultaneously
+    /// without touching each source's own volume setting.
+    /// </summary>
+    public void SetMuffled(bool muffled)
+    {
+        AudioListener.volume = muffled ? 0.5f : 1f;
+    }
+
 }

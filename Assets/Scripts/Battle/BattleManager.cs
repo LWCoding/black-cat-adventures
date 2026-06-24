@@ -50,6 +50,8 @@ public class BattleManager : Singleton<BattleManager>
     /// </summary>
     private void Update()
     {
+        if (PauseMenuManager.Instance != null && PauseMenuManager.Instance.IsPaused) { return; }
+
         // If backspace is pressed, remove last letter
         if (Input.GetKeyDown(KeyCode.Backspace) && WordPreview.Instance.CurrentTiles.Count > 0)
         {
@@ -71,6 +73,8 @@ public class BattleManager : Singleton<BattleManager>
 
     void OnGUI()
     {
+        if (PauseMenuManager.Instance != null && PauseMenuManager.Instance.IsPaused) { return; }
+
         // If a letter is pressed, try to find that letter in the grid and add it
         Event e = Event.current;
         if (e.type == EventType.KeyDown && e.keyCode.ToString().Length == 1 && char.IsLetter(e.keyCode.ToString()[0]))
