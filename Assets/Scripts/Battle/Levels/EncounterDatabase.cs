@@ -37,14 +37,32 @@ public class EncounterDatabase : ScriptableObject
     /// MinEncountersCompleted prerequisite has been met. completedCount should be
     /// GameData.LevelsCompleted.Count at the time of resolution.
     /// The TutorialEncounter is always excluded.
+    ///
+    /// If <paramref name="seenEncounterIds"/> is supplied, selection prefers encounters
+    /// the player has not seen yet. Only once every eligible encounter has been seen does
+    /// it fall back to the full eligible pool, so picks randomize among all possibilities again.
     /// Returns null if no eligible entries exist.
     /// </summary>
-    public Encounter Roll(System.Random rng, int completedCount)
+    public Encounter Roll(System.Random rng, int completedCount, IEnumerable<string> seenEncounterIds = null)
     {
         List<Entry> eligible = Entries.FindAll(
             e => e.Encounter != null
             && e.Encounter != TutorialEncounter
             && completedCount >= e.MinEncountersCompleted);
+
+        if (eligible.Count == 0) { return null; }
+
+        // Prefer unseen encounters. Once all eligible encounters have been seen,
+        // keep the full pool so selection randomizes among everything again.
+        if (seenEncounterIds != null)
+        {
+            HashSet<string> seen = new(seenEncounterIds);
+            List<Entry> unseen = eligible.FindAll(e => !seen.Contains(e.Encounter.EncounterId));
+            if (unseen.Count > 0)
+            {
+                eligible = unseen;
+            }
+        }
 
         float totalWeight = 0f;
         foreach (Entry e in eligible)
