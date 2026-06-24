@@ -16,6 +16,10 @@ public class WordPreview : Singleton<WordPreview>
     public TextMeshPro FeedbackText;
     [SerializeField] private Transform _letterParentTransform;
 
+    [Header("Select Animation")]
+    [SerializeField] private float _selectMoveDuration = 0.18f;
+    [SerializeField] private Ease _selectMoveEase = Ease.OutCubic;
+
     [Header("Fling Animation")]
     [SerializeField] private float _staggerDelay = 0.02f;
     [SerializeField] private float _recoilDuration = 0.05f;
@@ -89,29 +93,43 @@ public class WordPreview : Singleton<WordPreview>
 
     /// <summary>
     /// Add a tile to the end of the list of chosen tiles.
+    /// Spawns a clone at the grid tile's world position and animates it to its slot.
     /// </summary>
     public void AppendTile(Tile tile)
     {
         tile.CurrTileType.OnTileAdded();
         _currTiles.Add(tile);
-        UpdatePreviewLetters();
+        GameObject obj = Instantiate(_previewLetterPrefab, _letterParentTransform, false);
+        obj.GetComponent<LetterTile>().InitializeTile(tile);
+        obj.transform.position = GridWorldPos(tile);
+        _previewLetterTiles.Add(obj);
+        RecomputeTargets();
         OnLetterTilesChanged.Invoke();
     }
 
     /// <summary>
     /// Remove a specific tile from the list of preview tiles.
     /// Gets rid of all of the tiles after it, if they exist.
+    /// Animates each removed clone back to its grid tile's position and destroys it on arrival.
     /// </summary>
     public void RemoveTile(Tile tile)
     {
         int tileIdx = _currTiles.FindIndex((t) => t.TileIndex == tile.TileIndex);
-        while (tileIdx < _currTiles.Count)
+        if (tileIdx == -1) return;
+        for (int i = _currTiles.Count - 1; i >= tileIdx; i--)
         {
-            WordGrid.Instance.LetterTiles[_currTiles[tileIdx].TileIndex].Tile.CurrTileType.OnTileRemoved();
-            WordGrid.Instance.LetterTiles[_currTiles[tileIdx].TileIndex].IsSelected = false;
-            _currTiles.RemoveAt(tileIdx);
+            Tile t = _currTiles[i];
+            WordGrid.Instance.LetterTiles[t.TileIndex].Tile.CurrTileType.OnTileRemoved();
+            WordGrid.Instance.LetterTiles[t.TileIndex].IsSelected = false;
+            if (i < _previewLetterTiles.Count)
+            {
+                _previewLetterTiles[i].GetComponent<PreviewLetterTile>()
+                    .MoveTo(GridWorldPos(t), _selectMoveDuration, _selectMoveEase, destroyOnArrival: true);
+                _previewLetterTiles.RemoveAt(i);
+            }
+            _currTiles.RemoveAt(i);
         }
-        UpdatePreviewLetters();
+        RecomputeTargets();
         OnLetterTilesChanged.Invoke();
     }
 
@@ -174,41 +192,37 @@ public class WordPreview : Singleton<WordPreview>
     }
 
     /// <summary>
-    /// Update the preview letters to represent the currently 
-    /// chosen letters.
+    /// Returns the world position for slot index <paramref name="i"/> in a row of
+    /// <paramref name="count"/> preview tiles, centred under _letterParentTransform.
     /// </summary>
-    private void UpdatePreviewLetters()
+    private Vector3 SlotPosition(int i, int count)
     {
-        // Get rid of all preview letters
-        foreach (GameObject o in _previewLetterTiles)
-        {
-            Destroy(o);
-        }
-        // Hide preview text (this should be updated after the function)
+        float spacePerTile = _previewLetterPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.bounds.size.x
+            * _previewLetterPrefab.transform.localScale.x + SPACE_BETWEEN_TILES;
+        Vector3 startingOffset = new Vector3(-(count / 2f) * spacePerTile + spacePerTile / 2f, 0f);
+        return _letterParentTransform.position + startingOffset + new Vector3(spacePerTile * i, 0f, 0f);
+    }
+
+    /// <summary>
+    /// Returns the world position of the grid tile backing <paramref name="t"/>.
+    /// </summary>
+    private Vector3 GridWorldPos(Tile t) =>
+        WordGrid.Instance.LetterTiles[t.TileIndex].transform.position;
+
+    /// <summary>
+    /// Recomputes the destination slot for every live preview clone and issues
+    /// a MoveTo so each clone smoothly tracks its new position.
+    /// Does not instantiate or destroy anything — use AppendTile / RemoveTile for that.
+    /// </summary>
+    private void RecomputeTargets()
+    {
         FeedbackText.enabled = false;
         FeedbackText.text = "";
-        // Clear list of tiles
-        _previewLetterTiles.Clear();
-        // Calculate starting position based on # of letters
-        float spacePerTile = _previewLetterPrefab.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.bounds.size.x * _previewLetterPrefab.transform.localScale.x + SPACE_BETWEEN_TILES;
-        Vector3 startingOffset;
-        if (_currTiles.Count % 2 == 0)
+        for (int i = 0; i < _previewLetterTiles.Count; i++)
         {
-            // Even number
-            startingOffset = new Vector3(-(_currTiles.Count / 2f) * spacePerTile, 0);
-        } else
-        {
-            // Odd number
-            startingOffset = new Vector3(-(_currTiles.Count / 2f) * spacePerTile, 0);
-        }
-        startingOffset += new Vector3(spacePerTile / 2, 0);
-        // Redraw current preview letters
-        for (int i = 0; i < _currTiles.Count; i++)
-        {
-            GameObject obj = Instantiate(_previewLetterPrefab, _letterParentTransform, false);
-            obj.GetComponent<LetterTile>().InitializeTile(_currTiles[i]);
-            obj.transform.position = startingOffset + new Vector3(spacePerTile * i, _letterParentTransform.transform.position.y, 0);
-            _previewLetterTiles.Add(obj);
+            Vector3 slot = SlotPosition(i, _currTiles.Count);
+            _previewLetterTiles[i].GetComponent<PreviewLetterTile>()
+                .MoveTo(slot, _selectMoveDuration, _selectMoveEase);
         }
     }
 
@@ -236,11 +250,12 @@ public class WordPreview : Singleton<WordPreview>
     /// </summary>
     public void FlingTilesToEnemy(Vector3 target, System.Action onAllLanded)
     {
-        // Snapshot and detach so ConsumeTiles / UpdatePreviewLetters won't Destroy these.
+        // Snapshot and detach so ConsumeTiles / RecomputeTargets won't touch these.
         List<GameObject> toFling = new(_previewLetterTiles);
         _previewLetterTiles.Clear();
         foreach (GameObject obj in toFling)
         {
+            obj.GetComponent<PreviewLetterTile>().StopMove();
             obj.transform.SetParent(null, worldPositionStays: true);
         }
 
