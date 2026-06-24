@@ -1,10 +1,10 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class IntroMenuController : MonoBehaviour
 {
-
     [Header("Menu Buttons")]
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _continueButton;
@@ -32,6 +32,69 @@ public class IntroMenuController : MonoBehaviour
 
         _confirmOverwritePanel.SetActive(false);
         _continueButton.interactable = _hasSave;
+
+        EnsureAnimator(_startButton);
+        EnsureAnimator(_continueButton);
+        EnsureAnimator(_quitButton);
+        EnsureAnimator(_confirmYesButton);
+        EnsureAnimator(_confirmNoButton);
+    }
+
+    private static void EnsureAnimator(Button button)
+    {
+        if (button.GetComponent<MenuButtonAnimator>() == null)
+        {
+            button.gameObject.AddComponent<MenuButtonAnimator>();
+        }
+    }
+
+    private void Update()
+    {
+        bool down = Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S);
+        bool up   = Input.GetKeyDown(KeyCode.UpArrow)   || Input.GetKeyDown(KeyCode.W);
+
+        if (!down && !up) { return; }
+
+        Button[] active = GetActiveButtons();
+        if (active.Length == 0) { return; }
+
+        GameObject current = EventSystem.current.currentSelectedGameObject;
+        int index = -1;
+        for (int i = 0; i < active.Length; i++)
+        {
+            if (active[i].gameObject == current)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        if (index < 0)
+        {
+            EventSystem.current.SetSelectedGameObject(active[0].gameObject);
+            return;
+        }
+
+        int next = Mathf.Clamp(index + (down ? 1 : -1), 0, active.Length - 1);
+        if (next != index)
+        {
+            EventSystem.current.SetSelectedGameObject(active[next].gameObject);
+        }
+    }
+
+    private Button[] GetActiveButtons()
+    {
+        if (_confirmOverwritePanel.activeSelf)
+        {
+            return new[] { _confirmYesButton, _confirmNoButton };
+        }
+
+        if (_continueButton.interactable)
+        {
+            return new[] { _startButton, _continueButton, _quitButton };
+        }
+
+        return new[] { _startButton, _quitButton };
     }
 
     private void OnStartClicked()
@@ -39,6 +102,7 @@ public class IntroMenuController : MonoBehaviour
         if (_hasSave)
         {
             _confirmOverwritePanel.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(_confirmYesButton.gameObject);
         }
         else
         {
@@ -52,19 +116,20 @@ public class IntroMenuController : MonoBehaviour
         GameManager.GameData = new GameData();
         _hasSave = false;
         _confirmOverwritePanel.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
         BeginNewRun();
     }
 
     private void OnConfirmNoClicked()
     {
         _confirmOverwritePanel.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     private void BeginNewRun()
     {
-        _menuPanel.SetActive(false);
         _bypassIntro.IsActive = true;
-        _introCutscene.BeginCutscene();
+        _introCutscene.BeginCutscene(() => _menuPanel.SetActive(false));
     }
 
     private void OnContinueClicked()
@@ -77,5 +142,4 @@ public class IntroMenuController : MonoBehaviour
     {
         Application.Quit();
     }
-
 }

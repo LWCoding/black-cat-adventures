@@ -1,29 +1,42 @@
 using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class IntroCutscene : MonoBehaviour
 {
-
     [Header("Object Assignments")]
     [SerializeField] private Animator _cutsceneAnimator;
     [Header("Cutscene Properties")]
     [SerializeField] private string _levelIdAfterCutscene;
+    [Header("Fade")]
+    [SerializeField] private Image _fadeOverlay;
+    [SerializeField] private float _fadeDuration = 0.4f;
 
     /// <summary>
-    /// Starts the cutscene denoted by the `Play` animation.
-    /// Afterwards, switches to an `Idle` animation and waits
-    /// for a click. The click will bring the player to the
-    /// next scene.
+    /// Fades to black, invokes <paramref name="onFadedToBlack"/> once the screen is
+    /// fully covered, then plays the cutscene. The overlay stays opaque for the
+    /// remainder of the cutscene; the scene load removes it naturally.
     /// </summary>
-    public void BeginCutscene()
+    public void BeginCutscene(System.Action onFadedToBlack = null)
     {
-        StartCoroutine(PlayCutsceneCoroutine());
+        StartCoroutine(PlayCutsceneCoroutine(onFadedToBlack));
     }
 
-    private IEnumerator PlayCutsceneCoroutine()
+    private IEnumerator PlayCutsceneCoroutine(System.Action onFadedToBlack)
     {
+        if (_fadeOverlay != null)
+        {
+            _fadeOverlay.gameObject.SetActive(true);
+            Color c = _fadeOverlay.color;
+            _fadeOverlay.color = new Color(c.r, c.g, c.b, 0f);
+            _fadeOverlay.DOFade(1f, _fadeDuration).SetEase(Ease.InOutSine);
+            yield return new WaitForSeconds(_fadeDuration);
+        }
+
+        onFadedToBlack?.Invoke();
+
         _cutsceneAnimator.enabled = true;
         _cutsceneAnimator.Play("Play");
 
@@ -47,5 +60,4 @@ public class IntroCutscene : MonoBehaviour
         GameManager.GameData.RecentLevelCompleted = _levelIdAfterCutscene;
         SceneManager.LoadScene("Level");
     }
-
 }
