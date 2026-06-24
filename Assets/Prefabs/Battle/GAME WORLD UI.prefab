@@ -1583,6 +1583,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1064009101476585420}
   - component: {fileID: 5994853354222890101}
+  - component: {fileID: 5994853354222890102}
   m_Layer: 0
   m_Name: Word Grid
   m_TagString: Untagged
@@ -1626,7 +1627,20 @@ MonoBehaviour:
   SPACE_BETWEEN_TILES: 1
   _scrambleSFX: {fileID: 8300000, guid: 0ff2224218a0e4ca8938d87d876742f5, type: 3}
   _scrambleSFXVolume: 1
-  _scramblePoofSprite: {fileID: 0}
+--- !u!114 &5994853354222890102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124478348961317733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30427e2a57a946259453a3273096701a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prewarmCount: 8
+  _poofSprite: {fileID: 0}
 --- !u!1 &6381529578354286324
 GameObject:
   m_ObjectHideFlags: 0

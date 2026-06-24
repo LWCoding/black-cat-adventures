@@ -18,10 +18,8 @@ public class WordGrid : Singleton<WordGrid>
     public float SPACE_BETWEEN_TILES;
 
     [Header("Scramble Effect")]
-    [SerializeField] private AudioClip _scrambleSFX;  // Placeholder; assign in the Inspector
+    [SerializeField] private AudioClip _scrambleSFX;
     [SerializeField] private float _scrambleSFXVolume = 1f;
-    [Tooltip("Optional cloud sprite for the Scramble poof; leave empty to use plain particles.")]
-    [SerializeField] private Sprite _scramblePoofSprite;
 
     // Rare, high-value letters a Scrambled tile is turned into (the gold-etched tier).
     private const string GoldEtchedLetters = "jkxzq";
@@ -123,7 +121,7 @@ public class WordGrid : Singleton<WordGrid>
             LetterTile tile = pool[i];
             string goldLetter = GoldEtchedLetters[Random.Range(0, GoldEtchedLetters.Length)].ToString();
             tile.SetTileText(goldLetter);
-            ScramblePoof.PlayAt(tile.transform.position, _scramblePoofSprite);
+            ParticleManager.Instance.SpawnPoof(tile.transform.position);
         }
 
         if (toScramble > 0)
