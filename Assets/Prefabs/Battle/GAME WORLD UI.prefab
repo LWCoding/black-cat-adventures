@@ -1921,6 +1921,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1835965829055422466}
   - component: {fileID: 1990714702781530057}
+  - component: {fileID: 1357924680135792469}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -1937,7 +1938,7 @@ Transform:
   m_GameObject: {fileID: 7766611195460922199}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 0.76, z: 0}
+  m_LocalPosition: {x: 0.6, y: -1, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1995,6 +1996,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1357924680135792469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7766611195460922199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b3e1c9a4d2f48a1b6c0e5d3f8a91240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squashAmount: 0.04
+  stretchAmount: 0.04
+  animationSpeed: 2
+  phaseOffset: 0
+  imageLocalYOffset: -1.2
 --- !u!1 &9039316530398636405
 GameObject:
   m_ObjectHideFlags: 0
