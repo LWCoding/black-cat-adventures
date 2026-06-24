@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,23 @@ public class DevToolsManager : Singleton<DevToolsManager>
         DontDestroyOnLoad(go);
     }
 
+    private EnemyData[] _enemyLibrary;
+    private int _libraryIndex;
+
+    private EnemyData[] EnemyLibrary
+    {
+        get
+        {
+            if (_enemyLibrary == null)
+            {
+                _enemyLibrary = Resources.LoadAll<EnemyData>("ScriptableObjects/Characters")
+                    .OrderBy(e => e.name)
+                    .ToArray();
+            }
+            return _enemyLibrary;
+        }
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F9))
@@ -22,6 +40,14 @@ public class DevToolsManager : Singleton<DevToolsManager>
         if (Input.GetKeyDown(KeyCode.F7))
         {
             SkipCurrentLevel();
+        }
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            CycleEnemy(+1);
+        }
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            CycleEnemy(-1);
         }
     }
 
@@ -45,6 +71,27 @@ public class DevToolsManager : Singleton<DevToolsManager>
         HealthHandler health = enemy.HealthHandler;
         if (health == null || health.IsDead()) { return; }
         health.TakeDamage(health.CurrentHealth);
+    }
+
+    // Cheat: replaces the current enemy's data with the next/previous entry in the
+    // enemy library (alphabetical order), reloading sprite, attacks, and health.
+    private void CycleEnemy(int direction)
+    {
+        EnemyHandler enemy = BattleManager.Instance?.CurrEnemyHandler;
+        if (enemy == null) { return; }
+
+        EnemyData[] lib = EnemyLibrary;
+        if (lib.Length == 0) { return; }
+
+        int found = System.Array.IndexOf(lib, enemy.CharData as EnemyData);
+        if (found >= 0) { _libraryIndex = found; }
+
+        int len = lib.Length;
+        _libraryIndex = ((_libraryIndex + direction) % len + len) % len;
+
+        EnemyData next = lib[_libraryIndex];
+        enemy.SetCharacterData(next);
+        EnemyInfoBox.Instance?.SetInfo(next);
     }
 }
 #endif
