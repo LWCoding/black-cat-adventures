@@ -2,9 +2,10 @@ using UnityEngine;
 
 /// <summary>
 /// Subtle idle breathing effect for battle characters. Attach to the
-/// sprite child ("Image") of a player or enemy. Animates visual scale
-/// only, oscillating around whatever local scale is present at start so
-/// per-character SpriteScale is respected and cleanly restored.
+/// sprite child ("Image") of a player or enemy. Animates local scale only,
+/// oscillating around whatever local scale is present at start so
+/// per-character SpriteScale is respected and cleanly restored. Applies
+/// imageLocalYOffset once at startup to set the initial Y anchor.
 /// </summary>
 public class IdleSquashStretch : MonoBehaviour
 {
@@ -16,20 +17,17 @@ public class IdleSquashStretch : MonoBehaviour
     [SerializeField] private float phaseOffset = 0f;
 
     [Header("Anchoring")]
-    [Tooltip("Local Y position the sprite child stays anchored at, keeping the character grounded instead of floating upward while it squashes and stretches.")]
+    [Tooltip("Local Y position applied once at startup to anchor the sprite child.")]
     [SerializeField] private float imageLocalYOffset = -1f;
 
     private Vector3 _baseScale = Vector3.one;
-    private Vector3 _basePosition;
 
     private void Start()
     {
         _baseScale = transform.localScale;
-        // Remember the sprite's resting position and anchor its Y to the
-        // intended ground offset so the squash/stretch never drifts it upward.
-        _basePosition = transform.localPosition;
-        _basePosition.y = imageLocalYOffset;
-        transform.localPosition = _basePosition;
+        Vector3 pos = transform.localPosition;
+        pos.y = imageLocalYOffset;
+        transform.localPosition = pos;
     }
 
     private void Update()
@@ -42,17 +40,10 @@ public class IdleSquashStretch : MonoBehaviour
             _baseScale.x * (1f - amount),
             _baseScale.y * (1f + amount),
             _baseScale.z);
-        // Keep the sprite grounded: scaling must not push the image upward.
-        Vector3 pos = transform.localPosition;
-        pos.y = _basePosition.y;
-        transform.localPosition = pos;
     }
 
     private void OnDisable()
     {
         transform.localScale = _baseScale;
-        Vector3 pos = transform.localPosition;
-        pos.y = _basePosition.y;
-        transform.localPosition = pos;
     }
 }
