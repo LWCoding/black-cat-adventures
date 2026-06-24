@@ -15,13 +15,13 @@ MonoBehaviour:
   StartingHealth: 45
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 3cca3f354b1afbb44aebf83c469a18ea, type: 3}
-    Offset: {x: 0.7, y: 0.9}
+    Offset: {x: 0.7, y: -1.3}
   AttackSprite:
     Sprite: {fileID: 21300000, guid: 3cca3f354b1afbb44aebf83c469a18ea, type: 3}
-    Offset: {x: 0.7, y: 0.9}
+    Offset: {x: 0.7, y: -1.3}
   DeadSprite:
     Sprite: {fileID: 21300000, guid: 471a2f4531e78f0489c43e35abfe7b9e, type: 3}
-    Offset: {x: 0.7, y: 0.7}
+    Offset: {x: 0.7, y: -1.5}
   SpriteScale: {x: 0.85, y: 0.85}
   EnemyDescription: Stop asking! They're an axolotl mixed with a dutch angel dragon,
     sheesh.

@@ -260,7 +260,7 @@ Transform:
   m_GameObject: {fileID: 7914945707406219719}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6, y: -1, z: 0}
+  m_LocalPosition: {x: 0.6, y: -1.2, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -327,14 +327,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7914945707406219719}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b3e1c9a4d2f48a1b6c0e5d3f8a91240, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d0871dbe98dd49eabe9c098fa105ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squashAmount: 0.04
-  stretchAmount: 0.04
-  animationSpeed: 2
-  phaseOffset: 1.5
-  imageLocalYOffset: -1.2
+  _enableTilt: 0
+  _tiltAngle: 8
+  _tiltDuration: 2.5
+  _enableScalePulse: 0
+  _scalePulseAmount: 1.08
+  _scalePulseDuration: 1.8
+  _enableSquashStretch: 1
+  _squashStretchAmount: 0.02
+  _squashStretchDuration: 1.57
+  _squashStretchPhase: 1.5
 --- !u!1 &8723121862826607162
 GameObject:
   m_ObjectHideFlags: 0

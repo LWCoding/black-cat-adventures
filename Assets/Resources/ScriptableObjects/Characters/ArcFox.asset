@@ -15,13 +15,13 @@ MonoBehaviour:
   StartingHealth: 15
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 2109d13289b5c9945b27d27327242279, type: 3}
-    Offset: {x: 0.8, y: 1}
+    Offset: {x: 0.8, y: -1.2}
   AttackSprite:
     Sprite: {fileID: 21300000, guid: 2109d13289b5c9945b27d27327242279, type: 3}
-    Offset: {x: 0.8, y: 1}
+    Offset: {x: 0.8, y: -1.2}
   DeadSprite:
     Sprite: {fileID: 21300000, guid: 6b07971d7aa878840abb58a08e0ee664, type: 3}
-    Offset: {x: 0, y: 0.8}
+    Offset: {x: 0, y: -1.4}
   SpriteScale: {x: 0.85, y: 0.85}
   EnemyDescription: Growls at people he hates. He's been through many anger management
     sessions.

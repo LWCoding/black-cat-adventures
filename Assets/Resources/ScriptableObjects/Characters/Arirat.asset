@@ -15,13 +15,13 @@ MonoBehaviour:
   StartingHealth: 20
   AliveSprite:
     Sprite: {fileID: 21300000, guid: e010e6fd89fc828479a81680811b749d, type: 3}
-    Offset: {x: 0.7, y: 1}
+    Offset: {x: 0.7, y: -1.2}
   AttackSprite:
     Sprite: {fileID: 21300000, guid: e010e6fd89fc828479a81680811b749d, type: 3}
-    Offset: {x: 0.7, y: 1}
+    Offset: {x: 0.7, y: -1.2}
   DeadSprite:
     Sprite: {fileID: 21300000, guid: 2ab7dbe52be5eab4391ec8196c553bfa, type: 3}
-    Offset: {x: 0.5, y: 0.8}
+    Offset: {x: 0.5, y: -1.4}
   SpriteScale: {x: 0.88, y: 0.88}
   EnemyDescription: To answer the question you've been thinking of, their favorite
     cheese is a good Vieux Boulogne.

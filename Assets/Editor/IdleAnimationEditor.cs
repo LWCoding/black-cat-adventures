@@ -10,6 +10,10 @@ public class IdleAnimationEditor : Editor
     private SerializedProperty _enableScalePulse;
     private SerializedProperty _scalePulseAmount;
     private SerializedProperty _scalePulseDuration;
+    private SerializedProperty _enableSquashStretch;
+    private SerializedProperty _squashStretchAmount;
+    private SerializedProperty _squashStretchDuration;
+    private SerializedProperty _squashStretchPhase;
 
     private void OnEnable()
     {
@@ -19,6 +23,10 @@ public class IdleAnimationEditor : Editor
         _enableScalePulse = serializedObject.FindProperty("_enableScalePulse");
         _scalePulseAmount = serializedObject.FindProperty("_scalePulseAmount");
         _scalePulseDuration = serializedObject.FindProperty("_scalePulseDuration");
+        _enableSquashStretch = serializedObject.FindProperty("_enableSquashStretch");
+        _squashStretchAmount = serializedObject.FindProperty("_squashStretchAmount");
+        _squashStretchDuration = serializedObject.FindProperty("_squashStretchDuration");
+        _squashStretchPhase = serializedObject.FindProperty("_squashStretchPhase");
     }
 
     public override void OnInspectorGUI()
@@ -44,6 +52,19 @@ public class IdleAnimationEditor : Editor
             EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(_scalePulseAmount, new GUIContent("Pulse Scale"));
             EditorGUILayout.PropertyField(_scalePulseDuration, new GUIContent("Half-pulse Duration (s)"));
+            EditorGUI.indentLevel--;
+        }
+
+        EditorGUILayout.Space();
+
+        EditorGUILayout.LabelField("Squash & Stretch", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(_enableSquashStretch, new GUIContent("Enable Squash & Stretch"));
+        if (_enableSquashStretch.boolValue)
+        {
+            EditorGUI.indentLevel++;
+            EditorGUILayout.PropertyField(_squashStretchAmount, new GUIContent("Amount"));
+            EditorGUILayout.PropertyField(_squashStretchDuration, new GUIContent("Half-cycle Duration (s)"));
+            EditorGUILayout.PropertyField(_squashStretchPhase, new GUIContent("Phase Delay (s)"));
             EditorGUI.indentLevel--;
         }
 
