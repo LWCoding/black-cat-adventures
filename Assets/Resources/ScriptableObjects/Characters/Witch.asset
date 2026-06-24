@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
+  m_Name: Witch
+  m_EditorClassIdentifier: 
+  StartingHealth: 45
+  AliveSprite:
+    Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
+    Offset: {x: 0.6, y: -1.2}
+  AttackSprite:
+    Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
+    Offset: {x: 0.6, y: -1.2}
+  DeadSprite:
+    Sprite: {fileID: 21300000, guid: a98949ac6b7a94d43b5b39a854fcc574, type: 3}
+    Offset: {x: 0.6, y: -1.2}
+  SpriteScale: {x: 0.9, y: 0.9}
+  EnemyDescription: Brews a potion for every occasion. This one tastes like soggy
+    vowels.
+  Attacks:
+  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+    AttackName: Broom Swipe
+    _attackDescription: Whacks you with her broom, dealing %d damage.
+    Damage: 5
+    AnimType: 0
+    InflictedStatuses: []
+    BoardEffects: []
+  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+    AttackName: Hexing Brew
+    _attackDescription: Scrambles three letters and inflicts Waterlogged.
+    Damage: 0
+    AnimType: 0
+    InflictedStatuses:
+    - Target: 0
+      Status: {fileID: 11400000, guid: 8157d86778283a542acecf088bd7a052, type: 2}
+      Amplifier: 2
+    BoardEffects:
+    - Effect: {fileID: 11400000, guid: 6cc86070687d4ee7a9bd003209d0395d, type: 2}
+      Amplifier: 3

@@ -176,6 +176,17 @@ public class BattleManager : Singleton<BattleManager>
         }
         // Make the player actually take the damage.
         PlayerHandler.HealthHandler.TakeDamage(attack.Damage);
+        // Apply any board effects (e.g. Scramble tiles).
+        if (attack.BoardEffects != null)
+        {
+            foreach (AttackBoardEffect boardEffect in attack.BoardEffects)
+            {
+                if (boardEffect.Effect != null)
+                {
+                    boardEffect.Effect.Apply(boardEffect.Amplifier);
+                }
+            }
+        }
     }
 
     /// <summary>

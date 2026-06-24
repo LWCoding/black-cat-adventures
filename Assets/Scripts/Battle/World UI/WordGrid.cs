@@ -17,6 +17,15 @@ public class WordGrid : Singleton<WordGrid>
     public int NUM_COLUMNS;
     public float SPACE_BETWEEN_TILES;
 
+    [Header("Scramble Effect")]
+    [SerializeField] private AudioClip _scrambleSFX;  // Placeholder; assign in the Inspector
+    [SerializeField] private float _scrambleSFXVolume = 1f;
+    [Tooltip("Optional cloud sprite for the Scramble poof; leave empty to use plain particles.")]
+    [SerializeField] private Sprite _scramblePoofSprite;
+
+    // Rare, high-value letters a Scrambled tile is turned into (the gold-etched tier).
+    private const string GoldEtchedLetters = "jkxzq";
+
     private readonly List<LetterTile> _letterTiles = new();  // Instantiated letters
     public List<LetterTile> LetterTiles => _letterTiles;
 
@@ -84,6 +93,54 @@ public class WordGrid : Singleton<WordGrid>
         {
             int randomIdx = Random.Range(0, NUM_ROWS * NUM_COLUMNS);
             _letterTiles[randomIdx].RandomizeVowel();
+        }
+    }
+
+    /// <summary>
+    /// Scrambles <paramref name="count"/> tiles on the board: turns common letters
+    /// into rare gold-etched ones to mess up the player's options. This is a
+    /// one-time tile effect (not a status). Tiles are chosen by etching tier,
+    /// preferring the most common first: bronze (LOW) tiles, then silver (MEDIUM),
+    /// then gold (HIGH). Each scrambled tile becomes a random gold-etched letter
+    /// and gets a poof particle effect; a sound effect plays once for the batch.
+    /// </summary>
+    public void ScrambleTiles(int count)
+    {
+        if (count <= 0 || _letterTiles.Count == 0) { return; }
+
+        // Build a selection pool ordered by etching tier (common letters first).
+        List<LetterTile> pool = new();
+        foreach (TileDamage tier in new[] { TileDamage.LOW, TileDamage.MEDIUM, TileDamage.HIGH })
+        {
+            List<LetterTile> inTier = _letterTiles.FindAll(t => t.Tile.DamageType == tier);
+            Shuffle(inTier);
+            pool.AddRange(inTier);
+        }
+
+        int toScramble = Mathf.Min(count, pool.Count);
+        for (int i = 0; i < toScramble; i++)
+        {
+            LetterTile tile = pool[i];
+            string goldLetter = GoldEtchedLetters[Random.Range(0, GoldEtchedLetters.Length)].ToString();
+            tile.SetTileText(goldLetter);
+            ScramblePoof.PlayAt(tile.transform.position, _scramblePoofSprite);
+        }
+
+        if (toScramble > 0)
+        {
+            AudioManager.Instance.PlayOneShot(_scrambleSFX, _scrambleSFXVolume);
+        }
+    }
+
+    /// <summary>
+    /// In-place Fisher-Yates shuffle.
+    /// </summary>
+    private static void Shuffle(List<LetterTile> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            (list[i], list[j]) = (list[j], list[i]);
         }
     }
 

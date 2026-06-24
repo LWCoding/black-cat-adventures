@@ -22,4 +22,7 @@ MonoBehaviour:
   - Encounter: {fileID: 11400000, guid: 38e2874132bff2aa6dbce54b57bc5b5d, type: 2}
     Weight: 1
     MinEncountersCompleted: 100
+  - Encounter: {fileID: 11400000, guid: e6e98e20cafc40aabb6916ae43a36271, type: 2}
+    Weight: 1
+    MinEncountersCompleted: 0
   TutorialEncounter: {fileID: 11400000, guid: 755b651381017323367bda12a13a3bb4, type: 2}

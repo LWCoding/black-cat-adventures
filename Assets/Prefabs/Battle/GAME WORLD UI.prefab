@@ -1624,6 +1624,9 @@ MonoBehaviour:
   NUM_ROWS: 4
   NUM_COLUMNS: 4
   SPACE_BETWEEN_TILES: 1
+  _scrambleSFX: {fileID: 8300000, guid: 0ff2224218a0e4ca8938d87d876742f5, type: 3}
+  _scrambleSFXVolume: 1
+  _scramblePoofSprite: {fileID: 0}
 --- !u!1 &6381529578354286324
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ public struct EnemyAttack
     public int Damage;
     public AttackAnimation AnimType;
     public List<AttackStatus> InflictedStatuses;
+    public List<AttackBoardEffect> BoardEffects;
 
     // Replace %d instances with damage number
     public string AttackDescription => _attackDescription.Replace("%d", Damage.ToString());
