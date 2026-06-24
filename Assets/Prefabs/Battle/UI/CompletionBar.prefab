@@ -129,7 +129,7 @@ MonoBehaviour:
   _fillBarTransform: {fileID: 4850589046108705183}
   _barStart: {fileID: 6605508995853974554}
   _barEnd: {fileID: 1864757583864968791}
-  _notchSprite: {fileID: 21300000, guid: d2feab8db485d734b91b7ab6b1ece18e, type: 3}
+  _notchPrefab: {fileID: 1000000000000001, guid: 5f3a8b2e1d4c9076ef8a3b5c2d1e4f70, type: 3}
 --- !u!1 &2136130313093250753
 GameObject:
   m_ObjectHideFlags: 0

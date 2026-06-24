@@ -12,8 +12,8 @@ public class UICompletionBar : MonoBehaviour
     [SerializeField] private RectTransform _fillBarTransform;
     [SerializeField] private Transform _barStart;
     [SerializeField] private Transform _barEnd;
-    [Header("Image Assignments")]
-    [SerializeField] private Sprite _notchSprite;
+    [Header("Prefab Assignments")]
+    [SerializeField] private GameObject _notchPrefab;
 
     private Vector3 _playerIconOffset;
     private float _progressBarLength;
@@ -21,7 +21,8 @@ public class UICompletionBar : MonoBehaviour
     private int _eventsEncountered = 0;
     private int _totalNumEvents = 0;
 
-    private readonly Dictionary<int, Image> _notchImages = new();  // Key = event encountered #
+    private readonly Dictionary<int, Image> _notchImages = new();           // Key = event encountered #
+    private readonly Dictionary<int, IdleAnimation> _notchTilts = new(); // Key = event encountered #
 
     private void Awake()
     {
@@ -57,15 +58,10 @@ public class UICompletionBar : MonoBehaviour
         // Create a notch for every possible ratio
         for (int i = 1; i <= eventCount; i++)
         {
-            Image notchImage = new GameObject("Ratio").AddComponent<Image>();
-            notchImage.transform.SetParent(transform, false);
-            notchImage.transform.position = new Vector3(_barStart.position.x + section * i, _fillBarTransform.position.y);
-            notchImage.GetComponent<RectTransform>().sizeDelta = new(80, 80);
-#if UNITY_WEBGL && !UNITY_EDITOR
-            notchImage.GetComponent<RectTransform>().sizeDelta = new(60, 60);
-#endif
-            notchImage.sprite = _notchSprite;
-            _notchImages.Add(i, notchImage);
+            GameObject notchGO = Instantiate(_notchPrefab, transform);
+            notchGO.transform.position = new Vector3(_barStart.position.x + section * i, _fillBarTransform.position.y);
+            _notchImages.Add(i, notchGO.GetComponent<Image>());
+            _notchTilts.Add(i, notchGO.GetComponent<IdleAnimation>());
         }
     }
 
@@ -78,6 +74,11 @@ public class UICompletionBar : MonoBehaviour
             _notchImages[_eventsEncountered].color = new Color(1, 1, 1, 0.5f);
         }
         _eventsEncountered++;
+        if (_notchTilts.TryGetValue(_eventsEncountered, out IdleAnimation reachedTilt))
+        {
+            reachedTilt.Stop();
+            _notchTilts.Remove(_eventsEncountered);
+        }
         GoToProgress((float)_eventsEncountered / _totalNumEvents);
     }
 
