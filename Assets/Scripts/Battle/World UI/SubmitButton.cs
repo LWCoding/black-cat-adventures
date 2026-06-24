@@ -76,8 +76,22 @@ public class SubmitButton : MonoBehaviour
         {
             tile.CurrTileType.ActivateTileEffects();
         }
-        BattleManager.Instance.RenderAttackAgainstEnemy(damageDealt);
-        BattleManager.Instance.OnPlayerAttack?.Invoke();
+
+        // Freeze the turn while letters are in flight.
+        BattleManager.Instance.SetState(new WaitState());
+
+        // Detach + animate preview letters toward the enemy.
+        // Damage and the player lunge fire only after the last letter lands.
+        Vector3 enemyPos = BattleManager.Instance.CurrEnemyHandler.transform.position;
+        WordPreview.Instance.FlingTilesToEnemy(enemyPos, onAllLanded: () =>
+        {
+            BattleManager.Instance.RenderAttackAgainstEnemy(damageDealt);
+            BattleManager.Instance.OnPlayerAttack?.Invoke();
+        });
+
+        // Re-roll the grid and clear selection data immediately (the
+        // flung GameObjects are already detached, so the Destroy loop
+        // in UpdatePreviewLetters is now a no-op for them).
         WordPreview.Instance.ConsumeTiles(specialTile);
     }
 

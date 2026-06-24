@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -15,6 +15,18 @@ public class WordPreview : Singleton<WordPreview>
     [Header("Object Assignments")]
     public TextMeshPro FeedbackText;
     [SerializeField] private Transform _letterParentTransform;
+
+    [Header("Fling Animation")]
+    [SerializeField] private float _staggerDelay = 0.02f;
+    [SerializeField] private float _recoilDuration = 0.05f;
+    [SerializeField] private float _recoilDistance = 0.3f;
+    [SerializeField] private float _flightDuration = 0.16f;
+    [SerializeField] private Ease _flingEase = Ease.InExpo;
+    [SerializeField] private float _impactDuration = 0.25f;
+    [SerializeField] private float _impactGrowScale = 1.3f;
+    [SerializeField] private float _impactXOffset = 0.5f;   // How far left of enemy center letters land
+    [SerializeField] private float _impactXSpread = 0.5f;   // Random X scatter around landing point
+    [SerializeField] private float _impactYSpread = 0.8f;   // Random Y scatter around landing point
 
     public Action OnLetterTilesChanged = null;  // Called whenever chosen letters have been modified
     public List<Tile> CurrentTiles => _currTiles;
@@ -212,6 +224,83 @@ public class WordPreview : Singleton<WordPreview>
         {
             _previewLetterTiles[tilesIdx].GetComponent<PreviewLetterTile>().ToggleVisibility(isVisible);
         }
+    }
+
+    /// <summary>
+    /// Two-phase animation:
+    /// Phase 1 — each letter punches outward with a short stagger so the word
+    ///           "winds up" before launching.
+    /// Phase 2 — once the last pulse finishes, every letter flies to its own
+    ///           scatter position on the left side of <paramref name="target"/>.
+    /// <paramref name="onAllLanded"/> fires when the last letter lands.
+    /// </summary>
+    public void FlingTilesToEnemy(Vector3 target, System.Action onAllLanded)
+    {
+        // Snapshot and detach so ConsumeTiles / UpdatePreviewLetters won't Destroy these.
+        List<GameObject> toFling = new(_previewLetterTiles);
+        _previewLetterTiles.Clear();
+        foreach (GameObject obj in toFling)
+        {
+            obj.transform.SetParent(null, worldPositionStays: true);
+        }
+
+        if (toFling.Count == 0)
+        {
+            onAllLanded?.Invoke();
+            return;
+        }
+
+        // Pre-compute a unique landing position per tile: left side of enemy with random scatter.
+        Vector3 landBase = target + new Vector3(-_impactXOffset, 0f, 0f);
+        List<Vector3> landPositions = new(toFling.Count);
+        for (int i = 0; i < toFling.Count; i++)
+        {
+            landPositions.Add(landBase + new Vector3(
+                Random.Range(-_impactXSpread, _impactXSpread),
+                Random.Range(-_impactYSpread, _impactYSpread),
+                0f));
+        }
+
+        // Phase 1: staggered recoil — each letter slides away from the enemy and holds.
+        for (int i = 0; i < toFling.Count; i++)
+        {
+            Vector3 recoilPos = toFling[i].transform.position
+                + (toFling[i].transform.position - target).normalized * _recoilDistance;
+            toFling[i].transform
+                .DOMove(recoilPos, _recoilDuration)
+                .SetDelay(i * _staggerDelay)
+                .SetEase(Ease.OutQuad);
+        }
+
+        // Phase 2: once the last letter has finished recoiling, all blast to their landing spots.
+        float launchDelay = (toFling.Count - 1) * _staggerDelay + _recoilDuration;
+        DOVirtual.DelayedCall(launchDelay, () =>
+        {
+            int remaining = toFling.Count;
+            for (int i = 0; i < toFling.Count; i++)
+            {
+                GameObject captured = toFling[i];
+                Vector3 landPos = landPositions[i];
+                captured.transform
+                    .DOMove(landPos, _flightDuration)
+                    .SetEase(_flingEase)
+                    .OnComplete(() =>
+                    {
+                        remaining--;
+                        if (remaining == 0)
+                        {
+                            onAllLanded?.Invoke();
+                            foreach (GameObject t in toFling)
+                            {
+                                if (t != null)
+                                {
+                                    t.GetComponent<LetterTile>().PlayImpactAndDestroy(_impactDuration, _impactGrowScale);
+                                }
+                            }
+                        }
+                    });
+            }
+        });
     }
 
 }

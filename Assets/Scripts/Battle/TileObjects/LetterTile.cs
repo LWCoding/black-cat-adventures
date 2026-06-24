@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using DG.Tweening;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -115,6 +116,21 @@ public abstract class LetterTile : MonoBehaviour
         Tile newTile = WordGenerator.Instance.GetRandomTile(Tile.TileIndex);
         newTile.Letters = letters;
         InitializeTile(newTile);
+    }
+
+    /// <summary>
+    /// Plays a grow-and-fade animation on this tile, then destroys the GameObject.
+    /// The tile scales up by <paramref name="growScale"/> and fades all renderers
+    /// and text to zero alpha over <paramref name="duration"/> seconds.
+    /// </summary>
+    public void PlayImpactAndDestroy(float duration, float growScale)
+    {
+        IsVisibilityLocked = true;
+        transform.DOScale(transform.localScale * growScale, duration).SetEase(Ease.OutQuad)
+            .OnComplete(() => Destroy(gameObject));
+        _bgRenderer.DOFade(0f, duration);
+        _dmgIndRenderer.DOFade(0f, duration);
+        DOTween.To(() => _letterText.alpha, a => _letterText.alpha = a, 0f, duration);
     }
 
     /// <summary>
