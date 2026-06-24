@@ -29,10 +29,10 @@ public static class ScramblePoof
         ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
         ParticleSystem.MainModule main = ps.main;
-        main.duration = 0.5f;
+        main.duration = 1.0f;
         main.loop = false;
         main.playOnAwake = false;
-        main.startLifetime = new ParticleSystem.MinMaxCurve(0.35f, 0.55f);
+        main.startLifetime = new ParticleSystem.MinMaxCurve(0.85f, 1.05f);
         main.startSpeed = new ParticleSystem.MinMaxCurve(0.8f, 1.8f);
         main.startSize = new ParticleSystem.MinMaxCurve(0.35f, 0.7f);
         main.startColor = new Color(0.95f, 0.95f, 1f, 0.9f);
