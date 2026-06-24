@@ -10,6 +10,5 @@ public class Encounter : ScriptableObject
     public string EncounterId;
     [FormerlySerializedAs("Encounters")]
     public List<EnemySpawn> Enemies = new();
-    public Treasure RewardTreasure;
 
 }

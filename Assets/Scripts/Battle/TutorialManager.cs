@@ -72,10 +72,13 @@ public class TutorialManager : Singleton<TutorialManager>
         BattleManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied += OnStatusEffectApplied;
         // When we reach the last enemy (treasure), show that tooltip
         BattleManager.Instance.OnReachedLastEnemy += OnReachedLastEnemy;
-        // When we have obtained the collectible treasure, hide that tooltip
-        TreasureCollectible.OnCollect += OnCollectTreasure;
+        // When we have opened the treasure chest, hide that tooltip
+        TreasureChest.OnCollect += OnCollectTreasure;
         // When a new enemy is set, make sure we render the OnEnemyDies function
-        BattleManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath += OnEnemyDies;
+        if (BattleManager.Instance.CurrEnemyHandler != null)
+        {
+            BattleManager.Instance.CurrEnemyHandler.HealthHandler.OnDeath += OnEnemyDies;
+        }
         BattleManager.Instance.OnNewEnemySet += OnNewEnemyArrives;
     }
 
@@ -86,7 +89,7 @@ public class TutorialManager : Singleton<TutorialManager>
         ShuffleButton.OnClickButton -= OnShuffleButtonPressed;
         BattleManager.Instance.PlayerHandler.StatusHandler.OnStatusApplied -= OnStatusEffectApplied;
         BattleManager.Instance.OnReachedLastEnemy -= OnReachedLastEnemy;
-        TreasureCollectible.OnCollect -= OnCollectTreasure;
+        TreasureChest.OnCollect -= OnCollectTreasure;
     }
 
     /// <summary>

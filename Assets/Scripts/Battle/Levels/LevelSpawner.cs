@@ -11,7 +11,7 @@ public class LevelSpawner : MonoBehaviour
     [SerializeField] private EncounterDatabase _encounterDatabase;
     [Header("Prefab Assignments")]
     [SerializeField] private GameObject _enemyPrefab;
-    [SerializeField] private GameObject _rewardPrefab;
+    [SerializeField] private GameObject _treasureChestPrefab;
     [Header("Object Assignments")]
     [SerializeField] private Transform _enemySpawnAnchor;
     [SerializeField] private Transform _stagingAnchor;
@@ -20,7 +20,19 @@ public class LevelSpawner : MonoBehaviour
     private void Awake()
     {
         string encounterId = GameManager.GameData.RecentLevelCompleted;
-        Encounter encounter = _encounterDatabase.GetEncounter(encounterId);
+
+        // Always use the tutorial encounter for the player's very first battle.
+        Encounter encounter =
+            (GameManager.GameData.LevelsCompleted.Count == 0 && _encounterDatabase.TutorialEncounter != null)
+                ? _encounterDatabase.TutorialEncounter
+                : _encounterDatabase.GetEncounter(encounterId)
+                  ?? _encounterDatabase.Roll(new System.Random(), 0);
+
+        if (encounter == null)
+        {
+            Debug.LogError($"[LevelSpawner] No encounter found for id '{encounterId}' and no fallback available.");
+            return;
+        }
 
         List<EnemyHandler> spawnedEnemies = new();
         for (int i = 0; i < encounter.Enemies.Count; i++)
@@ -46,17 +58,29 @@ public class LevelSpawner : MonoBehaviour
         }
 
         EnemyHandler lastEnemy = spawnedEnemies[^1];
-        if (encounter.RewardTreasure != null)
+        List<Treasure> choices = GameManager.GameData.GetRandomUnownedTreasures(3);
+        bool hasChest = choices.Count > 0;
+        if (hasChest)
         {
-            GameObject rewardObject = Instantiate(_rewardPrefab, _stagingAnchor.position, Quaternion.identity, _spawnedObjectsParent);
-            rewardObject.GetComponentInChildren<TreasureCollectible>().SetTreasureData(encounter.RewardTreasure);
-            rewardObject.SetActive(false);
-            lastEnemy.SetNextBattleObject(rewardObject);
+            GameObject chestObject = Instantiate(_treasureChestPrefab, _stagingAnchor.position, Quaternion.identity, _spawnedObjectsParent);
+            TreasureChest chest = chestObject.GetComponentInChildren<TreasureChest>();
+            if (chest != null)
+            {
+                chest.SetChoices(choices);
+                chestObject.SetActive(false);
+                lastEnemy.SetNextBattleObject(chestObject);
+            }
+            else
+            {
+                Debug.LogError("[LevelSpawner] TreasureChest component not found on the chest prefab — check the script GUID in TreasureChest.prefab.");
+                Destroy(chestObject);
+                hasChest = false;
+            }
         }
 
-        BattleManager.Instance.CurrEnemyHandler = spawnedEnemies[0];
-        int totalEvents = encounter.Enemies.Count + (encounter.RewardTreasure != null ? 1 : 0);
+        int totalEvents = encounter.Enemies.Count + (hasChest ? 1 : 0);
         FindAnyObjectByType<UICompletionBar>(FindObjectsInactive.Include).Initialize(totalEvents);
+        BattleManager.Instance.CurrEnemyHandler = spawnedEnemies[0];
     }
 
 }

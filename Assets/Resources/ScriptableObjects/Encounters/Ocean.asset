@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f09b01bdfcd89596d2250fbbae52cc1, type: 3}
-  m_Name: Level3
-  m_EditorClassIdentifier:
-  LevelId: Level3
-  Encounters:
+  m_Name: Ocean
+  m_EditorClassIdentifier: 
+  EncounterId: Ocean
+  Enemies:
   - EnemyData: {fileID: 11400000, guid: fc8ec49997e333c44911ed046d5a8dd6, type: 2}
     DialogueToPlayOnMeet:
     - Text: Turn back! This is restricted territory.
@@ -45,4 +45,3 @@ MonoBehaviour:
     ShouldStallBeforeTurn: 0
     TimeToNextObject: 2.5
     SpawnOffset: {x: 0, y: 0}
-  RewardTreasure: {fileID: 11400000, guid: fc881eb429299984398219c42713d5b5, type: 2}

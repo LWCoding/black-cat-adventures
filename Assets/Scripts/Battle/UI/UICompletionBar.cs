@@ -71,6 +71,7 @@ public class UICompletionBar : MonoBehaviour
 
     private void OnNewEnemySet(EnemyHandler enemy)
     {
+        if (_totalNumEvents == 0) { return; }
         // Fade out already-visited events
         if (_notchImages.ContainsKey(_eventsEncountered))
         {

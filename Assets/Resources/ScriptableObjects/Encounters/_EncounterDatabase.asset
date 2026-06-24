@@ -10,12 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9b00580ce624a90bd7ea00fc50e3976, type: 3}
-  m_Name: EncounterDatabase
+  m_Name: _EncounterDatabase
   m_EditorClassIdentifier: 
   Entries:
-  - Encounter: {fileID: 11400000, guid: 755b651381017323367bda12a13a3bb4, type: 2}
-    Weight: 1
-    MinEncountersCompleted: 0
   - Encounter: {fileID: 11400000, guid: 57cc9a0bd583d55cc3722ba19207cf2d, type: 2}
     Weight: 1
     MinEncountersCompleted: 0
@@ -25,3 +22,4 @@ MonoBehaviour:
   - Encounter: {fileID: 11400000, guid: 38e2874132bff2aa6dbce54b57bc5b5d, type: 2}
     Weight: 1
     MinEncountersCompleted: 100
+  TutorialEncounter: {fileID: 11400000, guid: 755b651381017323367bda12a13a3bb4, type: 2}

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = System.Random;
 
 /// <summary>
 /// Flat, JsonUtility-serializable record of per-node resolved space state.
@@ -74,6 +75,25 @@ public class GameData
     /// load; looked up on subsequent loads to apply stable space appearances/payloads.
     /// </summary>
     public List<ResolvedSpaceEntry> ResolvedSpaces = new();
+
+    /// <summary>
+    /// Returns up to <paramref name="count"/> randomly ordered treasures that the player
+    /// does not yet own, excluding the None placeholder. Returns fewer than count if not
+    /// enough unowned treasures remain; returns an empty list if none are available.
+    /// </summary>
+    public List<Treasure> GetRandomUnownedTreasures(int count)
+    {
+        List<Treasure> all = Resources.LoadAll<Treasure>("ScriptableObjects/Treasure").ToList();
+        List<Treasure> pool = all.FindAll(t => t is not None && !UnlockedTreasures.Contains(t));
+        // Fisher-Yates shuffle using a fresh RNG each call
+        Random rng = new();
+        for (int i = pool.Count - 1; i > 0; i--)
+        {
+            int j = rng.Next(i + 1);
+            (pool[i], pool[j]) = (pool[j], pool[i]);
+        }
+        return pool.Take(count).ToList();
+    }
 
     public ResolvedSpaceEntry GetResolvedSpace(string spaceNodeId)
         => ResolvedSpaces.Find(e => e.SpaceNodeId == spaceNodeId);

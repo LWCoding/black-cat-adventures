@@ -22,6 +22,9 @@ public class EncounterDatabase : ScriptableObject
 
     public List<Entry> Entries = new();
 
+    [Tooltip("If set, this encounter is always used for the player's very first battle and is never chosen by Roll.")]
+    public Encounter TutorialEncounter;
+
     /// <summary>
     /// Looks up an encounter by its id. Used by LevelSpawner after the
     /// map has written the chosen id to GameData.RecentLevelCompleted.
@@ -33,12 +36,15 @@ public class EncounterDatabase : ScriptableObject
     /// Picks a random encounter using weighted selection, filtered to entries whose
     /// MinEncountersCompleted prerequisite has been met. completedCount should be
     /// GameData.LevelsCompleted.Count at the time of resolution.
+    /// The TutorialEncounter is always excluded.
     /// Returns null if no eligible entries exist.
     /// </summary>
     public Encounter Roll(System.Random rng, int completedCount)
     {
         List<Entry> eligible = Entries.FindAll(
-            e => e.Encounter != null && completedCount >= e.MinEncountersCompleted);
+            e => e.Encounter != null
+            && e.Encounter != TutorialEncounter
+            && completedCount >= e.MinEncountersCompleted);
 
         float totalWeight = 0f;
         foreach (Entry e in eligible)
