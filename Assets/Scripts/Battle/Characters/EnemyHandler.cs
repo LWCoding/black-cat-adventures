@@ -159,6 +159,10 @@ public class EnemyHandler : CharacterHandler
                 BattleManager.Instance.OnReachedLastEnemy?.Invoke();
             }
         }
+        else if (_nextBattleObject.GetComponentInChildren<TreasureChest>() != null)
+        {
+            BattleManager.Instance.OnTreasureChestSet?.Invoke();
+        }
         gameObject.SetActive(false);
     }
 

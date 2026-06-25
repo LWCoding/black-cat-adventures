@@ -35,6 +35,7 @@ public class UICompletionBar : MonoBehaviour
         if (BattleManager.Instance != null)
         {
             BattleManager.Instance.OnNewEnemySet += OnNewEnemySet;
+            BattleManager.Instance.OnTreasureChestSet += OnTreasureChestSet;
         }
     }
 
@@ -43,6 +44,7 @@ public class UICompletionBar : MonoBehaviour
         if (BattleManager.Instance != null)
         {
             BattleManager.Instance.OnNewEnemySet -= OnNewEnemySet;
+            BattleManager.Instance.OnTreasureChestSet -= OnTreasureChestSet;
         }
     }
 
@@ -65,7 +67,11 @@ public class UICompletionBar : MonoBehaviour
         }
     }
 
-    private void OnNewEnemySet(EnemyHandler enemy)
+    private void OnNewEnemySet(EnemyHandler enemy) => AdvanceProgress();
+
+    private void OnTreasureChestSet() => AdvanceProgress();
+
+    private void AdvanceProgress()
     {
         if (_totalNumEvents == 0) { return; }
         // Fade out already-visited events

@@ -26,6 +26,7 @@ public class BattleManager : Singleton<BattleManager>
     public Action<State> OnStateChanged = null;  // Parameter is the state to transition to
     public Action<EnemyHandler> OnNewEnemySet = null;  // Parameter is the new enemy entering
     public Action OnReachedLastEnemy = null;
+    public Action OnTreasureChestSet = null;  // Fired when the treasure chest becomes the active battle object
 
     private void Start()
     {
