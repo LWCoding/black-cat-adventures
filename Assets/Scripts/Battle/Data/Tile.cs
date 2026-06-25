@@ -35,6 +35,10 @@ public class Tile
     public TileDamage DamageType;
     public TileType CurrTileType;
 
+    public int LockedTurnsRemaining;
+    public bool IsLocked => LockedTurnsRemaining > 0;
+    public TileTypeName PreLockType;
+
     public Tile(string letters, int idx, TileTypeName tileTypeName)
     {
         Letters = letters;

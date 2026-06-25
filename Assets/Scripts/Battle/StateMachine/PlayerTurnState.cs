@@ -12,7 +12,7 @@ public class PlayerTurnState : State
 
     public override void OnExitState()
     {
-
+        WordGrid.Instance.TickLockedTiles();
     }
 
 }

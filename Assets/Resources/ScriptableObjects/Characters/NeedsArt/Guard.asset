@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
-  m_Name: Wizard
+  m_Name: Guard
   m_EditorClassIdentifier: 
-  StartingHealth: 40
+  StartingHealth: 60
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
     Offset: {x: 0.6, y: -1.2}
@@ -23,22 +23,31 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: a98949ac6b7a94d43b5b39a854fcc574, type: 3}
     Offset: {x: 0.6, y: -1.2}
   SpriteScale: {x: 0.9, y: 0.9}
-  EnemyDescription: Tenured at the academy of jumbling perfectly good words into
-    gibberish.
+  EnemyDescription: Takes "no one gets past me" very personally. Still hasn't caught
+    that thief.
   Attacks:
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
-    AttackName: Arcane Bolt
-    _attackDescription: Zap! Deals %d damage.
+    AttackName: Clobber
+    _attackDescription: Whacks you with a baton, dealing %d damage.
     Damage: 4
     AnimType: 0
     InflictedStatuses: []
     BoardEffects: []
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
-    AttackName: Jumble Hex
-    _attackDescription: Deals %d damage, then Scrambles three letters.
+    AttackName: Detain
+    _attackDescription: Deals %d damage. Locks 2 tiles.
     Damage: 2
     AnimType: 0
     InflictedStatuses: []
     BoardEffects:
-    - Effect: {fileID: 11400000, guid: 6cc86070687d4ee7a9bd003209d0395d, type: 2}
-      Amplifier: 3
+    - Effect: {fileID: 11400000, guid: 27a79008c9b04eb3b40db459f4bdff9c, type: 2}
+      Amplifier: 2
+  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+    AttackName: Justice!!!
+    _attackDescription: Locks 4 tiles.
+    Damage: 0
+    AnimType: 0
+    InflictedStatuses: []
+    BoardEffects:
+    - Effect: {fileID: 11400000, guid: 27a79008c9b04eb3b40db459f4bdff9c, type: 2}
+      Amplifier: 4

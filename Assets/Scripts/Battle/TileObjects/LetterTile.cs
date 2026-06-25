@@ -159,7 +159,8 @@ public abstract class LetterTile : MonoBehaviour
     /// </summary>
     protected void BeginTooltipHover()
     {
-        if (Tile?.CurrTileType == null || !Tile.CurrTileType.HasTooltip) { return; }
+        if (Tile == null) { return; }
+        if (!Tile.IsLocked && (Tile.CurrTileType == null || !Tile.CurrTileType.HasTooltip)) { return; }
         _tooltipCoroutine = StartCoroutine(TooltipHoverCoroutine());
     }
 
@@ -180,7 +181,10 @@ public abstract class LetterTile : MonoBehaviour
     private IEnumerator TooltipHoverCoroutine()
     {
         yield return new WaitForSeconds(TOOLTIP_HOVER_DELAY);
-        TooltipManager.Instance.Show(Tile.CurrTileType.Description, transform.position);
+        string text = Tile.IsLocked
+            ? Tile.CurrTileType.Description + " (" + Tile.LockedTurnsRemaining + " turn" + (Tile.LockedTurnsRemaining == 1 ? "" : "s") + " left)"
+            : Tile.CurrTileType.Description;
+        TooltipManager.Instance.Show(text, transform.position);
         _tooltipCoroutine = null;
     }
 

@@ -34,7 +34,7 @@ public class GridLetterTile : LetterTile
     private void OnMouseEnter()
     {
         if (IsSelected || BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }
-        _animator.Play("StartHover");
+        if (!Tile.IsLocked) _animator.Play("StartHover");
         BeginTooltipHover();
     }
 
@@ -60,6 +60,7 @@ public class GridLetterTile : LetterTile
     public bool TrySelectTile()
     {
         if (IsSelected) return false;
+        if (Tile.IsLocked) return false;
         if (BattleManager.Instance.CurrentState is not PlayerTurnState) return false;
         AudioManager.Instance.PlayOneShot(_clickSFX, _clickSFXVolume);
         WordPreview.Instance.AppendTile(Tile);

@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f09b01bdfcd89596d2250fbbae52cc1, type: 3}
-  m_Name: Spellcasters
+  m_Name: Patrol
   m_EditorClassIdentifier: 
-  EncounterId: Spellcasters
+  EncounterId: Patrol
   Enemies:
-  - EnemyData: {fileID: 11400000, guid: 9e3c96a3472346a8b3e7cfc9459045af, type: 2}
+  - EnemyData: {fileID: 11400000, guid: 25da2d2ca13e415baa4b0e6f3be94d56, type: 2}
     DialogueToPlayOnMeet:
-    - Text: A traveler? How quaint.
+    - Text: Hey! This is a restricted area.
       Duration: 2
       Speaker: 1
       ShouldStallState: 1
-    - Text: Let me rearrange your little vocabulary.
+    - Text: We're on the lookout for a thief on the premises.
       Duration: 2
       Speaker: 1
       ShouldStallState: 0
     ShouldStallBeforeTurn: 0
     TimeToNextObject: 1.3
     SpawnOffset: {x: 0, y: 0}
-  - EnemyData: {fileID: 11400000, guid: 3486e2963e2e4cd7860290381f845173, type: 2}
+  - EnemyData: {fileID: 11400000, guid: f3ba37233a5d448a830b9e65bc14b59b, type: 2}
     DialogueToPlayOnMeet:
-    - Text: My apprentice!! No!!!
+    - Text: Oh dear~ another victim to steal from!
       Duration: 2
       Speaker: 1
-      ShouldStallState: 0
+      ShouldStallState: 1
     ShouldStallBeforeTurn: 0
     TimeToNextObject: 1.3
     SpawnOffset: {x: 0, y: 0}

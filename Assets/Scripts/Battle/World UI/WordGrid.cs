@@ -62,6 +62,16 @@ public class WordGrid : Singleton<WordGrid>
     /// </summary>
     public void ShuffleBoard()
     {
+        // Shuffling clears all tile locks — player chose to reset the board
+        foreach (LetterTile tile in _letterTiles)
+        {
+            if (tile.Tile.IsLocked)
+            {
+                tile.Tile.LockedTurnsRemaining = 0;
+                tile.SetTileType(tile.Tile.PreLockType);
+            }
+        }
+
         int vowelCount = 0;
         Dictionary<string, int> letterOccur = new();
         StringBuilder blacklistedLetters = new();  // Letters that occur >3 tiles shouldn't be added anymore
@@ -127,6 +137,54 @@ public class WordGrid : Singleton<WordGrid>
         if (toScramble > 0)
         {
             AudioManager.Instance.PlayOneShot(_scrambleSFX, _scrambleSFXVolume);
+        }
+    }
+
+    /// <summary>
+    /// Locks <paramref name="count"/> random unlocked tiles on the board for
+    /// <paramref name="durationTurns"/> player turns. Locked tiles cannot be
+    /// clicked or typed until the countdown reaches zero. Plays a poof particle
+    /// on each tile and a sound effect once for the batch.
+    /// </summary>
+    public void LockRandomTiles(int count, int durationTurns)
+    {
+        if (count <= 0 || _letterTiles.Count == 0) { return; }
+
+        List<LetterTile> available = _letterTiles.FindAll(t => !t.Tile.IsLocked);
+        if (available.Count == 0) { return; }
+
+        Shuffle(available);
+        int toLock = Mathf.Min(count, available.Count);
+        for (int i = 0; i < toLock; i++)
+        {
+            LetterTile tile = available[i];
+            tile.Tile.PreLockType = tile.Tile.CurrTileType.TileTypeName;
+            tile.Tile.LockedTurnsRemaining = durationTurns;
+            tile.SetTileType(TileTypeName.LOCKED);
+            ParticleManager.Instance.SpawnPoof(tile.transform.position);
+        }
+
+        if (toLock > 0)
+        {
+            AudioManager.Instance.PlayOneShot(_scrambleSFX, _scrambleSFXVolume);
+        }
+    }
+
+    /// <summary>
+    /// Decrements the lock countdown on every locked tile by one turn.
+    /// Tiles whose countdown reaches zero revert to their pre-lock tile type.
+    /// Should be called once per player turn end.
+    /// </summary>
+    public void TickLockedTiles()
+    {
+        foreach (LetterTile letterTile in _letterTiles)
+        {
+            if (!letterTile.Tile.IsLocked) { continue; }
+            letterTile.Tile.LockedTurnsRemaining--;
+            if (!letterTile.Tile.IsLocked)
+            {
+                letterTile.SetTileType(letterTile.Tile.PreLockType);
+            }
         }
     }
 

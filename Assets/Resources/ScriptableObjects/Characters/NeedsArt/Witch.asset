@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
   m_Name: Witch
   m_EditorClassIdentifier: 
-  StartingHealth: 45
+  StartingHealth: 50
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
     Offset: {x: 0.6, y: -1.2}
