@@ -15,6 +15,9 @@ MonoBehaviour:
   SpaceTypeId: Unknown
   DisplayName: Unknown
   ActionLabel: Explore
+  NodeLabel: '?'
   NodeSprite: {fileID: 0}
   SceneToLoad: 
-  ResolutionRegistry: {fileID: 11400000, guid: 58e68cfe1c6b46aa8eafc15b5eb5288e, type: 2}
+  Entries:
+  - Space: {fileID: 11400000, guid: 99d53ed29db74b4c9aed745501ccadd2, type: 2}
+    Weight: 1

@@ -104,6 +104,11 @@ public class StatusHandler : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns true if this character currently has a status effect with the given name.
+    /// </summary>
+    public bool HasStatus(string name) => _effects.Exists(e => e.Name == name);
+
+    /// <summary>
     /// Toggle the visibility of the status effects.
     /// </summary>
     public void ToggleEffectVisibility(bool isVisible)

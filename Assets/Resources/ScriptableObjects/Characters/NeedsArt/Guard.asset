@@ -33,21 +33,24 @@ MonoBehaviour:
     AnimType: 0
     InflictedStatuses: []
     BoardEffects: []
+    AvoidIfSelfHasStatus: {fileID: 0}
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Detain
-    _attackDescription: Deals %d damage. Locks 2 tiles.
+    _attackDescription: Deals %d damage and locks 2 tiles.
     Damage: 2
     AnimType: 0
     InflictedStatuses: []
     BoardEffects:
     - Effect: {fileID: 11400000, guid: 27a79008c9b04eb3b40db459f4bdff9c, type: 2}
       Amplifier: 2
+    AvoidIfSelfHasStatus: {fileID: 0}
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Justice!!!
-    _attackDescription: Locks 4 tiles.
+    _attackDescription: Welcome to the Baroness. Locks 4 tiles.
     Damage: 0
     AnimType: 0
     InflictedStatuses: []
     BoardEffects:
     - Effect: {fileID: 11400000, guid: 27a79008c9b04eb3b40db459f4bdff9c, type: 2}
       Amplifier: 4
+    AvoidIfSelfHasStatus: {fileID: 0}

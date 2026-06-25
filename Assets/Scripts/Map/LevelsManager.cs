@@ -30,6 +30,13 @@ public class LevelsManager : Singleton<LevelsManager>
 
     [Header("Other Properties")]
     [SerializeField] private Vector3 _iconOffsetFromLevel;
+    [Header("Node Type Weights")]
+    [Tooltip("Relative weight for battle nodes on middle columns.")]
+    [SerializeField] private float _battleWeight = 1f;
+    [Tooltip("Relative weight for unknown (?) nodes on middle columns.")]
+    [SerializeField] private float _unknownWeight = 1f;
+    [Tooltip("Relative weight for miniboss nodes on middle columns.")]
+    [SerializeField] private float _minibossWeight = 0.2f;
 
     private LevelHandler _startLevel;
     private LevelHandler _currSelectedLevel;
@@ -67,8 +74,9 @@ public class LevelsManager : Singleton<LevelsManager>
         System.Random layoutRng = new(GameManager.GameData.MapSeed);
         System.Random spaceRng  = new(GameManager.GameData.MapSeed ^ 0x5A5A5A5A);
 
-        BattleSpaceData  battleSpace  = Resources.Load<BattleSpaceData> ("ScriptableObjects/Spaces/BattleSpace");
-        UnknownSpaceData unknownSpace = Resources.Load<UnknownSpaceData>("ScriptableObjects/Spaces/UnknownSpace");
+        BattleSpaceData  battleSpace   = Resources.Load<BattleSpaceData> ("ScriptableObjects/Spaces/BattleSpace");
+        UnknownSpaceData unknownSpace  = Resources.Load<UnknownSpaceData>("ScriptableObjects/Spaces/UnknownSpace");
+        MinibossSpaceData minibossSpace = Resources.Load<MinibossSpaceData>("ScriptableObjects/Spaces/MinibossSpace");
 
         // Build node grid ---------------------------------------------------
         for (int col = 0; col < _columnCount; col++)
@@ -102,7 +110,7 @@ public class LevelsManager : Singleton<LevelsManager>
                 // Author space per column:
                 // col 0 = Start (null space = tutorial marker)
                 // col last = End (always Battle)
-                // middle = seeded random Battle or Unknown
+                // middle = weighted random Battle, Unknown, or Miniboss
                 if (col == 0)
                 {
                     node.AuthoredSpace = null;
@@ -113,7 +121,8 @@ public class LevelsManager : Singleton<LevelsManager>
                 }
                 else
                 {
-                    node.AuthoredSpace = (spaceRng.NextDouble() < 0.5) ? (SpaceData)battleSpace : unknownSpace;
+                    node.AuthoredSpace = RollAuthoredSpace(
+                        spaceRng, battleSpace, unknownSpace, minibossSpace);
                 }
 
                 node.transform.localPosition = localPos;
@@ -157,6 +166,27 @@ public class LevelsManager : Singleton<LevelsManager>
                 SpawnEdge(node.transform.position, child.transform.position);
             }
         }
+    }
+
+    /// <summary>
+    /// Picks a middle-column node type using configurable relative weights.
+    /// Miniboss is authored directly (not via Unknown) so "?" never resolves to it.
+    /// </summary>
+    private SpaceData RollAuthoredSpace(
+        System.Random rng,
+        BattleSpaceData battle,
+        UnknownSpaceData unknown,
+        MinibossSpaceData miniboss)
+    {
+        float minibossW = miniboss != null ? _minibossWeight : 0f;
+        float total = _battleWeight + _unknownWeight + minibossW;
+        if (total <= 0f) { return battle; }
+
+        float roll = (float)(rng.NextDouble() * total);
+        if (roll < _battleWeight) { return battle; }
+        roll -= _battleWeight;
+        if (roll < _unknownWeight) { return unknown; }
+        return miniboss != null ? miniboss : battle;
     }
 
     /// <summary>

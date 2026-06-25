@@ -81,10 +81,15 @@ public class LevelHandler : MonoBehaviour
     /// </summary>
     public void Initialize()
     {
-        // Determine label from space type: "?" for Unknown, "B" for Battle, empty for Start/null.
+        // Determine label from space type. NodeLabel on the asset takes priority;
+        // if absent, fall back to "?" for Unknown and "B" for any other authored space.
         if (AuthoredSpace == null)
         {
             _levelText.text = "";
+        }
+        else if (!string.IsNullOrEmpty(AuthoredSpace.NodeLabel))
+        {
+            _levelText.text = AuthoredSpace.NodeLabel;
         }
         else if (AuthoredSpace.SpaceTypeId == "Unknown")
         {

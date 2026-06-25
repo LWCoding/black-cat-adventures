@@ -1,6 +1,6 @@
 ---
 name: add-map-space
-description: Adds a brand-new space type to the Black Cat Adventures map system — creates the SpaceData subclass + .cs.meta, the .asset + .meta, an optional new scene + Build Settings registration, and wires the type into the Unknown resolution registry with a configurable weight. Use whenever the user asks to add a new map node type, map event, or map space (e.g. "add a shop space", "add a rest site", "add a mystery event"). Always use this instead of hand-writing SpaceData YAML from scratch.
+description: Adds a brand-new space type to the Black Cat Adventures map system — creates the SpaceData subclass + .cs.meta, the .asset + .meta, an optional new scene + Build Settings registration, and (if Unknown-eligible) wires the type into UnknownSpace.asset's Entries list with a configurable weight. Use whenever the user asks to add a new map node type, map event, or map space (e.g. "add a shop space", "add a rest site", "add a mystery event"). Always use this instead of hand-writing SpaceData YAML from scratch.
 ---
 
 # Add Map Space
@@ -24,7 +24,7 @@ Before writing anything, ask the user for (or confirm from context):
 5. **ScriptableObject fields** — does the space data asset need extra fields beyond what `SpaceData` provides? (e.g. an item pool, a heal amount, a difficulty tag.) List them now so they go into the subclass.
 
 6. **Unknown eligibility** — should an Unknown space be able to resolve into this new type?
-   - If **yes**: what is the relative weight? (Weights are not percentages — the actual chance is `weight / sum(all weights in SpaceResolutionRegistry)`.) For example, if Battle has weight 1 and you add Shop with weight 0.5, Battle occurs ~67% and Shop ~33% of Unknown resolutions.
+   - If **yes**: what is the relative weight? (Weights are not percentages — the actual chance is `weight / sum(all weights in UnknownSpace.asset Entries)`.) For example, if Battle has weight 1 and you add Shop with weight 0.5, Battle occurs ~67% and Shop ~33% of Unknown resolutions.
    - If **no**: the type is never rolled by Unknown and this step is skipped.
 
 ## 1. Create the C# script
@@ -61,18 +61,18 @@ If the space loads a scene that doesn't exist yet, read [references/scene-scaffo
 - Adding the entry to `ProjectSettings/EditorBuildSettings.asset`.
 - Creating a scene-reader MonoBehaviour that reads `GameManager.GameData.RecentLevelCompleted` and dispatches to the appropriate registry/loader.
 
-## 6. (Conditional) Register in SpaceResolutionRegistry
+## 6. (Conditional) Register in UnknownSpace.asset
 
 If the space is Unknown-eligible (step 0, question 6 = yes):
 
-Read the current `Assets/Resources/ScriptableObjects/Spaces/SpaceResolutionRegistry.asset` to see the existing `Entries` list. Add a new entry at the bottom:
+Read the current `Assets/Resources/ScriptableObjects/Spaces/UnknownSpace.asset` to see the existing `Entries` list. Add a new entry at the bottom:
 
 ```yaml
 - Space: {fileID: 11400000, guid: <asset guid from step 4>, type: 2}
   Weight: <weight from step 0>
 ```
 
-Do **not** invent a GUID for the `SpaceResolutionRegistry.asset` itself — read the actual asset file and edit the `Entries` list in place.
+Do **not** invent a GUID for `UnknownSpace.asset` itself — read the actual asset file and edit the `Entries` list in place.
 
 ## 7. Create a node prefab variant (manual Unity step)
 
@@ -88,7 +88,7 @@ This skill writes files; it cannot run the Unity Editor. After writing everythin
    - `SpaceTypeId`, `DisplayName`, `SceneToLoad` all have correct values.
    - `NodeSprite` is assigned (not "None") — if it was left `{fileID: 0}`, assign it now.
    - Any extra fields (pool, registry reference, etc.) are populated.
-3. Select `SpaceResolutionRegistry.asset` (if the type is Unknown-eligible). Confirm the new entry appears in `Entries` with the correct `Space` reference and `Weight`.
+3. Select `UnknownSpace.asset` (if the type is Unknown-eligible). Confirm the new entry appears in `Entries` with the correct `Space` reference and `Weight`.
 4. If a new scene was created: open **File > Build Settings**, confirm the scene appears in the build list and is enabled.
 5. In the **Map** scene, select a `LevelHandler` node and set its `AuthoredSpace` to `UnknownSpace.asset`. Enter Play mode — the Unknown node should resolve into your new type (visible in the Inspector via `GameData.ResolvedSpaces`) and the resolved sprite should appear on the map node.
 6. Click the resolved node and press the battle button — confirm the correct scene loads and that `GameManager.GameData.RecentLevelCompleted` contains the expected `PayloadId` string.

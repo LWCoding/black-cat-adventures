@@ -18,6 +18,8 @@ public struct EnemyAttack
     public AttackAnimation AnimType;
     public List<AttackStatus> InflictedStatuses;
     public List<AttackBoardEffect> BoardEffects;
+    [Tooltip("If set, this attack is skipped while the caster already has this status.")]
+    public StatusEffect AvoidIfSelfHasStatus;
 
     // Replace %d instances with damage number
     public string AttackDescription => _attackDescription.Replace("%d", Damage.ToString());

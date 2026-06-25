@@ -26,7 +26,7 @@ public class LevelSpawner : MonoBehaviour
             (GameManager.GameData.LevelsCompleted.Count == 0 && _encounterDatabase.TutorialEncounter != null)
                 ? _encounterDatabase.TutorialEncounter
                 : _encounterDatabase.GetEncounter(encounterId)
-                  ?? _encounterDatabase.Roll(new System.Random(), 0);
+                  ?? _encounterDatabase.RollNormal(new System.Random(), 0);
 
         if (encounter == null)
         {

@@ -2,25 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Space type that loads the Level scene and runs a battle encounter.
-/// Assign either a specific PinnedEncounter (always plays that one) or a Database
-/// (rolls a random eligible encounter based on prerequisites at resolve time).
-/// If both are assigned, PinnedEncounter takes priority.
+/// Space type that loads the Level scene and rolls a random Normal-type encounter
+/// from the database, respecting MinEncountersCompleted prerequisites.
 /// </summary>
 [CreateAssetMenu(fileName = "New Battle Space", menuName = "Spaces/Battle Space")]
 public class BattleSpaceData : SpaceData
 {
 
-    [Tooltip("A pinned encounter. Takes priority over Database if assigned.")]
-    public Encounter PinnedEncounter;
-    [Tooltip("Database to draw from when no pinned encounter is set. Respects MinEncountersCompleted prerequisites.")]
+    [Tooltip("Database to draw from. Respects MinEncountersCompleted prerequisites.")]
     public EncounterDatabase Database;
 
     public override ResolvedSpace Resolve(System.Random rng)
     {
-        Encounter chosen = PinnedEncounter != null
-            ? PinnedEncounter
-            : Database?.Roll(rng, GameManager.GameData.LevelsCompleted.Count, GetSeenEncounterIds());
+        Encounter chosen = Database?.RollNormal(rng, GameManager.GameData.LevelsCompleted.Count, GetSeenEncounterIds());
         return new ResolvedSpace
         {
             ResolvedTypeId = SpaceTypeId,

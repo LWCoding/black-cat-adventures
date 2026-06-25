@@ -78,9 +78,9 @@ MonoBehaviour:
 - Extra reference fields use `{fileID: 11400000, guid: <asset guid>, type: 2}`.
 - The `m_Script` GUID must exactly match the `.meta` you wrote in step 2 of SKILL.md — read that file to confirm, never guess.
 
-## 3. SpaceResolutionRegistry.asset — adding an entry
+## 3. UnknownSpace.asset — adding an entry
 
-Read `Assets/Resources/ScriptableObjects/Spaces/SpaceResolutionRegistry.asset` first to see the current entries. Append your new entry inside the `Entries:` list:
+Read `Assets/Resources/ScriptableObjects/Spaces/UnknownSpace.asset` first to see the current entries. Append your new entry inside the `Entries:` list:
 
 ```yaml
   - Space: {fileID: 11400000, guid: <your new asset guid from step 4 of SKILL.md>, type: 2}

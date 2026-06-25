@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,6 +17,8 @@ public class EnemyHandler : CharacterHandler
 
     [Header("Game State Properties")]
     public bool ShouldStallBeforeTurn;  // If true, doesn't go straight to player turn
+
+    private Tween _hoverTween;
 
     public bool IsLastEnemy() => _nextBattleObject == null;
 
@@ -69,7 +72,12 @@ public class EnemyHandler : CharacterHandler
             yield break;
         }
 
-        EnemyAttack chosenAttack = possibleAttacks[Random.Range(0, possibleAttacks.Count)];
+        // Filter out attacks the enemy should avoid while it already has a certain status
+        List<EnemyAttack> usable = possibleAttacks.FindAll(a =>
+            a.AvoidIfSelfHasStatus == null || !StatusHandler.HasStatus(a.AvoidIfSelfHasStatus.Name));
+        if (usable.Count == 0) { usable = possibleAttacks; }  // never soft-lock
+
+        EnemyAttack chosenAttack = usable[Random.Range(0, usable.Count)];
 
         // Flash the chosen attack in the enemy box
         if (EnemyInfoBox.Instance != null)
@@ -121,6 +129,27 @@ public class EnemyHandler : CharacterHandler
         yield return new WaitForSeconds(0.2f);
 
         codeToRunAfter.Invoke();
+    }
+
+    /// <summary>
+    /// Starts or stops the Airborne hover animation on the sprite child.
+    /// Uses DOTween so the bob runs independently of the root-transform attack lunge.
+    /// </summary>
+    public void SetHovering(bool on)
+    {
+        _hoverTween?.Kill();
+        if (on)
+        {
+            float baseY = _spriteRenderer.transform.localPosition.y;
+            _hoverTween = _spriteRenderer.transform
+                .DOLocalMoveY(baseY + 0.3f, 0.8f)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo);
+        }
+        else
+        {
+            _spriteRenderer.transform.localPosition = (Vector3)CharData.AliveSprite.Offset;
+        }
     }
 
     /// <summary>

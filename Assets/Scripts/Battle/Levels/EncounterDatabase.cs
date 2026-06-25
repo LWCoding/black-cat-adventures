@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Single source of truth for all encounters in the game.
@@ -20,7 +21,9 @@ public class EncounterDatabase : ScriptableObject
         public int MinEncountersCompleted = 0;
     }
 
-    public List<Entry> Entries = new();
+    [FormerlySerializedAs("Entries")]
+    public List<Entry> NormalEntries = new();
+    public List<Entry> MinibossEntries = new();
 
     [Tooltip("If set, this encounter is always used for the player's very first battle and is never chosen by Roll.")]
     public Encounter TutorialEncounter;
@@ -30,31 +33,50 @@ public class EncounterDatabase : ScriptableObject
     /// map has written the chosen id to GameData.RecentLevelCompleted.
     /// </summary>
     public Encounter GetEncounter(string encounterId)
-        => Entries.Find(e => e.Encounter != null && e.Encounter.EncounterId == encounterId)?.Encounter;
+    {
+        if (TutorialEncounter != null && TutorialEncounter.EncounterId == encounterId)
+        {
+            return TutorialEncounter;
+        }
+
+        Entry found = NormalEntries.Find(e => e.Encounter != null && e.Encounter.EncounterId == encounterId)
+                   ?? MinibossEntries.Find(e => e.Encounter != null && e.Encounter.EncounterId == encounterId);
+        return found?.Encounter;
+    }
 
     /// <summary>
-    /// Picks a random encounter using weighted selection, filtered to entries whose
-    /// MinEncountersCompleted prerequisite has been met. completedCount should be
-    /// GameData.LevelsCompleted.Count at the time of resolution.
-    /// The TutorialEncounter is always excluded.
-    ///
-    /// If <paramref name="seenEncounterIds"/> is supplied, selection prefers encounters
-    /// the player has not seen yet. Only once every eligible encounter has been seen does
-    /// it fall back to the full eligible pool, so picks randomize among all possibilities again.
+    /// Picks a random normal battle encounter using weighted selection, filtered to
+    /// entries whose MinEncountersCompleted prerequisite has been met.
+    /// Prefers unseen encounters when <paramref name="seenEncounterIds"/> is supplied;
+    /// once every eligible encounter has been seen, falls back to the full eligible pool.
     /// Returns null if no eligible entries exist.
     /// </summary>
-    public Encounter Roll(System.Random rng, int completedCount, IEnumerable<string> seenEncounterIds = null)
+    public Encounter RollNormal(System.Random rng, int completedCount, IEnumerable<string> seenEncounterIds = null)
+        => RollFromList(NormalEntries, rng, completedCount, seenEncounterIds, preferUnseen: true);
+
+    /// <summary>
+    /// Picks a random miniboss encounter using weighted selection, filtered to entries
+    /// whose MinEncountersCompleted prerequisite has been met.
+    /// Returns null if no eligible entries exist.
+    /// </summary>
+    public Encounter RollMiniboss(System.Random rng, int completedCount)
+        => RollFromList(MinibossEntries, rng, completedCount, seenEncounterIds: null, preferUnseen: false);
+
+    private Encounter RollFromList(
+        List<Entry> entries,
+        System.Random rng,
+        int completedCount,
+        IEnumerable<string> seenEncounterIds,
+        bool preferUnseen)
     {
-        List<Entry> eligible = Entries.FindAll(
+        List<Entry> eligible = entries.FindAll(
             e => e.Encounter != null
             && e.Encounter != TutorialEncounter
             && completedCount >= e.MinEncountersCompleted);
 
         if (eligible.Count == 0) { return null; }
 
-        // Prefer unseen encounters. Once all eligible encounters have been seen,
-        // keep the full pool so selection randomizes among everything again.
-        if (seenEncounterIds != null)
+        if (preferUnseen && seenEncounterIds != null)
         {
             HashSet<string> seen = new(seenEncounterIds);
             List<Entry> unseen = eligible.FindAll(e => !seen.Contains(e.Encounter.EncounterId));
@@ -65,10 +87,7 @@ public class EncounterDatabase : ScriptableObject
         }
 
         float totalWeight = 0f;
-        foreach (Entry e in eligible)
-        {
-            totalWeight += e.Weight;
-        }
+        foreach (Entry e in eligible) { totalWeight += e.Weight; }
         if (totalWeight <= 0f) { return null; }
 
         float roll = (float)(rng.NextDouble() * totalWeight);
@@ -76,10 +95,7 @@ public class EncounterDatabase : ScriptableObject
         foreach (Entry e in eligible)
         {
             cumulative += e.Weight;
-            if (roll < cumulative)
-            {
-                return e.Encounter;
-            }
+            if (roll < cumulative) { return e.Encounter; }
         }
         return eligible[^1].Encounter;
     }

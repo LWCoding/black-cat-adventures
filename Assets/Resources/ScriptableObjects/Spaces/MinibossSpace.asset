@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dcf81884d8d48b892e64c0cb3a97d48, type: 3}
-  m_Name: BattleSpace
-  m_EditorClassIdentifier: 
-  SpaceTypeId: Battle
-  DisplayName: Battle
+  m_Script: {fileID: 11500000, guid: e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0, type: 3}
+  m_Name: MinibossSpace
+  m_EditorClassIdentifier:
+  SpaceTypeId: Miniboss
+  DisplayName: Miniboss
   ActionLabel: Battle!
-  NodeLabel: B
+  NodeLabel: M
   NodeSprite: {fileID: 0}
   SceneToLoad: Level
   Database: {fileID: 11400000, guid: b30c794c3f984a7abacd7592d1c83034, type: 2}
