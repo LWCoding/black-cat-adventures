@@ -35,12 +35,14 @@ public class GridLetterTile : LetterTile
     {
         if (IsSelected || BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }
         _animator.Play("StartHover");
+        BeginTooltipHover();
     }
 
     private void OnMouseExit()
     {
         if (IsSelected || BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }
         _animator.Play("StopHover");
+        EndTooltipHover();
     }
 
     private void OnMouseDown()

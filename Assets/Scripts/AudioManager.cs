@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 /// available everywhere without needing to be placed in any scene.
 /// </summary>
 [RequireComponent(typeof(AudioSource))]
+[SelfSpawning(RuntimeInitializeLoadType.BeforeSceneLoad)]
 public class AudioManager : PersistentSingleton<AudioManager>
 {
 
@@ -18,14 +19,6 @@ public class AudioManager : PersistentSingleton<AudioManager>
     // The track keeps playing across reloads of that same scene, and is
     // stopped automatically once a different scene loads.
     private string _musicScene;
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void EnsureInstanceExists()
-    {
-        if (Instance != null) { return; }
-        GameObject go = new GameObject(nameof(AudioManager));
-        go.AddComponent<AudioManager>();
-    }
 
     protected override void OnPersistentAwake()
     {

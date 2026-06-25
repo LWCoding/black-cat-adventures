@@ -12,6 +12,7 @@ using UnityEngine.UI;
 /// In the Map scene:   Resume and Return to Menu are shown.
 /// In the Intro scene: Escape is ignored entirely.
 /// </summary>
+[SelfSpawning(RuntimeInitializeLoadType.AfterSceneLoad, ResourcePath = "PauseMenu")]
 public class PauseMenuManager : PersistentSingleton<PauseMenuManager>
 {
 
@@ -23,17 +24,6 @@ public class PauseMenuManager : PersistentSingleton<PauseMenuManager>
     private const float FadeDuration = 0.2f;
 
     public bool IsPaused { get; private set; }
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    private static void EnsureInstanceExists()
-    {
-        if (Instance != null) { return; }
-        GameObject prefab = Resources.Load<GameObject>("PauseMenu");
-        if (prefab != null)
-        {
-            Instantiate(prefab);
-        }
-    }
 
     protected override void OnPersistentAwake()
     {

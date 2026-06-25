@@ -14,6 +14,9 @@ public abstract class TileType : ScriptableObject
     public TileTypeName TileTypeName;
     public Sprite TileSprite;
     public Color TileSpriteColor = Color.white;
+    [TextArea] public string Description;
+
+    public bool HasTooltip => !string.IsNullOrWhiteSpace(Description);
 
     /// <summary>
     /// Is called when this tile is added to the player's word.

@@ -150,4 +150,38 @@ public abstract class LetterTile : MonoBehaviour
         _dmgIndRenderer.color = new Color(indColor.r, indColor.g, indColor.b, isVisible ? 1 : 0.3f);
     }
 
+    private const float TOOLTIP_HOVER_DELAY = 1f;
+    private Coroutine _tooltipCoroutine;
+
+    /// <summary>
+    /// Starts a 1-second delay before showing the tile's tooltip (if it has one).
+    /// Call from OnMouseEnter in subclasses.
+    /// </summary>
+    protected void BeginTooltipHover()
+    {
+        if (Tile?.CurrTileType == null || !Tile.CurrTileType.HasTooltip) { return; }
+        _tooltipCoroutine = StartCoroutine(TooltipHoverCoroutine());
+    }
+
+    /// <summary>
+    /// Cancels any pending tooltip and hides it immediately.
+    /// Call from OnMouseExit and OnDestroy in subclasses.
+    /// </summary>
+    protected void EndTooltipHover()
+    {
+        if (_tooltipCoroutine != null)
+        {
+            StopCoroutine(_tooltipCoroutine);
+            _tooltipCoroutine = null;
+        }
+        TooltipManager.Instance.Hide();
+    }
+
+    private IEnumerator TooltipHoverCoroutine()
+    {
+        yield return new WaitForSeconds(TOOLTIP_HOVER_DELAY);
+        TooltipManager.Instance.Show(Tile.CurrTileType.Description, transform.position);
+        _tooltipCoroutine = null;
+    }
+
 }

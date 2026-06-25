@@ -22,16 +22,22 @@ public class PreviewLetterTile : LetterTile
 
     public void StopMove() => _moveTween?.Kill();
 
-    private void OnDestroy() => _moveTween?.Kill();
+    private void OnDestroy()
+    {
+        _moveTween?.Kill();
+        EndTooltipHover();
+    }
 
     private void OnMouseEnter()
     {
         WordPreview.Instance.ToggleTilesFromIndex(Tile.TileIndex, false);
+        BeginTooltipHover();
     }
 
     private void OnMouseExit()
     {
         WordPreview.Instance.ToggleTilesFromIndex(Tile.TileIndex, true);
+        EndTooltipHover();
     }
 
     private void OnMouseDown()

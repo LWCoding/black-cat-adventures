@@ -3,17 +3,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
+[SelfSpawning(RuntimeInitializeLoadType.AfterSceneLoad, KeepAcrossScenes = true)]
 public class DevToolsManager : Singleton<DevToolsManager>
 {
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    private static void EnsureInstanceExists()
-    {
-        if (Instance != null) { return; }
-        GameObject go = new GameObject(nameof(DevToolsManager));
-        go.AddComponent<DevToolsManager>();
-        DontDestroyOnLoad(go);
-    }
-
     private EnemyData[] _enemyLibrary;
     private int _libraryIndex;
 

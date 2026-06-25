@@ -13,19 +13,15 @@ using UnityEngine;
 /// silently remove those other components too.
 ///
 /// Subclasses that want an instance to exist even when none is placed in a
-/// scene should add their own bootstrap, e.g.:
+/// scene should decorate the class with <see cref="SelfSpawningAttribute"/>, e.g.:
 /// <code>
-/// [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-/// private static void Bootstrap()
-/// {
-///     if (Instance == null)
-///     {
-///         new GameObject(nameof(MyManager)).AddComponent&lt;MyManager&gt;();
-///     }
-/// }
+/// [SelfSpawning(RuntimeInitializeLoadType.BeforeSceneLoad)]
+/// public class MyManager : PersistentSingleton&lt;MyManager&gt; { ... }
 /// </code>
-/// (<c>RuntimeInitializeOnLoadMethod</c> is not invoked on generic types, so it
-/// cannot live on this base class.)
+/// The <see cref="SelfSpawningBootstrap"/> scanner handles the actual
+/// instantiation. (<c>RuntimeInitializeOnLoadMethod</c> is not invoked on
+/// generic types, so it cannot live on this base class — that is why a
+/// separate non-generic bootstrap is used.)
 /// </summary>
 public abstract class PersistentSingleton<T> : Singleton<T> where T : MonoBehaviour
 {
