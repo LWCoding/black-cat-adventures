@@ -24,6 +24,7 @@ public class EncounterDatabase : ScriptableObject
     [FormerlySerializedAs("Entries")]
     public List<Entry> NormalEntries = new();
     public List<Entry> MinibossEntries = new();
+    public List<Entry> BossEntries = new();
 
     [Tooltip("If set, this encounter is always used for the player's very first battle and is never chosen by Roll.")]
     public Encounter TutorialEncounter;
@@ -40,7 +41,8 @@ public class EncounterDatabase : ScriptableObject
         }
 
         Entry found = NormalEntries.Find(e => e.Encounter != null && e.Encounter.EncounterId == encounterId)
-                   ?? MinibossEntries.Find(e => e.Encounter != null && e.Encounter.EncounterId == encounterId);
+                   ?? MinibossEntries.Find(e => e.Encounter != null && e.Encounter.EncounterId == encounterId)
+                   ?? BossEntries.Find(e => e.Encounter != null && e.Encounter.EncounterId == encounterId);
         return found?.Encounter;
     }
 
@@ -61,6 +63,14 @@ public class EncounterDatabase : ScriptableObject
     /// </summary>
     public Encounter RollMiniboss(System.Random rng, int completedCount)
         => RollFromList(MinibossEntries, rng, completedCount, seenEncounterIds: null, preferUnseen: false);
+
+    /// <summary>
+    /// Picks a random boss encounter using weighted selection, filtered to entries
+    /// whose MinEncountersCompleted prerequisite has been met.
+    /// Returns null if no eligible entries exist.
+    /// </summary>
+    public Encounter RollBoss(System.Random rng, int completedCount)
+        => RollFromList(BossEntries, rng, completedCount, seenEncounterIds: null, preferUnseen: false);
 
     private Encounter RollFromList(
         List<Entry> entries,

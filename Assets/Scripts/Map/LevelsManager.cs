@@ -74,9 +74,10 @@ public class LevelsManager : Singleton<LevelsManager>
         System.Random layoutRng = new(GameManager.GameData.MapSeed);
         System.Random spaceRng  = new(GameManager.GameData.MapSeed ^ 0x5A5A5A5A);
 
-        BattleSpaceData  battleSpace   = Resources.Load<BattleSpaceData> ("ScriptableObjects/Spaces/BattleSpace");
-        UnknownSpaceData unknownSpace  = Resources.Load<UnknownSpaceData>("ScriptableObjects/Spaces/UnknownSpace");
+        BattleSpaceData   battleSpace   = Resources.Load<BattleSpaceData>  ("ScriptableObjects/Spaces/BattleSpace");
+        UnknownSpaceData  unknownSpace  = Resources.Load<UnknownSpaceData> ("ScriptableObjects/Spaces/UnknownSpace");
         MinibossSpaceData minibossSpace = Resources.Load<MinibossSpaceData>("ScriptableObjects/Spaces/MinibossSpace");
+        BossSpaceData     bossSpace     = Resources.Load<BossSpaceData>    ("ScriptableObjects/Spaces/BossSpace");
 
         // Build node grid ---------------------------------------------------
         for (int col = 0; col < _columnCount; col++)
@@ -117,7 +118,7 @@ public class LevelsManager : Singleton<LevelsManager>
                 }
                 else if (col == _columnCount - 1)
                 {
-                    node.AuthoredSpace = battleSpace;
+                    node.AuthoredSpace = bossSpace;
                 }
                 else
                 {

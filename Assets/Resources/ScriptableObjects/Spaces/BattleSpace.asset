@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: BattleSpace
   m_EditorClassIdentifier: 
   SpaceTypeId: Battle
-  DisplayName: Battle
   ActionLabel: Battle!
   NodeLabel: B
   NodeSprite: {fileID: 0}

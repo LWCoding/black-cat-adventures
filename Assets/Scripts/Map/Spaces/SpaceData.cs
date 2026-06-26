@@ -23,7 +23,6 @@ public abstract class SpaceData : ScriptableObject
 
     [Tooltip("Stable identifier for this space type (e.g. 'Battle', 'Unknown'). Used in ResolvedSpaceEntry.")]
     public string SpaceTypeId;
-    public string DisplayName;
     [Tooltip("Label shown on the action button when the player is on this space (e.g. 'Battle!', 'Explore').")]
     public string ActionLabel;
     [Tooltip("Single-character label shown on the map node (e.g. 'B', 'M'). Leave empty to fall back to the default logic ('?' for Unknown, 'B' for all others).")]

@@ -22,6 +22,9 @@ public class EnemyHandler : CharacterHandler
 
     public bool IsLastEnemy() => _nextBattleObject == null;
 
+    private bool IsNextObjectTreasureChest() =>
+        _nextBattleObject != null && _nextBattleObject.GetComponentInChildren<TreasureChest>() != null;
+
     public void SetNextBattleObject(GameObject nextBattleObject) => _nextBattleObject = nextBattleObject;
 
     public void SetTimeToNextObject(float timeToNextObject) => _timeToNextObject = timeToNextObject;
@@ -34,6 +37,10 @@ public class EnemyHandler : CharacterHandler
             // If there's a "next" object to render, transition to it
             HealthHandler.OnDeath += () =>
             {
+                if (IsNextObjectTreasureChest())
+                {
+                    EnemyInfoBox.Instance?.ClearInfo();
+                }
                 StartCoroutine(FadeAwayCoroutine());
                 TransitionToNextObject();
                 BattleManager.Instance.SetState(new WaitState());
@@ -43,6 +50,7 @@ public class EnemyHandler : CharacterHandler
             // Or else, the player has defeated all enemies in this level
             HealthHandler.OnDeath += () =>
             {
+                EnemyInfoBox.Instance?.ClearInfo();
                 StartCoroutine(FadeAwayCoroutine());
                 BattleManager.Instance.SetState(new WinState());
             };

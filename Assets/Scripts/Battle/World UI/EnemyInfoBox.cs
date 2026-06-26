@@ -23,16 +23,23 @@ public class EnemyInfoBox : Singleton<EnemyInfoBox>
     private readonly List<Tuple<string, EnemyInfoHandler>> _instantiatedAttacks = new();
 
     /// <summary>
+    /// Hides the info box and removes all attack entries.
+    /// </summary>
+    public void ClearInfo()
+    {
+        ClearAttackEntries();
+        _enemyDescText.text = "";
+        gameObject.SetActive(false);
+    }
+
+    /// <summary>
     /// Given an Enemy's data, sets the info box's description to
     /// match the enemy and creates an info prefab for each attack.
     /// </summary>
     public void SetInfo(EnemyData enemyData)
     {
-        for (int i = _instantiatedAttacks.Count - 1; i >= 0; i--)
-        {
-            Destroy(_instantiatedAttacks[i].Item2.gameObject);
-        }
-        _instantiatedAttacks.Clear();
+        ClearAttackEntries();
+        gameObject.SetActive(true);
         // Compile all attacks to load UI
         List<EnemyInfo> infos = new();
         foreach (EnemyAttack attack in enemyData.Attacks)
@@ -54,6 +61,15 @@ public class EnemyInfoBox : Singleton<EnemyInfoBox>
         }
         // Set description text
         _enemyDescText.text = enemyData.EnemyDescription;
+    }
+
+    private void ClearAttackEntries()
+    {
+        for (int i = _instantiatedAttacks.Count - 1; i >= 0; i--)
+        {
+            Destroy(_instantiatedAttacks[i].Item2.gameObject);
+        }
+        _instantiatedAttacks.Clear();
     }
 
     /// <summary>

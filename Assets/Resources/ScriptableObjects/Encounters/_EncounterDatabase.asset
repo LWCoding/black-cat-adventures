@@ -25,14 +25,15 @@ MonoBehaviour:
   - Encounter: {fileID: 11400000, guid: ae3c5598b609461baadfe9983fb0afee, type: 2}
     Weight: 1
     MinEncountersCompleted: 2
-  - Encounter: {fileID: 11400000, guid: 38e2874132bff2aa6dbce54b57bc5b5d, type: 2}
-    Weight: 1
-    MinEncountersCompleted: 100
   - Encounter: {fileID: 11400000, guid: 4d5e6f708192a3b4c5d6e7f8091a2b3c, type: 2}
     Weight: 1
-    MinEncountersCompleted: 0
+    MinEncountersCompleted: 2
   MinibossEntries:
   - Encounter: {fileID: 11400000, guid: c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6, type: 2}
+    Weight: 1
+    MinEncountersCompleted: 0
+  BossEntries:
+  - Encounter: {fileID: 11400000, guid: 38e2874132bff2aa6dbce54b57bc5b5d, type: 2}
     Weight: 1
     MinEncountersCompleted: 0
   TutorialEncounter: {fileID: 11400000, guid: 755b651381017323367bda12a13a3bb4, type: 2}

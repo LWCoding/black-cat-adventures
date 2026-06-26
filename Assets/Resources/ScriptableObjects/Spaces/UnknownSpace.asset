@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: UnknownSpace
   m_EditorClassIdentifier: 
   SpaceTypeId: Unknown
-  DisplayName: Unknown
   ActionLabel: Explore
   NodeLabel: '?'
   NodeSprite: {fileID: 0}
