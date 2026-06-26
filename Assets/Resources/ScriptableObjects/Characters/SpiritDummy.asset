@@ -44,3 +44,8 @@ MonoBehaviour:
     - Target: 0
       Status: {fileID: 11400000, guid: 8157d86778283a542acecf088bd7a052, type: 2}
       Amplifier: 2
+    BoardEffects: []
+    AvoidIfSelfHasStatus: {fileID: 0}
+    AvoidIfTargetHasStatus: {fileID: 0}
+    ProjectileSprite: {fileID: 0}
+    ProjectileSpeed: 0
