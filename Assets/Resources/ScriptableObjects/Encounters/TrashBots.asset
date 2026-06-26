@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: TrashBots
   m_EditorClassIdentifier: 
   EncounterId: TrashBots
+  Type: 0
   Enemies:
   - EnemyData: {fileID: 11400000, guid: 1a2b3c4d5e6f708192a3b4c5d6e7f809, type: 2}
     DialogueToPlayOnMeet:
@@ -29,7 +30,7 @@ MonoBehaviour:
     SpawnOffset: {x: 0, y: 0}
   - EnemyData: {fileID: 11400000, guid: 2b3c4d5e6f708192a3b4c5d6e7f8091a, type: 2}
     DialogueToPlayOnMeet:
-    - Text: Reuse queue engaged. You're still on it.
+    - Text: BZZT. Reuse queue engaged.
       Duration: 2
       Speaker: 1
       ShouldStallState: 0
@@ -38,7 +39,7 @@ MonoBehaviour:
     SpawnOffset: {x: 0, y: 0}
   - EnemyData: {fileID: 11400000, guid: 3c4d5e6f708192a3b4c5d6e7f8091a2b, type: 2}
     DialogueToPlayOnMeet:
-    - Text: Final step—recycle. Don't take it personally.
+    - Text: KRRHZ. Recycling. Recycling. Recycling.
       Duration: 2
       Speaker: 1
       ShouldStallState: 0
