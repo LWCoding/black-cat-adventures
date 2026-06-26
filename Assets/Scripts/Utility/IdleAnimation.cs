@@ -5,6 +5,11 @@ using UnityEngine;
 /// Loops configurable idle animations (tilt, scale pulse, and/or squash &amp; stretch) on a transform
 /// using DOTween. Toggle each effect independently via the inspector or via the Enable* properties
 /// before the component's Start() fires. Call Stop() to end all animations permanently.
+///
+/// When a <see cref="SpriteScaleRoot"/> is present on the same GameObject, squash &amp; stretch is
+/// routed through it (so persistent scale modifiers such as Shrink compose correctly).
+/// Scale Pulse is not routed — it is a deliberate uniform emphasis effect that should override
+/// all modifiers, so it still tweens localScale directly.
 /// </summary>
 public class IdleAnimation : MonoBehaviour
 {
@@ -36,8 +41,12 @@ public class IdleAnimation : MonoBehaviour
     private bool _stopped;
     private bool _started;
 
+    private SpriteScaleRoot _scaler;
+    private float _squashValue;
+
     private void Start()
     {
+        _scaler = GetComponent<SpriteScaleRoot>();
         _baseScale = transform.localScale;
         _started = true;
         if (!_stopped) { Play(); }
@@ -80,14 +89,38 @@ public class IdleAnimation : MonoBehaviour
     {
         if (_squashStretchTween != null && _squashStretchTween.IsActive()) { return; }
         float a = _squashStretchAmount;
-        Vector3 squashed = new Vector3(_baseScale.x * (1f + a), _baseScale.y * (1f - a), _baseScale.z);
-        Vector3 stretched = new Vector3(_baseScale.x * (1f - a), _baseScale.y * (1f + a), _baseScale.z);
-        transform.localScale = squashed;
-        _squashStretchTween = transform
-            .DOScale(stretched, _squashStretchDuration)
-            .SetEase(Ease.InOutSine)
-            .SetLoops(-1, LoopType.Yoyo)
-            .SetDelay(_squashStretchPhase);
+
+        if (_scaler != null)
+        {
+            // Route through SpriteScaleRoot so other scale modifiers (e.g. Shrink) compose cleanly.
+            // Animate a float from +a (squashed) to -a (stretched) in a yoyo loop.
+            // SpriteScaleRoot converts this into a per-axis Vector3 modifier each frame.
+            _squashValue = a;
+            _scaler.SetModifier("squashstretch", new Vector3(1f + a, 1f - a, 1f));
+            _squashStretchTween = DOTween.To(
+                () => _squashValue,
+                v =>
+                {
+                    _squashValue = v;
+                    _scaler.SetModifier("squashstretch", new Vector3(1f + v, 1f - v, 1f));
+                },
+                -a, _squashStretchDuration)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetDelay(_squashStretchPhase);
+        }
+        else
+        {
+            // Fallback: direct localScale tween for GameObjects without a SpriteScaleRoot.
+            Vector3 squashed = new Vector3(_baseScale.x * (1f + a), _baseScale.y * (1f - a), _baseScale.z);
+            Vector3 stretched = new Vector3(_baseScale.x * (1f - a), _baseScale.y * (1f + a), _baseScale.z);
+            transform.localScale = squashed;
+            _squashStretchTween = transform
+                .DOScale(stretched, _squashStretchDuration)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetDelay(_squashStretchPhase);
+        }
     }
 
     public void Stop(bool resetTransforms = true)
@@ -99,10 +132,14 @@ public class IdleAnimation : MonoBehaviour
         _scaleTween = null;
         _squashStretchTween?.Kill();
         _squashStretchTween = null;
+        _scaler?.ClearModifier("squashstretch");
         if (resetTransforms)
         {
             transform.localRotation = Quaternion.identity;
-            transform.localScale = _baseScale == Vector3.zero ? Vector3.one : _baseScale;
+            if (_scaler == null)
+            {
+                transform.localScale = _baseScale == Vector3.zero ? Vector3.one : _baseScale;
+            }
         }
     }
 
@@ -111,5 +148,6 @@ public class IdleAnimation : MonoBehaviour
         _tiltTween?.Kill();
         _scaleTween?.Kill();
         _squashStretchTween?.Kill();
+        _scaler?.ClearModifier("squashstretch");
     }
 }

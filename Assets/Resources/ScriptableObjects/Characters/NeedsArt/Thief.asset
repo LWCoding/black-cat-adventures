@@ -23,7 +23,7 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: a98949ac6b7a94d43b5b39a854fcc574, type: 3}
     Offset: {x: 0.6, y: -1.2}
   SpriteScale: {x: 0.9, y: 0.9}
-  EnemyDescription: Would steal the shirt off your back, but yours isn't worth fencing.
+  EnemyDescription: Where's a guard when you need them?
   Attacks:
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Pilfer
@@ -35,6 +35,7 @@ MonoBehaviour:
     - Effect: {fileID: 11400000, guid: 27a79008c9b04eb3b40db459f4bdff9c, type: 2}
       Amplifier: 1
     AvoidIfSelfHasStatus: {fileID: 0}
+    AvoidIfTargetHasStatus: {fileID: 0}
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Ransack
     _attackDescription: Deals %d damage and inflicts Bruise.
@@ -46,3 +47,4 @@ MonoBehaviour:
       Amplifier: 2
     BoardEffects: []
     AvoidIfSelfHasStatus: {fileID: 0}
+    AvoidIfTargetHasStatus: {fileID: 0}

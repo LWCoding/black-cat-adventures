@@ -3062,6 +3062,9 @@ MonoBehaviour:
   _edgeColor: {r: 0.55, g: 0.45, b: 0.35, a: 1}
   _extraEdgeChance: 0.6
   _iconOffsetFromLevel: {x: 0.05, y: 1.7, z: 0}
+  _battleWeight: 1
+  _unknownWeight: 1
+  _minibossWeight: 0.2
 --- !u!114 &1470311607
 MonoBehaviour:
   m_ObjectHideFlags: 0

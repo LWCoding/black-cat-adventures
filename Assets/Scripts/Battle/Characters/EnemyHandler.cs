@@ -72,9 +72,20 @@ public class EnemyHandler : CharacterHandler
             yield break;
         }
 
-        // Filter out attacks the enemy should avoid while it already has a certain status
+        // Filter out attacks the enemy should avoid while it or the player already has a certain status
         List<EnemyAttack> usable = possibleAttacks.FindAll(a =>
-            a.AvoidIfSelfHasStatus == null || !StatusHandler.HasStatus(a.AvoidIfSelfHasStatus.Name));
+        {
+            if (a.AvoidIfSelfHasStatus != null && StatusHandler.HasStatus(a.AvoidIfSelfHasStatus.Name))
+            {
+                return false;
+            }
+            if (a.AvoidIfTargetHasStatus != null
+                && BattleManager.Instance.PlayerHandler.StatusHandler.HasStatus(a.AvoidIfTargetHasStatus.Name))
+            {
+                return false;
+            }
+            return true;
+        });
         if (usable.Count == 0) { usable = possibleAttacks; }  // never soft-lock
 
         EnemyAttack chosenAttack = usable[Random.Range(0, usable.Count)];
@@ -121,6 +132,13 @@ public class EnemyHandler : CharacterHandler
                 BattleManager.Instance.RenderAttackAgainstPlayer(chosenAttack);
                 break;
 
+            case AttackAnimation.PROJECTILE:
+                SetSprite(CharData.AttackSprite);
+                yield return new WaitForSeconds(0.15f);
+                yield return FireProjectileAtPlayer(chosenAttack);
+                SetSprite(CharData.AliveSprite);
+                break;
+
             default:
                 break;
         }
@@ -129,6 +147,45 @@ public class EnemyHandler : CharacterHandler
         yield return new WaitForSeconds(0.2f);
 
         codeToRunAfter.Invoke();
+    }
+
+    private const float DEFAULT_PROJECTILE_SPEED = 12f;
+
+    /// <summary>
+    /// Spawns a projectile sprite that travels toward the player, then applies the attack on hit.
+    /// Uses attack.ProjectileSprite if set, falling back to IconSprite.
+    /// Uses attack.ProjectileSpeed (u/s) if > 0, otherwise DEFAULT_PROJECTILE_SPEED.
+    /// </summary>
+    private IEnumerator FireProjectileAtPlayer(EnemyAttack attack)
+    {
+        Vector3 startPos = transform.position + new Vector3(-0.5f, 0.5f, 0f);
+        Vector3 targetPos = BattleManager.Instance.PlayerHandler.transform.position;
+
+        Sprite sprite = attack.ProjectileSprite != null ? attack.ProjectileSprite : attack.IconSprite;
+        float speed = attack.ProjectileSpeed > 0f ? attack.ProjectileSpeed : DEFAULT_PROJECTILE_SPEED;
+        float duration = Vector3.Distance(startPos, targetPos) / speed;
+
+        GameObject projectile = new("Projectile");
+        SpriteRenderer projectileRenderer = projectile.AddComponent<SpriteRenderer>();
+        projectileRenderer.sprite = sprite;
+        projectileRenderer.sortingLayerID = _spriteRenderer.sortingLayerID;
+        projectileRenderer.sortingOrder = _spriteRenderer.sortingOrder + 1;
+        projectile.transform.position = startPos;
+        projectile.transform.localScale = Vector3.one * 0.6f;
+
+        bool hit = false;
+        projectile.transform
+            .DOMove(targetPos, duration)
+            .SetEase(Ease.Linear)
+            .OnComplete(() => hit = true);
+        while (!hit)
+        {
+            yield return null;
+        }
+
+        Destroy(projectile);
+        BattleManager.Instance.RenderAttackAgainstPlayer(attack);
+        yield return new WaitForSeconds(0.1f);
     }
 
     /// <summary>

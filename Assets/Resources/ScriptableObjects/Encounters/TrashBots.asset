@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f09b01bdfcd89596d2250fbbae52cc1, type: 3}
+  m_Name: TrashBots
+  m_EditorClassIdentifier: 
+  EncounterId: TrashBots
+  Enemies:
+  - EnemyData: {fileID: 11400000, guid: 1a2b3c4d5e6f708192a3b4c5d6e7f809, type: 2}
+    DialogueToPlayOnMeet:
+    - Text: BEEP. Unauthorized litter detected.
+      Duration: 2
+      Speaker: 1
+      ShouldStallState: 1
+    - Text: Initiating waste reduction protocol.
+      Duration: 2
+      Speaker: 1
+      ShouldStallState: 0
+    ShouldStallBeforeTurn: 0
+    TimeToNextObject: 1.3
+    SpawnOffset: {x: 0, y: 0}
+  - EnemyData: {fileID: 11400000, guid: 2b3c4d5e6f708192a3b4c5d6e7f8091a, type: 2}
+    DialogueToPlayOnMeet:
+    - Text: Reuse queue engaged. You're still on it.
+      Duration: 2
+      Speaker: 1
+      ShouldStallState: 0
+    ShouldStallBeforeTurn: 0
+    TimeToNextObject: 1.3
+    SpawnOffset: {x: 0, y: 0}
+  - EnemyData: {fileID: 11400000, guid: 3c4d5e6f708192a3b4c5d6e7f8091a2b, type: 2}
+    DialogueToPlayOnMeet:
+    - Text: Final step—recycle. Don't take it personally.
+      Duration: 2
+      Speaker: 1
+      ShouldStallState: 0
+    ShouldStallBeforeTurn: 0
+    TimeToNextObject: 1.3
+    SpawnOffset: {x: 0, y: 0}

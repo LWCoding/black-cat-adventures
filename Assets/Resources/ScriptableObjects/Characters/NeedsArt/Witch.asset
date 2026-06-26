@@ -32,6 +32,10 @@ MonoBehaviour:
     AnimType: 0
     InflictedStatuses: []
     BoardEffects: []
+    AvoidIfSelfHasStatus: {fileID: 0}
+    AvoidIfTargetHasStatus: {fileID: 0}
+    ProjectileSprite: {fileID: 0}
+    ProjectileSpeed: 0
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Hexing Brew
     _attackDescription: Scrambles three letters and inflicts Waterlogged.
@@ -44,3 +48,7 @@ MonoBehaviour:
     BoardEffects:
     - Effect: {fileID: 11400000, guid: 6cc86070687d4ee7a9bd003209d0395d, type: 2}
       Amplifier: 3
+    AvoidIfSelfHasStatus: {fileID: 0}
+    AvoidIfTargetHasStatus: {fileID: 0}
+    ProjectileSprite: {fileID: 0}
+    ProjectileSpeed: 0

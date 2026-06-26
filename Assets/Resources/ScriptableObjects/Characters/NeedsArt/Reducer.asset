@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
-  m_Name: Guard
+  m_Name: Reducer
   m_EditorClassIdentifier: 
-  StartingHealth: 60
+  StartingHealth: 40
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
     Offset: {x: 0.6, y: -1.2}
@@ -23,36 +23,31 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: a98949ac6b7a94d43b5b39a854fcc574, type: 3}
     Offset: {x: 0.6, y: -1.2}
   SpriteScale: {x: 0.9, y: 0.9}
-  EnemyDescription: If he doesn't catch this thief, he'll be on traffic duty again.
+  EnemyDescription: 'Protocol: REDUCE. Finally learned how to add numbers by subtracting
+    negative numbers. It''s pretty proud about that.'
   Attacks:
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
-    AttackName: Clobber
-    _attackDescription: Whacks you with a baton, dealing %d damage.
-    Damage: 4
+    AttackName: Waste Reduction
+    _attackDescription: Shrinks you down.
+    Damage: 0
     AnimType: 0
+    InflictedStatuses:
+    - Target: 0
+      Status: {fileID: 11400000, guid: a9f8e7d6c5b4a3928171605049382716, type: 2}
+      Amplifier: 3
+    BoardEffects: []
+    AvoidIfSelfHasStatus: {fileID: 0}
+    AvoidIfTargetHasStatus: {fileID: 11400000, guid: a9f8e7d6c5b4a3928171605049382716, type: 2}
+    ProjectileSprite: {fileID: 0}
+    ProjectileSpeed: 0
+  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+    AttackName: Junk Shot
+    _attackDescription: Fires compressed refuse. Deals %d damage.
+    Damage: 3
+    AnimType: 3
     InflictedStatuses: []
     BoardEffects: []
     AvoidIfSelfHasStatus: {fileID: 0}
     AvoidIfTargetHasStatus: {fileID: 0}
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
-    AttackName: Detain
-    _attackDescription: Deals %d damage and locks 2 tiles.
-    Damage: 2
-    AnimType: 0
-    InflictedStatuses: []
-    BoardEffects:
-    - Effect: {fileID: 11400000, guid: 27a79008c9b04eb3b40db459f4bdff9c, type: 2}
-      Amplifier: 2
-    AvoidIfSelfHasStatus: {fileID: 0}
-    AvoidIfTargetHasStatus: {fileID: 0}
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
-    AttackName: Justice!!!
-    _attackDescription: Welcome to the Baroness. Locks 4 tiles.
-    Damage: 0
-    AnimType: 0
-    InflictedStatuses: []
-    BoardEffects:
-    - Effect: {fileID: 11400000, guid: 27a79008c9b04eb3b40db459f4bdff9c, type: 2}
-      Amplifier: 4
-    AvoidIfSelfHasStatus: {fileID: 0}
-    AvoidIfTargetHasStatus: {fileID: 0}
+    ProjectileSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+    ProjectileSpeed: 28
