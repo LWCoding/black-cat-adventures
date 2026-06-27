@@ -15,6 +15,8 @@ public class Shrink : StatusEffect
         if (handler is not PlayerHandler) { return; }
 
         DamageCalculator.RegisterFlatModifier("shrink", -3);
+        WordPreview.Instance.OnLetterTilesChanged += ShrinkEffect;
+        ShrinkEffect();
 
         _scaler = handler.GetComponentInChildren<SpriteScaleRoot>();
         if (_scaler == null) { return; }
@@ -49,6 +51,7 @@ public class Shrink : StatusEffect
         if (CurrAmplifier == 0)
         {
             DamageCalculator.RegisterFlatModifier("shrink", 0);
+            WordPreview.Instance.OnLetterTilesChanged -= ShrinkEffect;
             if (_scaler != null)
             {
                 DOTween.To(
@@ -59,6 +62,22 @@ public class Shrink : StatusEffect
             }
         }
         return CurrAmplifier == 0;
+    }
+
+    private void ShrinkEffect()
+    {
+        if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord)
+            && DamageCalculator.CalculateDamage(WordPreview.Instance.CurrentTiles) <= 0)
+        {
+            BattleManager.Instance.RunNextFrame(() =>
+            {
+                if (WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord))
+                {
+                    WordPreview.Instance.FeedbackText.enabled = true;
+                    WordPreview.Instance.FeedbackText.text = "Shrunk...";
+                }
+            });
+        }
     }
 
 }

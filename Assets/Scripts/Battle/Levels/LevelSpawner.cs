@@ -21,9 +21,14 @@ public class LevelSpawner : MonoBehaviour
     {
         string encounterId = GameManager.GameData.RecentLevelCompleted;
 
-        // Always use the tutorial encounter for the player's very first battle.
+        // Always use the tutorial encounter for the player's very first battle,
+        // unless the tutorial has already been completed (e.g. on a continued save
+        // or after an F7 skip that was properly persisted).
+        bool needsTutorial = !GameManager.GameData.HasTutorialCompleted
+            && GameManager.GameData.LevelsCompleted.Count == 0
+            && _encounterDatabase.TutorialEncounter != null;
         Encounter encounter =
-            (GameManager.GameData.LevelsCompleted.Count == 0 && _encounterDatabase.TutorialEncounter != null)
+            needsTutorial
                 ? _encounterDatabase.TutorialEncounter
                 : _encounterDatabase.GetEncounter(encounterId)
                   ?? _encounterDatabase.RollNormal(new System.Random(), 0);

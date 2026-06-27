@@ -147,6 +147,10 @@ public class EnemyHandler : CharacterHandler
                 SetSprite(CharData.AliveSprite);
                 break;
 
+            case AttackAnimation.NONE:
+                BattleManager.Instance.RenderAttackAgainstPlayer(chosenAttack);
+                break;
+
             default:
                 break;
         }

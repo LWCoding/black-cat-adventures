@@ -18,7 +18,9 @@ public class SaveManager
         if (File.Exists(Application.persistentDataPath + "/savefile.json"))
         {
             string json = File.ReadAllText(Application.persistentDataPath + "/savefile.json");
-            return JsonUtility.FromJson<GameData>(json);
+            GameData data = JsonUtility.FromJson<GameData>(json);
+            data.MigrateTutorialFlag();
+            return data;
         }
         else
         {

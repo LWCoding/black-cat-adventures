@@ -51,6 +51,12 @@ public class GameData
     public string RecentLevelCompleted = "";
 
     /// <summary>
+    /// Persisted flag: true once the player has finished or skipped the tutorial.
+    /// Prevents the tutorial encounter and tooltips from replaying on continue.
+    /// </summary>
+    public bool HasTutorialCompleted;
+
+    /// <summary>
     /// Stable node ids for each map node the player has beaten. Used for
     /// lock/unlock gating so progression is independent of which encounter
     /// a node happened to roll.
@@ -93,6 +99,37 @@ public class GameData
             (pool[i], pool[j]) = (pool[j], pool[i]);
         }
         return pool.Take(count).ToList();
+    }
+
+    /// <summary>
+    /// Migrates legacy saves that pre-date HasTutorialCompleted.
+    /// If the player has any completed levels or map nodes beyond the auto-completed
+    /// start node, they have already passed the tutorial.
+    /// </summary>
+    public void MigrateTutorialFlag()
+    {
+        if (HasTutorialCompleted) { return; }
+        if (LevelsCompleted.Count > 0)
+        {
+            HasTutorialCompleted = true;
+            return;
+        }
+        // CompletedNodeIds always contains at least the start node (Node_0_0),
+        // so count > 1 means the player has beaten at least one real battle node.
+        if (CompletedNodeIds.Count > 1)
+        {
+            HasTutorialCompleted = true;
+            // Backfill LevelsCompleted from resolved battle-node payloads so
+            // MinEncountersCompleted gating in EncounterDatabase stays accurate.
+            foreach (ResolvedSpaceEntry entry in ResolvedSpaces)
+            {
+                if (!string.IsNullOrEmpty(entry.PayloadId)
+                    && CompletedNodeIds.Contains(entry.SpaceNodeId))
+                {
+                    LevelsCompleted.Add(entry.PayloadId);
+                }
+            }
+        }
     }
 
     public ResolvedSpaceEntry GetResolvedSpace(string spaceNodeId)

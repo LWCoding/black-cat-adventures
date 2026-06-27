@@ -26,6 +26,12 @@ public class TutorialManager : Singleton<TutorialManager>
     protected override void Awake()
     {
         base.Awake();
+        // Restore the in-memory flag from persistent save data so continuing a run
+        // after the tutorial was already completed (or skipped) doesn't replay it.
+        if (GameManager.GameData != null)
+        {
+            HasTutorialPlayed = GameManager.GameData.HasTutorialCompleted;
+        }
         _boardTooltipObject.SetActive(false);
         _shuffleTooltipObject.SetActive(false);
         _enemyTooltipObject.SetActive(false);

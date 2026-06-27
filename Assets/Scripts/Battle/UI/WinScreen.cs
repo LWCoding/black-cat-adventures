@@ -29,6 +29,7 @@ public class WinScreen : MonoBehaviour
     {
         _winScreenAnimator.Play("Show");
         yield return new WaitForSeconds(5f);
+        SaveManager.SaveGame(GameManager.GameData);
         SceneManager.LoadScene("Map");
     }
 

@@ -51,6 +51,7 @@ public class DevToolsManager : Singleton<DevToolsManager>
         {
             BattleManager.Instance.SetState(new WinState());
         }
+        SaveManager.SaveGame(GameManager.GameData);
         SceneManager.LoadScene("Map");
     }
 

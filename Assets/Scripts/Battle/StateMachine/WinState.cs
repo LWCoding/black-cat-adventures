@@ -7,6 +7,10 @@ public class WinState : State
 
     public override void OnEnterState()
     {
+        if (GameManager.GameData.LevelsCompleted.Count == 0)
+        {
+            GameManager.GameData.HasTutorialCompleted = true;
+        }
         GameManager.GameData.LevelsCompleted.Add(GameManager.GameData.RecentLevelCompleted);
         if (!string.IsNullOrEmpty(GameManager.GameData.RecentNodeEntered))
         {
