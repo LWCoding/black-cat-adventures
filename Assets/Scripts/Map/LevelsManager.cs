@@ -109,12 +109,12 @@ public class LevelsManager : Singleton<LevelsManager>
                 node.LevelName    = $"Node_{col}_{row}";
 
                 // Author space per column:
-                // col 0 = Start (null space = tutorial marker)
-                // col last = End (always Battle)
+                // col 0 = Start (always Battle — the tutorial encounter)
+                // col last = End (always Boss)
                 // middle = weighted random Battle, Unknown, or Miniboss
                 if (col == 0)
                 {
-                    node.AuthoredSpace = null;
+                    node.AuthoredSpace = battleSpace;
                 }
                 else if (col == _columnCount - 1)
                 {
@@ -316,15 +316,17 @@ public class LevelsManager : Singleton<LevelsManager>
 
     private void Start()
     {
-        // Auto-complete the Start (tutorial) node.
-        if (!GameManager.GameData.CompletedNodeIds.Contains(_startLevel.SpaceNodeId))
+        // Auto-complete the start node only for players who have already beaten the tutorial
+        // (e.g. legacy saves migrated from before this node was a real battle). New players
+        // must fight it themselves; abandoning the battle leaves it incomplete so they return
+        // to Node_0_0 on the map rather than skipping to a column-1 node.
+        if (GameManager.GameData.HasTutorialCompleted
+            && !GameManager.GameData.CompletedNodeIds.Contains(_startLevel.SpaceNodeId))
         {
             GameManager.GameData.CompletedNodeIds.Add(_startLevel.SpaceNodeId);
             SaveManager.SaveGame(GameManager.GameData);
         }
 
-        // Refresh start node's completed appearance now that it's in CompletedNodeIds.
-        _startLevel.ApplyCompletedAppearance(true);
         _startLevel.Initialize();
 
         ResolveAndApplyAllSpaces();
@@ -485,10 +487,15 @@ public class LevelsManager : Singleton<LevelsManager>
     private void EstablishFrontier(LevelHandler frontier)
     {
         _frontierLevel = frontier;
-        frontier.SetVisitable(true);                 // allow temporary backtrack to the just-completed node
-        foreach (LevelHandler child in frontier.NextLevels)
+        frontier.SetVisitable(true);
+        // Children become accessible only after the frontier node itself is beaten.
+        // This prevents column-1 nodes from being clickable while the tutorial is pending.
+        if (IsCompleted(frontier))
         {
-            child.SetVisitable(!IsCompleted(child));
+            foreach (LevelHandler child in frontier.NextLevels)
+            {
+                child.SetVisitable(!IsCompleted(child));
+            }
         }
     }
 

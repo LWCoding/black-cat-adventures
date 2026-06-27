@@ -8,8 +8,6 @@ public class IntroCutscene : MonoBehaviour
 {
     [Header("Object Assignments")]
     [SerializeField] private Animator _cutsceneAnimator;
-    [Header("Cutscene Properties")]
-    [SerializeField] private string _levelIdAfterCutscene;
     [Header("Fade")]
     [SerializeField] private Image _fadeOverlay;
     [SerializeField] private float _fadeDuration = 0.4f;
@@ -57,7 +55,6 @@ public class IntroCutscene : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitWhile(() => _cutsceneAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
 
-        GameManager.GameData.RecentLevelCompleted = _levelIdAfterCutscene;
-        SceneManager.LoadScene("Level");
+        SceneManager.LoadScene("Map");
     }
 }
