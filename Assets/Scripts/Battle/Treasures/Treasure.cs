@@ -9,7 +9,7 @@ public abstract class Treasure : ScriptableObject
     public string TreasureName;
     public string TreasureDescription;
     public Sprite TreasureIcon;
-    public bool IsUnlockedByDefault;  // If the player should start with this unlocked
+    public TreasureRarity Rarity;
 
     /// <summary>
     /// Activates the treasure's effects.

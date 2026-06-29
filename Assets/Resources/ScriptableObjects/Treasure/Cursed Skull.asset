@@ -16,4 +16,4 @@ MonoBehaviour:
   TreasureDescription: Words spelt with 6+ letters deal double damage. Otherwise,
     deal no damage.
   TreasureIcon: {fileID: 21300000, guid: d2feab8db485d734b91b7ab6b1ece18e, type: 3}
-  IsUnlockedByDefault: 0
+  Rarity: 3

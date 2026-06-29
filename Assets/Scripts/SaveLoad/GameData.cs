@@ -33,7 +33,7 @@ public class GameData
             if (_unlockedTreasures.Count == 0)
             {
                 List<Treasure> allTreasures = Resources.LoadAll<Treasure>("ScriptableObjects/Treasure").ToList();
-                List<Treasure> defaultTreasures = allTreasures.FindAll((t) => t.IsUnlockedByDefault);
+                List<Treasure> defaultTreasures = allTreasures.FindAll((t) => t is not None && t.Rarity == TreasureRarity.Starter);
                 _unlockedTreasures = defaultTreasures;
             }
             // If we somehow have duplicate treasures, remove those
@@ -82,23 +82,44 @@ public class GameData
     /// </summary>
     public List<ResolvedSpaceEntry> ResolvedSpaces = new();
 
+    private static readonly (TreasureRarity tier, int weight)[] _rollWeights =
+    {
+        (TreasureRarity.Common, 65), (TreasureRarity.Rare, 20),
+        (TreasureRarity.SuperRare, 10), (TreasureRarity.Legendary, 5),
+    };
+
     /// <summary>
-    /// Returns up to <paramref name="count"/> randomly ordered treasures that the player
-    /// does not yet own, excluding the None placeholder. Returns fewer than count if not
-    /// enough unowned treasures remain; returns an empty list if none are available.
+    /// Returns up to <paramref name="count"/> treasures the player does not yet own,
+    /// excluding None and Starter-tier treasures. Each slot is independently rolled
+    /// by rarity weight (Common 65%, Rare 20%, Super Rare 10%, Legendary 5%),
+    /// renormalizing over tiers that still have unowned entries to avoid empty draws.
+    /// Returns fewer than count if the unowned pool is exhausted.
     /// </summary>
     public List<Treasure> GetRandomUnownedTreasures(int count)
     {
-        List<Treasure> all = Resources.LoadAll<Treasure>("ScriptableObjects/Treasure").ToList();
-        List<Treasure> pool = all.FindAll(t => t is not None && !UnlockedTreasures.Contains(t));
-        // Fisher-Yates shuffle using a fresh RNG each call
+        List<Treasure> pool = Resources.LoadAll<Treasure>("ScriptableObjects/Treasure")
+            .Where(t => t is not None && t.Rarity != TreasureRarity.Starter && !UnlockedTreasures.Contains(t))
+            .ToList();
         Random rng = new();
-        for (int i = pool.Count - 1; i > 0; i--)
+        List<Treasure> result = new();
+        for (int n = 0; n < count && pool.Count > 0; n++)
         {
-            int j = rng.Next(i + 1);
-            (pool[i], pool[j]) = (pool[j], pool[i]);
+            int total = _rollWeights.Where(w => pool.Any(t => t.Rarity == w.tier)).Sum(w => w.weight);
+            if (total == 0) { break; }
+            int roll = rng.Next(total), acc = 0;
+            TreasureRarity chosen = TreasureRarity.Common;
+            foreach (var (tier, weight) in _rollWeights)
+            {
+                if (!pool.Any(t => t.Rarity == tier)) { continue; }
+                acc += weight;
+                if (roll < acc) { chosen = tier; break; }
+            }
+            List<Treasure> tierPool = pool.Where(t => t.Rarity == chosen).ToList();
+            Treasure picked = tierPool[rng.Next(tierPool.Count)];
+            result.Add(picked);
+            pool.Remove(picked);
         }
-        return pool.Take(count).ToList();
+        return result;
     }
 
     /// <summary>

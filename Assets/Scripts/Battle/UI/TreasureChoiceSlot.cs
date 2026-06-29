@@ -17,6 +17,7 @@ public class TreasureChoiceSlot : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private GameObject _tooltipObject;
     [SerializeField] private TextMeshProUGUI _tooltipText;
+    [SerializeField] private TextMeshProUGUI _rarityText;
 
     public Treasure Treasure { get; private set; }
     private Action<Treasure> _onSelected;
@@ -27,7 +28,12 @@ public class TreasureChoiceSlot : MonoBehaviour, IPointerEnterHandler, IPointerE
         Treasure = treasure;
         _onSelected = onSelected;
         _iconImage.sprite = treasure.TreasureIcon;
-        _tooltipText.text = "<color=\"orange\"><b>" + treasure.TreasureName + "</b></color>:\n" + treasure.TreasureDescription;
+        _tooltipText.text = "<b><color=#" + TreasureRarityInfo.GetHexColor(treasure.Rarity) + ">" + treasure.TreasureName + "</color></b>:\n" + treasure.TreasureDescription;
+        if (_rarityText != null)
+        {
+            _rarityText.text = TreasureRarityInfo.GetLabel(treasure.Rarity);
+            _rarityText.color = TreasureRarityInfo.GetColor(treasure.Rarity);
+        }
         _tooltipObject.SetActive(false);
         _canvasGroup.alpha = 1f;
         _isInteractable = true;

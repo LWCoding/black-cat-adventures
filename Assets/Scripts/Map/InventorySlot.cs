@@ -50,7 +50,7 @@ public class InventorySlot : MonoBehaviour
         {
             return;
         }
-        _tooltipText.text = "<b><color=\"orange\">" + treasure.TreasureName + "</color></b>:\n" + treasure.TreasureDescription;
+        _tooltipText.text = "<b><color=#" + TreasureRarityInfo.GetHexColor(treasure.Rarity) + ">" + treasure.TreasureName + "</color></b>:\n" + treasure.TreasureDescription;
         _relicImage.sprite = treasure.TreasureIcon;
     }
 

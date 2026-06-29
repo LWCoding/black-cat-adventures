@@ -37,9 +37,9 @@ public class <TreasureName> : Treasure
 
 Match the existing file header style (`using System.Collections; using System.Collections.Generic; using UnityEngine;`) even if unused, since every existing treasure script has it — consistency over strict minimalism here.
 
-## 3. Write the script's `.meta`
+## 3. Let Unity generate the `.meta`
 
-This is a brand-new script, so it has no Unity-assigned GUID yet. Generate one and write the `.meta` by hand — see "Writing a `.meta` for a brand-new C# script" in [asset-mechanics.md](asset-mechanics.md). Save the generated GUID; you need the identical value in the `.asset` file next.
+Do **not** hand-write the `.meta` file for the new script. Unity auto-generates it on reimport. Just create the `.cs` file; the GUID will be assigned by Unity on the next import. If you need the GUID for the `.asset` before reimport, write the asset using a placeholder and let Unity reconcile on open.
 
 ## 4. Resolve the icon sprite
 
@@ -67,14 +67,14 @@ MonoBehaviour:
   TreasureName: <Treasure Name>
   TreasureDescription: <description>
   TreasureIcon: {fileID: 21300000, guid: <icon sprite guid>, type: 3}
-  IsUnlockedByDefault: 0
+  Rarity: 1
 ```
 
-`IsUnlockedByDefault` — ask the user; most treasures are found/unlocked during play (`0`), only set `1` if they explicitly want the player to start with it.
+`Rarity` — use the int corresponding to `TreasureRarity`: Starter=0, Common=1, Rare=2, SuperRare=3, Legendary=4. Ask the user if unsure; most new treasures are Common (1) or Rare (2). Starter (0) is reserved for Lucky Cat Paw (the treasure given at game start) and should rarely be used.
 
-## 6. Write the `.asset`'s own `.meta`
+## 6. Let Unity generate the `.asset`'s `.meta` too
 
-Same `NativeFormatImporter` template as enemies — see asset-mechanics.md's "brand-new `.asset` file" section. Generate a fresh GUID (distinct from the script's GUID from step 3).
+Same rule as the script: do **not** hand-write the `.asset.meta`. Unity generates it on reimport.
 
 ## 7. Wiring up how it's obtained (ask, don't assume)
 

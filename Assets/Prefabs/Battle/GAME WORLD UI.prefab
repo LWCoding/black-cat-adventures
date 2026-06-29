@@ -2289,7 +2289,7 @@ GameObject:
   - component: {fileID: 1835965829055422466}
   - component: {fileID: 1990714702781530057}
   - component: {fileID: 1357924680135792469}
-  - component: {fileID: 9555555555555555555}
+  - component: {fileID: 9100000000000000555}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -2312,7 +2312,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1335532183028059603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9555555555555555555
+--- !u!114 &9100000000000000555
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -15,4 +15,4 @@ MonoBehaviour:
   TreasureName: Banana Peel
   TreasureDescription: Words that include at least three of the same letter deal triple damage.
   TreasureIcon: {fileID: 21300000, guid: d2feab8db485d734b91b7ab6b1ece18e, type: 3}
-  IsUnlockedByDefault: 0
+  Rarity: 3
