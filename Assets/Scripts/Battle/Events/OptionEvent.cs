@@ -15,6 +15,7 @@ public class OptionEvent : EventBehaviour
 {
     private bool _optionChosen   = false;
     private bool _treasurePicked = false;
+    private bool _proceeding     = false;
 
     public override void BeginEvent()
     {
@@ -124,7 +125,7 @@ public class OptionEvent : EventBehaviour
                 break;
 
             default:
-                ShowResultAndReturn(option.ResultText, 2f);
+                ShowResultAndProceed(option.ResultText, option);
                 break;
         }
     }
@@ -132,8 +133,29 @@ public class OptionEvent : EventBehaviour
     private void RunGrantRandom(EventOption option)
     {
         List<Treasure> granted = EventOutcomes.GrantRandom(option.Outcome.Count);
-        string text = granted.Count > 0 ? option.ResultText : option.EmptyPoolText;
-        ShowResultAndReturn(text, 2.5f);
+        if (granted.Count == 0)
+        {
+            ShowResultAndProceed(option.EmptyPoolText, option);
+            return;
+        }
+        string text = $"{option.ResultText}\n\nYou received {FormatTreasureList(granted)}.";
+        ShowResultAndProceed(text, option);
+    }
+
+    /// <summary>
+    /// Joins treasure names into a readable, rarity-coloured list:
+    /// "A", "A and B", or "A, B, and C".
+    /// </summary>
+    private static string FormatTreasureList(List<Treasure> treasures)
+    {
+        List<string> names = new();
+        foreach (Treasure t in treasures)
+        {
+            names.Add($"<color=#{TreasureRarityInfo.GetHexColor(t.Rarity)}>{t.TreasureName}</color>");
+        }
+        if (names.Count == 1) { return names[0]; }
+        if (names.Count == 2) { return $"{names[0]} and {names[1]}"; }
+        return string.Join(", ", names.GetRange(0, names.Count - 1)) + ", and " + names[^1];
     }
 
     private void RunSwapRandom(EventOption option)
@@ -152,7 +174,7 @@ public class OptionEvent : EventBehaviour
         {
             text = option.EmptyPoolText;
         }
-        ShowResultAndReturn(text, 3f);
+        ShowResultAndProceed(text, option);
     }
 
     private void RunGrantScramble(EventOption option)
@@ -161,7 +183,7 @@ public class OptionEvent : EventBehaviour
         string text = gained != null
             ? string.Format(option.ResultText, gained.TreasureName)
             : option.EmptyPoolText;
-        ShowResultAndReturn(text, 3f);
+        ShowResultAndProceed(text, option);
     }
 
     private void RunChooseTreasure(EventOption option)
@@ -169,7 +191,7 @@ public class OptionEvent : EventBehaviour
         List<Treasure> choices = GameManager.GameData.GetRandomUnownedTreasures(option.Outcome.ChooseFrom);
         if (choices.Count == 0)
         {
-            ShowResultAndReturn(option.EmptyPoolText, 2f);
+            ShowResultAndProceed(option.EmptyPoolText, option);
             return;
         }
 
@@ -183,14 +205,15 @@ public class OptionEvent : EventBehaviour
         foreach (Treasure treasure in choices)
         {
             Treasure captured = treasure;
+            EventOption capturedOption = option;
             string label = string.IsNullOrEmpty(captured.TreasureDescription)
                 ? captured.TreasureName
                 : $"{captured.TreasureName}\n<size=75%><color=#cfd2ff>{captured.TreasureDescription}</color></size>";
-            SpawnButton(container, prefab, label, () => OnTreasurePicked(captured));
+            SpawnButton(container, prefab, label, () => OnTreasurePicked(captured, capturedOption));
         }
     }
 
-    private void OnTreasurePicked(Treasure chosen)
+    private void OnTreasurePicked(Treasure chosen, EventOption option)
     {
         if (_treasurePicked) { return; }
         _treasurePicked = true;
@@ -199,13 +222,39 @@ public class OptionEvent : EventBehaviour
         if (container != null) { ClearContainer(container); }
 
         GameManager.GameData.UnlockedTreasures.Add(chosen);
-        SetDescriptionText($"You claim {chosen.TreasureName}.");
-        EventManager.Instance.ReturnToMapAfterDelay(2f);
+        ShowResultAndProceed($"You claim {chosen.TreasureName}.", option);
     }
 
-    private static void ShowResultAndReturn(string text, float delay)
+    // ─── Result + manual proceed ─────────────────────────────────────────────
+
+    /// <summary>
+    /// Shows the result text, then (after a short beat) spawns a single button the
+    /// player must click to return to the map. The button label comes from the
+    /// chosen option's ProceedLabel, defaulting to "Proceed".
+    /// </summary>
+    private void ShowResultAndProceed(string text, EventOption option)
     {
         SetDescriptionText(text);
-        EventManager.Instance.ReturnToMapAfterDelay(delay);
+        string proceedLabel = string.IsNullOrEmpty(option.ProceedLabel) ? "Proceed" : option.ProceedLabel;
+        StartCoroutine(ShowProceedAfterDelay(0.4f, proceedLabel));
+    }
+
+    private IEnumerator ShowProceedAfterDelay(float delay, string proceedLabel)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Transform  container = EventManager.Instance.OptionsContainer;
+        GameObject prefab    = EventManager.Instance.OptionButtonPrefab;
+        if (container == null || prefab == null) { yield break; }
+
+        ClearContainer(container);
+        SpawnButton(container, prefab, proceedLabel, OnProceedClicked);
+    }
+
+    private void OnProceedClicked()
+    {
+        if (_proceeding) { return; }
+        _proceeding = true;
+        EventManager.Instance.ReturnToMap();
     }
 }

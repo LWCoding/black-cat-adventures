@@ -22,6 +22,8 @@ public struct EventOption
     public string EmptyPoolText;
     [Tooltip("When true, this option is hidden entirely if the player owns no treasures (e.g. nothing to discard).")]
     public bool HideIfNoTreasures;
+    [Tooltip("Label on the button the player clicks to leave the event after this option resolves. Empty = \"Proceed\".")]
+    public string ProceedLabel;
 }
 
 /// <summary>
