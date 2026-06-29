@@ -138,7 +138,9 @@ public class OptionEvent : EventBehaviour
             ShowResultAndProceed(option.EmptyPoolText, option);
             return;
         }
-        string text = $"{option.ResultText}\n\nYou received {FormatTreasureList(granted)}.";
+        // The asset's ResultText supplies the wording; {0} is replaced with the
+        // rarity-coloured list of treasures the player received.
+        string text = string.Format(option.ResultText, FormatTreasureList(granted));
         ShowResultAndProceed(text, option);
     }
 

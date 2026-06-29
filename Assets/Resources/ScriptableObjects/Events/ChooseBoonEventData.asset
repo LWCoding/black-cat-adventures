@@ -23,7 +23,7 @@ MonoBehaviour:
       Type: 1
       Count: 2
       ChooseFrom: 0
-    ResultText: 'The fountain bubbles warmly, and two gifts rise to meet you.'
+    ResultText: 'The fountain bubbles warmly, and two gifts rise to meet you: {0}.'
     EmptyPoolText: 'The fountain stirs, but you already carry everything it could
       offer.'
   - Label: Desecrate
