@@ -1,6 +1,6 @@
 # Adding a new SpaceData subclass
 
-A map space type is a ScriptableObject that subclasses `SpaceData` (`Assets/Scripts/Map/Spaces/SpaceData.cs`). The single required contract is overriding `Resolve(System.Random rng)` to return a `ResolvedSpace` describing which scene to load and what payload to hand off. Read [asset-mechanics.md](../../add-game-content/references/asset-mechanics.md) for GUID/.meta mechanics before writing anything.
+A map space type is a ScriptableObject that subclasses `SpaceData` (`Assets/Scripts/Map/Spaces/SpaceData.cs`). The single required contract is overriding `Resolve(System.Random rng)` to return a `ResolvedSpace` describing which scene to load and what payload to hand off. Do **not** hand-write `.meta` files — Unity generates them on reimport. For GUIDs that must be known before reimport (e.g. sprite references), always read the existing PNG `.meta` files to get the correct value.
 
 ## 1. C# subclass template
 
@@ -62,7 +62,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: <script guid from step 2 of SKILL.md>, type: 3}
+  m_Script: {fileID: 11500000, guid: <script guid — read from generated .cs.meta after reimport; use placeholder until then>, type: 3}
   m_Name: <Name>Space
   m_EditorClassIdentifier: 
   SpaceTypeId: <stable type id, e.g. Shop>
@@ -76,14 +76,14 @@ MonoBehaviour:
 
 - `NodeSprite` uses `fileID: 21300000` for single-mode PNG sprites (see asset-mechanics.md). If no sprite is assigned yet, use `{fileID: 0}` and assign in Inspector.
 - Extra reference fields use `{fileID: 11400000, guid: <asset guid>, type: 2}`.
-- The `m_Script` GUID must exactly match the `.meta` you wrote in step 2 of SKILL.md — read that file to confirm, never guess.
+- The `m_Script` GUID must match the auto-generated `<Name>SpaceData.cs.meta` — read that file after Unity imports the script. If registering immediately, leave a placeholder and fix via the Inspector after import.
 
 ## 3. UnknownSpace.asset — adding an entry
 
 Read `Assets/Resources/ScriptableObjects/Spaces/UnknownSpace.asset` first to see the current entries. Append your new entry inside the `Entries:` list:
 
 ```yaml
-  - Space: {fileID: 11400000, guid: <your new asset guid from step 4 of SKILL.md>, type: 2}
+  - Space: {fileID: 11400000, guid: <your new asset guid — read from generated .asset.meta after reimport>, type: 2}
     Weight: <float — relative, not a percentage>
 ```
 

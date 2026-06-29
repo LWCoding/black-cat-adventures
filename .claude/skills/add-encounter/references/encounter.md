@@ -64,38 +64,21 @@ MonoBehaviour:
 
 Repeat the `- EnemyData:` block for each enemy, in fight order. For an enemy with no dialogue, use `DialogueToPlayOnMeet: []` (as in enemy 2 above). For dialogue, repeat the `- Text:` block per line.
 
-## `.asset.meta` template
-
-Hand-write the sibling `.meta` with a fresh GUID (distinct from the script and every enemy):
-
-```yaml
-fileFormatVersion: 2
-guid: <32 lowercase hex chars, no dashes — fresh>
-NativeFormatImporter:
-  externalObjects: {}
-  mainObjectFileID: 11400000
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-```
-
-This `guid` is what `_EncounterDatabase.asset` references the encounter by.
-
 # Registering in `_EncounterDatabase.asset`
 
 `EncounterDatabase` (`Assets/Scripts/Battle/Levels/EncounterDatabase.cs`) is the single source of truth: it does id lookup (`GetEncounter`) and weighted random selection (`Roll`, filtered by `MinEncountersCompleted`). The asset lives at `Assets/Resources/ScriptableObjects/Encounters/_EncounterDatabase.asset`.
 
-Read it and edit **in place** — do not regenerate it and do not invent a GUID for the database asset.
+The preferred registration method is via the Unity Inspector (see the main `SKILL.md`). If you need to YAML-edit the database directly after the encounter's `.meta` has been generated, read the GUID from the newly generated `.meta` file first — never invent or guess GUIDs. Then edit the database **in place** — do not regenerate it and do not invent a GUID for the database asset itself.
 
 `Entry` fields:
-- `Encounter` — reference to your encounter `.asset`: `{fileID: 11400000, guid: <encounter guid>, type: 2}`.
+- `Encounter` — reference to your encounter `.asset`: `{fileID: 11400000, guid: <encounter guid from its .meta>, type: 2}`.
 - `Weight` (float ≥ 0) — relative chance in `Roll`. Actual probability is `Weight / sum(all eligible weights)`. Default `1`. Use `0` for an id-only encounter that should never be randomly rolled.
 - `MinEncountersCompleted` (int ≥ 0) — battles the player must complete before this entry is eligible. Default `0`.
 
 ## Normal encounter — append to `Entries`
 
 ```yaml
-- Encounter: {fileID: 11400000, guid: <encounter guid>, type: 2}
+- Encounter: {fileID: 11400000, guid: <encounter guid from its .meta>, type: 2}
   Weight: <weight>
   MinEncountersCompleted: <min>
 ```
@@ -105,5 +88,5 @@ Read it and edit **in place** — do not regenerate it and do not invent a GUID 
 Replace the `TutorialEncounter` line at the bottom of the database (it is always used for the player's first battle and excluded from `Roll`):
 
 ```yaml
-TutorialEncounter: {fileID: 11400000, guid: <encounter guid>, type: 2}
+TutorialEncounter: {fileID: 11400000, guid: <encounter guid from its .meta>, type: 2}
 ```

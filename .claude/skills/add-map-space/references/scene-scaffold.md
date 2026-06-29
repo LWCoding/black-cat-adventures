@@ -1,7 +1,6 @@
 # Scaffolding a new Unity scene for a space type
 
-Use this when a new space type loads a scene that doesn't exist yet. Read
-[asset-mechanics.md](../../add-game-content/references/asset-mechanics.md) for GUID/.meta mechanics.
+Use this when a new space type loads a scene that doesn't exist yet. Do **not** hand-write `.meta` files — Unity generates them on reimport. The one exception is `EditorBuildSettings.asset`, which requires the scene's GUID; read the auto-generated scene `.meta` before editing it.
 
 ## 1. Determine the scene name
 
@@ -11,7 +10,7 @@ The scene name string in `SpaceData.SceneToLoad` must match the filename (withou
 
 Path: `Assets/Scenes/<SceneName>.unity`
 
-Unity scene files are complex YAML. The minimal template below creates a scene with a Main Camera and a single empty `GameBootstrap` GameObject that you'll use to attach your scene initializer script. **Do not copy-paste raw Unity scene YAML blindly** — generate a fresh GUID for the scene file's `.meta` (step 3), and replace every `<placeholder>` below.
+Unity scene files are complex YAML. The minimal template below creates a scene with a Main Camera and a single empty `GameBootstrap` GameObject that you'll use to attach your scene initializer script. **Do not copy-paste raw Unity scene YAML blindly** — replace every `<placeholder>` below. Unity will generate the `.meta` for the scene file on reimport; you'll read that GUID in step 3 when you register the scene in Build Settings.
 
 ```yaml
 %YAML 1.1
@@ -270,33 +269,19 @@ MonoBehaviour:
 >
 > The `fileID` values (`100000000`, `200000000`, etc.) need only be unique within a single `.unity` file — the numbers above are safe to use verbatim in a new scene.
 
-## 3. Write the scene .meta
+## 3. Register in Build Settings
 
-Generate a fresh GUID (see asset-mechanics.md). Use `DefaultImporter` (not `NativeFormatImporter`):
-
-```yaml
-fileFormatVersion: 2
-guid: <32 lowercase hex, no dashes>
-DefaultImporter:
-  externalObjects: {}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
-```
-
-## 4. Register in Build Settings
-
-Read `ProjectSettings/EditorBuildSettings.asset`. Append a new entry inside the `m_Scenes:` list:
+After Unity reimports and generates the scene's `.meta`, read the GUID from `Assets/Scenes/<SceneName>.unity.meta`. Then edit `ProjectSettings/EditorBuildSettings.asset` in place — append a new entry inside the `m_Scenes:` list:
 
 ```yaml
   - enabled: 1
     path: Assets/Scenes/<SceneName>.unity
-    guid: <same guid as scene .meta>
+    guid: <guid from generated scene .meta>
 ```
 
 Do not change the existing entries. The order in this list is the build index order; new scenes can go at the end.
 
-## 5. Write the scene initializer script
+## 4. Write the scene initializer script
 
 Your new scene needs a MonoBehaviour that reads `GameManager.GameData.RecentLevelCompleted` (the `PayloadId` set by `BattleButton` before loading the scene) and initializes the scene accordingly. See [space.md](space.md) section 4 for the exact pattern.
 
