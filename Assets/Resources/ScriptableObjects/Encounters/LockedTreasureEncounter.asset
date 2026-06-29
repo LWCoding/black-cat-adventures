@@ -15,7 +15,11 @@ MonoBehaviour:
   EncounterId: LockedTreasure
   Enemies:
   - EnemyData: {fileID: 11400000, guid: 90f5052f105734c748a65cb8b8300e10, type: 2}
-    DialogueToPlayOnMeet: []
+    DialogueToPlayOnMeet:
+    - Text: Claim me... within three turns... or else...
+      Duration: 3
+      Speaker: 1
+      ShouldStallState: 0
     ShouldStallBeforeTurn: 0
     TimeToNextObject: 1.3
     SpawnOffset: {x: 0, y: 0}
