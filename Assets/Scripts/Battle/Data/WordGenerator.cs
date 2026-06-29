@@ -141,7 +141,7 @@ public class WordGenerator : Singleton<WordGenerator>
     {
         if (damageDealt > 40)
         {
-            return TileTypeName.POISON;
+            return TileTypeName.WILD;
         } else if (damageDealt > 30)
         {
             return TileTypeName.POISON;
