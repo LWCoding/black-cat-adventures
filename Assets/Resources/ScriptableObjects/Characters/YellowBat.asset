@@ -28,7 +28,7 @@ MonoBehaviour:
     Offset: {x: 0, y: -1.2}
   EnemyDescription: Called yellow, but he's clearly orange.
   Attacks:
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+  - IconSprite: {fileID: 21300000, guid: f28173d04abba16448e566438e8b6f18, type: 3}
     AttackName: Screech
     _attackDescription: Yells loudly for %d damage.
     Damage: 7
@@ -39,7 +39,7 @@ MonoBehaviour:
     AvoidIfTargetHasStatus: {fileID: 0}
     ProjectileSprite: {fileID: 0}
     ProjectileSpeed: 0
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+  - IconSprite: {fileID: 21300000, guid: 28ff8545032b84e4abc11186d059b2a4, type: 3}
     AttackName: Gust
     _attackDescription: Flies into the air, becoming Airborne.
     Damage: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
     AvoidIfTargetHasStatus: {fileID: 0}
     ProjectileSprite: {fileID: 0}
     ProjectileSpeed: 0
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+  - IconSprite: {fileID: 21300000, guid: 47c438c5e6b3d9745bb3d9f7b27634fd, type: 3}
     AttackName: Batter Up
     _attackDescription: Swing! Deals %d damage and locks 2 tiles.
     Damage: 2
