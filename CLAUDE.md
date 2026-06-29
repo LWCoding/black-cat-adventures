@@ -36,3 +36,9 @@ StartCoroutine(MoveCoroutine(target, 0.25f));
 ```
 
 Use `SetDelay`, `SetEase`, `OnComplete`, and `DOSequence`/`Sequence.Join`/`Sequence.Append` for sequencing. Fall back to a coroutine only when the animation logic genuinely cannot be expressed as a tween (e.g. physics-driven or data-dependent per-frame decisions).
+
+## Unity asset files
+
+### Do not generate `.meta` files
+
+Never write `.meta` files by hand. Unity generates them automatically on reimport, and a hand-written `.meta` can conflict with what the Editor would produce. Create only the actual asset or script file; let Unity handle the accompanying `.meta`.

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum TileTypeName
 {
-    NORMAL = 0, POISON = 1, HEAL = 2, LOCKED = 3
+    NORMAL = 0, POISON = 1, HEAL = 2, LOCKED = 3, WILD = 4
 }
 
 public abstract class TileType : ScriptableObject

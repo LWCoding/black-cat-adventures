@@ -48,7 +48,9 @@ public abstract class LetterTile : MonoBehaviour
         _bgRenderer.sprite = tile.CurrTileType.TileSprite;
         _bgRenderer.color = new Color(tile.CurrTileType.TileSpriteColor.r, tile.CurrTileType.TileSpriteColor.g, tile.CurrTileType.TileSpriteColor.b, savedTileBGAlpha);
         Tile = tile;
-        _letterText.text = tile.Letters;
+        _letterText.text = (tile.CurrTileType.TileTypeName == TileTypeName.WILD && string.IsNullOrEmpty(tile.Letters))
+            ? "?"
+            : tile.Letters;
 
         byte savedTileIndAlpha = (byte)(255 * _dmgIndRenderer.color.a);  // Don't override alpha value in case toggled off
         switch (tile.DamageType)

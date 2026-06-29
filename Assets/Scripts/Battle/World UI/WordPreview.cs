@@ -104,6 +104,7 @@ public class WordPreview : Singleton<WordPreview>
         obj.transform.position = GridWorldPos(tile);
         _previewLetterTiles.Add(obj);
         RecomputeTargets();
+        ResolveWildTiles();
         OnLetterTilesChanged.Invoke();
     }
 
@@ -121,6 +122,16 @@ public class WordPreview : Singleton<WordPreview>
             Tile t = _currTiles[i];
             WordGrid.Instance.LetterTiles[t.TileIndex].Tile.CurrTileType.OnTileRemoved();
             WordGrid.Instance.LetterTiles[t.TileIndex].IsSelected = false;
+            // Wild tiles return to the board empty — reset letter so the grid tile shows blank.
+            if (t.CurrTileType.TileTypeName == TileTypeName.WILD)
+            {
+                t.Letters = "";
+                if (i < _previewLetterTiles.Count)
+                {
+                    _previewLetterTiles[i].GetComponent<LetterTile>().InitializeTile(t);
+                }
+                WordGrid.Instance.LetterTiles[t.TileIndex].InitializeTile(t);
+            }
             if (i < _previewLetterTiles.Count)
             {
                 _previewLetterTiles[i].GetComponent<PreviewLetterTile>()
@@ -130,6 +141,7 @@ public class WordPreview : Singleton<WordPreview>
             _currTiles.RemoveAt(i);
         }
         RecomputeTargets();
+        ResolveWildTiles();
         OnLetterTilesChanged.Invoke();
     }
 
@@ -188,6 +200,39 @@ public class WordPreview : Singleton<WordPreview>
         {
             Tile t = _currTiles[i];
             RemoveTile(t);
+        }
+    }
+
+    /// <summary>
+    /// For each wild tile in the current selection, finds the first letter A–Z that
+    /// makes the full word a valid dictionary word and writes it onto the tile.
+    /// If no letter works, the tile's letter is set to "" (empty/blank).
+    /// Updates the matching preview clone so the displayed glyph is current.
+    /// </summary>
+    private void ResolveWildTiles()
+    {
+        const string alphabet = "abcdefghijklmnopqrstuvwxyz";
+        for (int i = 0; i < _currTiles.Count; i++)
+        {
+            Tile t = _currTiles[i];
+            if (t.CurrTileType.TileTypeName != TileTypeName.WILD) { continue; }
+
+            string resolved = "";
+            foreach (char c in alphabet)
+            {
+                t.Letters = c.ToString();
+                if (WordGenerator.Instance.IsValidWord(CurrentWord))
+                {
+                    resolved = c.ToString();
+                    break;
+                }
+            }
+            t.Letters = resolved;
+
+            if (i < _previewLetterTiles.Count)
+            {
+                _previewLetterTiles[i].GetComponent<LetterTile>().InitializeTile(t);
+            }
         }
     }
 

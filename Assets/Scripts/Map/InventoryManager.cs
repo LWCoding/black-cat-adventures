@@ -75,9 +75,25 @@ public class InventoryManager : Singleton<InventoryManager>
         _allSlotsObject.SetActive(isShown);
     }
 
+    /// <summary>
+    /// Re-syncs every inventory slot to the current GameData without reloading the scene.
+    /// Safe to call at any time from other systems (e.g. the dev F2 cheat).
+    /// </summary>
+    public void RefreshFromGameData()
+    {
+        for (int i = 0; i < _equippedSlots.Count; i++)
+        {
+            _equippedSlots[i].Initialize(null);
+        }
+        for (int i = 0; i < _allSlots.Count; i++)
+        {
+            _allSlots[i].Initialize(null);
+        }
+        RenderInventory();
+    }
+
     private void RenderInventory()
     {
-        // Initialize all equipped slots to equipped treasures
         for (int i = 0; i < GameManager.GameData.UnlockedTreasures.Count; i++)
         {
             if (i < _equippedSlots.Count)
@@ -86,7 +102,11 @@ public class InventoryManager : Singleton<InventoryManager>
             }
             else
             {
-                _allSlots[i - 3].Initialize(GameManager.GameData.UnlockedTreasures[i]);
+                int allSlotsIdx = i - _equippedSlots.Count;
+                if (allSlotsIdx < _allSlots.Count)
+                {
+                    _allSlots[allSlotsIdx].Initialize(GameManager.GameData.UnlockedTreasures[i]);
+                }
             }
         }
     }

@@ -96,7 +96,8 @@ public class BattleManager : Singleton<BattleManager>
             // Look for a letter with that matching letter
             for (int i = 0; i <  WordGrid.Instance.LetterTiles.Count; i++)
             {
-                if (WordGrid.Instance.LetterTiles[i].GetLetters()[0] == keyChar) 
+                string tileLetters = WordGrid.Instance.LetterTiles[i].GetLetters();
+                if (tileLetters.Length > 0 && tileLetters[0] == keyChar) 
                 {
                     if (((GridLetterTile)(WordGrid.Instance.LetterTiles[i])).TrySelectTile())
                     {

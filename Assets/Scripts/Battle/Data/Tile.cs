@@ -53,6 +53,7 @@ public class Tile
 
     public static TileDamage GetTileDamageFromLetters(string letters)
     {
+        if (string.IsNullOrEmpty(letters)) return TileDamage.LOW;
         letters = letters.ToLower();
         if ("jkxzq".Contains(letters))
         {

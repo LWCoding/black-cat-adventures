@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -41,6 +42,10 @@ public class DevToolsManager : Singleton<DevToolsManager>
         {
             CycleEnemy(-1);
         }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            GiveAllTreasures();
+        }
     }
 
     // Cheat: marks the level/node complete via the normal WinState flow, then
@@ -64,6 +69,18 @@ public class DevToolsManager : Singleton<DevToolsManager>
         HealthHandler health = enemy.HealthHandler;
         if (health == null || health.IsDead()) { return; }
         health.TakeDamage(health.CurrentHealth);
+    }
+
+    // Cheat: gives the player every treasure (minus the None placeholder), saves, and
+    // refreshes the inventory if the Map scene is currently active.
+    private void GiveAllTreasures()
+    {
+        List<Treasure> all = Resources.LoadAll<Treasure>("ScriptableObjects/Treasure")
+            .Where(t => t is not None)
+            .ToList();
+        GameManager.GameData.UnlockedTreasures = all;
+        SaveManager.SaveGame(GameManager.GameData);
+        InventoryManager.Instance?.RefreshFromGameData();
     }
 
     // Cheat: replaces the current enemy's data with the next/previous entry in the
