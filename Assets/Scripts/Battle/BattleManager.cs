@@ -34,7 +34,19 @@ public class BattleManager : Singleton<BattleManager>
         // seamlessly across scene reloads (e.g. advancing between enemies) and
         // stops it automatically once we leave the battle scene.
         AudioManager.Instance.PlayMusic(_battleMusic);
-        SetState(new PlayerTurnState()); // Start off as player turn
+        // Only jump straight to the player's turn when the first enemy has no intro
+        // dialogue that stalls the battle. When it does stall (e.g. the tutorial's
+        // opening lines), SetNewEnemy's dialogue coroutine owns the
+        // WaitState -> PlayerTurnState transition itself. Firing PlayerTurnState here
+        // as well would emit a second PlayerTurnState (off-by-one for anything
+        // counting turns, like the tutorial) and let the player act before the
+        // dialogue has played. Mirrors EnemyHandler.TransitionToNextObject.
+        if (!CurrEnemyHandler.ShouldStallBeforeTurn
+            && (CurrEnemyHandler.DialogueToPlayOnMeet.Count == 0
+                || !CurrEnemyHandler.DialogueToPlayOnMeet[0].ShouldStallState))
+        {
+            SetState(new PlayerTurnState()); // Start off as player turn
+        }
         SetNewEnemy(CurrEnemyHandler);
     }
 

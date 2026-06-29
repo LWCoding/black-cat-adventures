@@ -47,7 +47,11 @@ public class LevelSpawner : MonoBehaviour
             GameObject enemyObject = Instantiate(_enemyPrefab, spawnPosition, Quaternion.identity, _spawnedObjectsParent);
             EnemyHandler enemyHandler = enemyObject.GetComponent<EnemyHandler>();
             enemyHandler.SetCharacterData(spawn.EnemyData);
-            enemyHandler.DialogueToPlayOnMeet = spawn.DialogueToPlayOnMeet;
+            // Copy the list rather than aliasing the Encounter ScriptableObject's
+            // own list: BattleManager consumes this list via RemoveAt while playing
+            // dialogue, which would otherwise permanently empty the cached asset and
+            // break dialogue (and the tutorial flow that depends on it) on replay.
+            enemyHandler.DialogueToPlayOnMeet = new List<DialogueInfo>(spawn.DialogueToPlayOnMeet);
             enemyHandler.ShouldStallBeforeTurn = spawn.ShouldStallBeforeTurn;
             enemyHandler.SetTimeToNextObject(spawn.TimeToNextObject);
             if (i > 0)
