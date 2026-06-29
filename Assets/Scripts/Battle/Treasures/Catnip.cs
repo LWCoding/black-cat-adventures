@@ -11,6 +11,21 @@ public class Catnip : Treasure
     {
         StatusEffect stunned = Resources.LoadAll<StatusEffect>("ScriptableObjects/Statuses")
             .First(s => s.name == "Stunned");
+
+        WordPreview.Instance.OnLetterTilesChanged += () =>
+        {
+            BattleManager.Instance.RunNextFrame(() =>
+            {
+                if (!WordGenerator.Instance.IsValidWord(WordPreview.Instance.CurrentWord) || WordPreview.Instance.CurrentTiles.Count < 8) { return; }
+                WordPreview.Instance.FeedbackText.enabled = true;
+                if (WordPreview.Instance.FeedbackText.text != "")
+                {
+                    WordPreview.Instance.FeedbackText.text += " ";
+                }
+                WordPreview.Instance.FeedbackText.text += "Catnip!";
+            });
+        };
+
         SubmitButton.OnClickButton += () =>
         {
             if (WordPreview.Instance.CurrentTiles.Count >= 8)
