@@ -70,6 +70,8 @@ public class OptionEvent : EventBehaviour
 
         foreach (EventOption option in options)
         {
+            if (option.HideIfNoTreasures && !GameManager.GameData.HasAnyTreasure) { continue; }
+
             EventOption captured = option;
             string label = string.IsNullOrEmpty(captured.Description)
                 ? captured.Label
@@ -113,6 +115,14 @@ public class OptionEvent : EventBehaviour
                 RunChooseTreasure(option);
                 break;
 
+            case OutcomeType.SwapRandomTreasure:
+                RunSwapRandom(option);
+                break;
+
+            case OutcomeType.GrantTreasureScrambleNextBattle:
+                RunGrantScramble(option);
+                break;
+
             default:
                 ShowResultAndReturn(option.ResultText, 2f);
                 break;
@@ -124,6 +134,34 @@ public class OptionEvent : EventBehaviour
         List<Treasure> granted = EventOutcomes.GrantRandom(option.Outcome.Count);
         string text = granted.Count > 0 ? option.ResultText : option.EmptyPoolText;
         ShowResultAndReturn(text, 2.5f);
+    }
+
+    private void RunSwapRandom(EventOption option)
+    {
+        (Treasure discarded, Treasure gained) = EventOutcomes.SwapRandomTreasure();
+        string text;
+        if (gained != null && discarded != null)
+        {
+            text = string.Format(option.ResultText, discarded.TreasureName, gained.TreasureName);
+        }
+        else if (gained != null)
+        {
+            text = $"You gained {gained.TreasureName}.";
+        }
+        else
+        {
+            text = option.EmptyPoolText;
+        }
+        ShowResultAndReturn(text, 3f);
+    }
+
+    private void RunGrantScramble(EventOption option)
+    {
+        Treasure gained = EventOutcomes.GrantTreasureScrambleNextBattle();
+        string text = gained != null
+            ? string.Format(option.ResultText, gained.TreasureName)
+            : option.EmptyPoolText;
+        ShowResultAndReturn(text, 3f);
     }
 
     private void RunChooseTreasure(EventOption option)

@@ -9,9 +9,13 @@ using System.Collections.Generic;
 /// </summary>
 public enum OutcomeType
 {
-    None                = 0,
-    GrantRandomTreasures = 1,
-    ChooseTreasure      = 2,
+    None                             = 0,
+    GrantRandomTreasures             = 1,
+    ChooseTreasure                   = 2,
+    /// <summary>Wishing Well: discard a random owned treasure, gain one random new treasure.</summary>
+    SwapRandomTreasure               = 3,
+    /// <summary>Genie Lamp: gain one random treasure, then flag the next battle to start half-scrambled.</summary>
+    GrantTreasureScrambleNextBattle  = 4,
 }
 
 [System.Serializable]
@@ -44,5 +48,32 @@ public static class EventOutcomes
             GameManager.GameData.UnlockedTreasures.Add(t);
         }
         return granted;
+    }
+
+    /// <summary>
+    /// Wishing Well outcome: grants one random unowned treasure (drawn first so it
+    /// cannot be immediately discarded), then removes one random owned treasure.
+    /// Returns (discarded, gained). Either may be null if the respective pool is empty.
+    /// </summary>
+    public static (Treasure discarded, Treasure gained) SwapRandomTreasure()
+    {
+        List<Treasure> gained = GrantRandom(1);
+        Treasure gainedTreasure = gained.Count > 0 ? gained[0] : null;
+
+        System.Random rng = new();
+        Treasure discarded = GameManager.GameData.DiscardRandomTreasure(rng);
+        return (discarded, gainedTreasure);
+    }
+
+    /// <summary>
+    /// Genie Lamp outcome: grants one random treasure and flags the next real battle
+    /// to begin with half its tiles scrambled to gold-etched (high-damage) letters.
+    /// Returns the granted treasure, or null if the unowned pool is exhausted.
+    /// </summary>
+    public static Treasure GrantTreasureScrambleNextBattle()
+    {
+        List<Treasure> granted = GrantRandom(1);
+        GameManager.GameData.NextBattleGoldEtched = true;
+        return granted.Count > 0 ? granted[0] : null;
     }
 }

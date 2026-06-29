@@ -20,6 +20,8 @@ public struct EventOption
     public string ResultText;
     [Tooltip("Text shown when the outcome's reward pool is empty (e.g. all treasures owned).")]
     public string EmptyPoolText;
+    [Tooltip("When true, this option is hidden entirely if the player owns no treasures (e.g. nothing to discard).")]
+    public bool HideIfNoTreasures;
 }
 
 /// <summary>

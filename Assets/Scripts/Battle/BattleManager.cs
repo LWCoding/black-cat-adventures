@@ -34,6 +34,19 @@ public class BattleManager : Singleton<BattleManager>
         // seamlessly across scene reloads (e.g. advancing between enemies) and
         // stops it automatically once we leave the battle scene.
         AudioManager.Instance.PlayMusic(_battleMusic);
+
+        // Genie Lamp curse: if the previous event requested gold-etched tiles,
+        // scramble half the board now (deferred one frame so InitializeBoard
+        // has already run). Clear and save immediately so a retry of a lost
+        // battle doesn't re-apply the penalty.
+        if (GameManager.GameData.NextBattleGoldEtched && WordGrid.Instance != null)
+        {
+            GameManager.GameData.NextBattleGoldEtched = false;
+            SaveManager.SaveGame(GameManager.GameData);
+            int half = (WordGrid.Instance.NUM_ROWS * WordGrid.Instance.NUM_COLUMNS) / 2;
+            RunNextFrame(() => WordGrid.Instance.ScrambleTiles(half));
+        }
+
         // Only jump straight to the player's turn when the first enemy has no intro
         // dialogue that stalls the battle. When it does stall (e.g. the tutorial's
         // opening lines), SetNewEnemy's dialogue coroutine owns the

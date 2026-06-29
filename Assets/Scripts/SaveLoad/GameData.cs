@@ -77,6 +77,14 @@ public class GameData
     public int MapSeed;
 
     /// <summary>
+    /// When true the next real battle (Level scene) begins with half the board
+    /// scrambled to gold-etched (high-damage) letters. Cleared and saved the
+    /// moment a battle consumes it, so a retry of a lost fight won't re-apply it.
+    /// Set by the Genie Lamp event outcome.
+    /// </summary>
+    public bool NextBattleGoldEtched;
+
+    /// <summary>
     /// Event ids that the player has fully experienced. Used by EventDatabase
     /// to prefer unseen events on future rolls.
     /// </summary>
@@ -94,6 +102,25 @@ public class GameData
     /// load; looked up on subsequent loads to apply stable space appearances/payloads.
     /// </summary>
     public List<ResolvedSpaceEntry> ResolvedSpaces = new();
+
+    /// <summary>
+    /// True when the player owns at least one treasure that isn't the None placeholder.
+    /// Used to gate events (e.g. Wishing Well) that require something to discard.
+    /// </summary>
+    public bool HasAnyTreasure => UnlockedTreasures.Any(t => t is not None);
+
+    /// <summary>
+    /// Removes and returns one random owned treasure (any rarity, including starters,
+    /// but excluding the None placeholder). Returns null if no eligible treasure exists.
+    /// </summary>
+    public Treasure DiscardRandomTreasure(Random rng)
+    {
+        List<Treasure> eligible = UnlockedTreasures.FindAll(t => t is not None);
+        if (eligible.Count == 0) { return null; }
+        Treasure chosen = eligible[rng.Next(eligible.Count)];
+        _unlockedTreasures.Remove(chosen);
+        return chosen;
+    }
 
     private static readonly (TreasureRarity tier, int weight)[] _rollWeights =
     {

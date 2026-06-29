@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630466f6530bd4bde87821011541f9b5, type: 3}
+  m_Name: WishingWellEventData
+  m_EditorClassIdentifier: 
+  SceneToLoad: EventLevel
+  IntroText: 'An old stone well sits at the crossroads, moss-covered and silent. Something
+    glimmers at the bottom — and the air carries a faint, expectant hum.'
+  LeftImage: {fileID: 0}
+  Options:
+  - Label: Toss a treasure in
+    Description: Discard a random treasure. Gain a random new one.
+    Outcome:
+      Type: 3
+      Count: 0
+      ChooseFrom: 0
+    ResultText: '{0} tumbles into the dark. Something better rises to meet you — {1}.'
+    EmptyPoolText: The well stirs, but you have nothing to offer it.
+    HideIfNoTreasures: 1
+  - Label: Walk away
+    Description: ''
+    Outcome:
+      Type: 0
+      Count: 0
+      ChooseFrom: 0
+    ResultText: You leave the well undisturbed. Some things are best left alone.
+    EmptyPoolText: ''
+    HideIfNoTreasures: 0
