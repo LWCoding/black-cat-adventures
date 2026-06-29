@@ -724,7 +724,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc1bd8ca60b8936d05e3540a77c3f03d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _encounterDatabase: {fileID: 11400000, guid: b30c794c3f984a7abacd7592d1c83034, type: 2}
   _enemyPrefab: {fileID: 8723121862826607162, guid: 96aede29c11558541bdb879e89f85c6e, type: 3}
   _treasureChestPrefab: {fileID: 1000001, guid: d4e5f60a7b8c9d0e1f2a3b4c5d6e7f8a, type: 3}
   _enemySpawnAnchor: {fileID: 969032142}

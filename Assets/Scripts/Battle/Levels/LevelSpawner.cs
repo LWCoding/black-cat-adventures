@@ -1,14 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class LevelSpawner : MonoBehaviour
 {
 
-    [Header("Data Assignments")]
-    [FormerlySerializedAs("_levelRegistry")]
-    [FormerlySerializedAs("_encounterRegistry")]
-    [SerializeField] private EncounterDatabase _encounterDatabase;
     [Header("Prefab Assignments")]
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _treasureChestPrefab;
@@ -19,19 +14,28 @@ public class LevelSpawner : MonoBehaviour
 
     private void Awake()
     {
+        // If the space resolves to an Event, hand off to the event behaviour
+        // instead of running the normal encounter spawning path.
+        if (GameManager.GameData.RecentResolvedTypeId == "Event")
+        {
+            AwakeEventMode();
+            return;
+        }
+
         string encounterId = GameManager.GameData.RecentLevelCompleted;
+        EncounterDatabase encounterDatabase = GameDatabase.Encounters;
 
         // Always use the tutorial encounter for the player's very first battle,
         // unless the tutorial has already been completed (e.g. on a continued save
         // or after an F7 skip that was properly persisted).
         bool needsTutorial = !GameManager.GameData.HasTutorialCompleted
             && GameManager.GameData.LevelsCompleted.Count == 0
-            && _encounterDatabase.TutorialEncounter != null;
+            && encounterDatabase.TutorialEncounter != null;
         Encounter encounter =
             needsTutorial
-                ? _encounterDatabase.TutorialEncounter
-                : _encounterDatabase.GetEncounter(encounterId)
-                  ?? _encounterDatabase.RollNormal(new System.Random(), 0);
+                ? encounterDatabase.TutorialEncounter
+                : encounterDatabase.GetEncounter(encounterId)
+                  ?? encounterDatabase.RollNormal(new System.Random(), 0);
 
         if (encounter == null)
         {
@@ -90,6 +94,40 @@ public class LevelSpawner : MonoBehaviour
         int totalEvents = encounter.Enemies.Count + (hasChest ? 1 : 0);
         FindAnyObjectByType<UICompletionBar>(FindObjectsInactive.Include).Initialize(totalEvents);
         BattleManager.Instance.CurrEnemyHandler = spawnedEnemies[0];
+    }
+
+    /// <summary>
+    /// Event-mode path: hides the completion bar, loads the EventData for the
+    /// current payload id, attaches the EventBehaviour, supplies scene context
+    /// to any behaviour that implements INeedsEventSceneContext, and calls
+    /// BeginEvent. Normal encounter spawning is skipped. No per-event fields
+    /// or per-event if-checks are needed on LevelSpawner.
+    /// </summary>
+    private void AwakeEventMode()
+    {
+        UICompletionBar completionBar = FindAnyObjectByType<UICompletionBar>(FindObjectsInactive.Include);
+        if (completionBar != null) { completionBar.gameObject.SetActive(false); }
+
+        string eventId = GameManager.GameData.RecentLevelCompleted;
+        EventData eventData = GameDatabase.Events != null ? GameDatabase.Events.GetEvent(eventId) : null;
+        if (eventData == null)
+        {
+            Debug.LogError($"[LevelSpawner] No EventData found for id '{eventId}'.");
+            return;
+        }
+
+        GameObject eventObj = new($"Event_{eventData.EventId}");
+        EventBehaviour behaviour = eventData.AttachBehaviour(eventObj);
+
+        // Supply scene-level references to any behaviour that needs them
+        // (e.g. BattleEvent). New battle events require no change here.
+        if (behaviour is INeedsEventSceneContext ctx)
+        {
+            ctx.SetSceneContext(new EventSceneContext(
+                _enemyPrefab, _enemySpawnAnchor, _stagingAnchor, _spawnedObjectsParent));
+        }
+
+        behaviour.BeginEvent();
     }
 
 }

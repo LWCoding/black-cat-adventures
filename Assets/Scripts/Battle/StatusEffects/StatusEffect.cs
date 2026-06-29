@@ -11,6 +11,7 @@ public enum StatusEffectType
     Waterlogged = 4,
     Shrink = 5,
     Stunned = 6,
+    Flee = 7,
 }
 
 [System.Serializable]

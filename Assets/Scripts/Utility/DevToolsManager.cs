@@ -16,7 +16,7 @@ public class DevToolsManager : Singleton<DevToolsManager>
         {
             if (_enemyLibrary == null)
             {
-                _enemyLibrary = Resources.LoadAll<EnemyData>("ScriptableObjects/Characters")
+                _enemyLibrary = GameDatabase.Enemies
                     .OrderBy(e => e.name)
                     .ToArray();
             }
@@ -75,7 +75,7 @@ public class DevToolsManager : Singleton<DevToolsManager>
     // refreshes the inventory if the Map scene is currently active.
     private void GiveAllTreasures()
     {
-        List<Treasure> all = Resources.LoadAll<Treasure>("ScriptableObjects/Treasure")
+        List<Treasure> all = GameDatabase.Treasures
             .Where(t => t is not None)
             .ToList();
         GameManager.GameData.UnlockedTreasures = all;

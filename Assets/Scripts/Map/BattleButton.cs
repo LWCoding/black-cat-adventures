@@ -44,14 +44,33 @@ public class BattleButton : MonoBehaviour, IPointerClickHandler
         GameManager.GameData.RecentNodeEntered = LevelsManager.Instance.GetCurrentNodeId();
 
         ResolvedSpaceEntry resolved = LevelsManager.Instance.GetCurrentResolvedSpace();
+
+        // Event nodes pick their concrete event lazily, here at entry time, so the
+        // unseen-first ordering follows the player's actual path instead of the
+        // order nodes resolved in at map generation.
+        EventSpaceData eventSpace = GameDatabase.EventSpace;
+        if (resolved != null && eventSpace != null && resolved.ResolvedTypeId == eventSpace.SpaceTypeId)
+        {
+            EventData chosen = eventSpace.PickEvent();
+            if (chosen != null && !string.IsNullOrEmpty(chosen.SceneToLoad))
+            {
+                GameManager.GameData.RecentLevelCompleted = chosen.EventId;
+                GameManager.GameData.RecentResolvedTypeId = resolved.ResolvedTypeId;
+                SceneManager.LoadScene(chosen.SceneToLoad);
+                return;
+            }
+        }
+
         if (resolved != null && !string.IsNullOrEmpty(resolved.SceneToLoad))
         {
-            GameManager.GameData.RecentLevelCompleted = resolved.PayloadId;
+            GameManager.GameData.RecentLevelCompleted  = resolved.PayloadId;
+            GameManager.GameData.RecentResolvedTypeId  = resolved.ResolvedTypeId;
             SceneManager.LoadScene(resolved.SceneToLoad);
         }
         else
         {
             GameManager.GameData.RecentLevelCompleted = LevelsManager.Instance.GetCurrentLevelString();
+            GameManager.GameData.RecentResolvedTypeId = "Battle";
             SceneManager.LoadScene("Level");
         }
     }

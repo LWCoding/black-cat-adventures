@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665e441181f664028bb6495cbcf5c49f, type: 3}
+  m_Name: LockedTreasureEventData
+  m_EditorClassIdentifier: 
+  SceneToLoad: Level
+  Encounter: {fileID: 11400000, guid: a7065343f7abd4eb3b6e1f68115f2223, type: 2}
+  StartStatuses:
+  - Status: {fileID: 11400000, guid: 6d169fc7aa16c4de88ac3451257abeb9, type: 2}
+    EnemyIndex: 0
+    Amplifier: 3
+  TurnLimit: 3
+  WinReward:
+    Type: 2
+    Count: 0
+    ChooseFrom: 3
+  TickStatusesOnFirstTurn: 0

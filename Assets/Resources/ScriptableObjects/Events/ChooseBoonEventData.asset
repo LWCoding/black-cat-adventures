@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630466f6530bd4bde87821011541f9b5, type: 3}
+  m_Name: ChooseBoonEventData
+  m_EditorClassIdentifier: 
+  SceneToLoad: EventLevel
+  IntroText: 'A still fountain glows with an unnatural light. Coins glint beneath
+    its surface, and the air hums with old, patient magic.'
+  LeftImage: {fileID: 0}
+  Options:
+  - Label: Throw a coin
+    Description: Receive two random treasures.
+    Outcome:
+      Type: 1
+      Count: 2
+      ChooseFrom: 0
+    ResultText: 'The fountain bubbles warmly, and two gifts rise to meet you.'
+    EmptyPoolText: 'The fountain stirs, but you already carry everything it could
+      offer.'
+  - Label: Desecrate
+    Description: Choose one treasure from three.
+    Outcome:
+      Type: 2
+      Count: 0
+      ChooseFrom: 3
+    ResultText: 'You plunge your paw into the murk and take what you please.'
+    EmptyPoolText: 'You disturb the waters, but nothing new remains to claim.'

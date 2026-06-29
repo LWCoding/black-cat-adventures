@@ -9,7 +9,7 @@ public class Catnip : Treasure
 
     public override void ActivateTreasure()
     {
-        StatusEffect stunned = Resources.LoadAll<StatusEffect>("ScriptableObjects/Statuses")
+        StatusEffect stunned = GameDatabase.Statuses
             .First(s => s.name == "Stunned");
 
         WordPreview.Instance.OnLetterTilesChanged += () =>

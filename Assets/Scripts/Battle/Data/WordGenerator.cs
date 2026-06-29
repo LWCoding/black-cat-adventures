@@ -13,7 +13,7 @@ public class WordGenerator : Singleton<WordGenerator>
             // If we don't have any treasures, give the player the default treasure
             if (_tileTypes.Count == 0)
             {
-                foreach (TileType tt in Resources.LoadAll<TileType>("ScriptableObjects/Tiles").ToList())
+                foreach (TileType tt in GameDatabase.Tiles)
                 {
                     _tileTypes.Add(tt.TileTypeName, tt);
                 }

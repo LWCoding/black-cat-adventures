@@ -9,16 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85b0b33d4a5c4a77bd931158f38c4fb9, type: 3}
-  m_Name: UnknownSpace
+  m_Script: {fileID: 11500000, guid: d0a97b3570f5e4e8e854c0d10b6a1f8e, type: 3}
+  m_Name: EventSpace
   m_EditorClassIdentifier: 
-  SpaceTypeId: Unknown
+  SpaceTypeId: Event
   ActionLabel: Explore
   NodeLabel: '?'
   NodeSprite: {fileID: 0}
-  SceneToLoad: 
-  Entries:
-  - Space: {fileID: 11400000, guid: 452928ea4027246b29e2ee5e8c6ba5ab, type: 2}
-    Weight: 4
-  - Space: {fileID: 11400000, guid: 99d53ed29db74b4c9aed745501ccadd2, type: 2}
-    Weight: 1
+  SceneToLoad: EventLevel

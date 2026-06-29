@@ -32,7 +32,7 @@ public class GameData
             // If we don't have any treasures, give the player the default treasure
             if (_unlockedTreasures.Count == 0)
             {
-                List<Treasure> allTreasures = Resources.LoadAll<Treasure>("ScriptableObjects/Treasure").ToList();
+                List<Treasure> allTreasures = GameDatabase.Treasures.ToList();
                 List<Treasure> defaultTreasures = allTreasures.FindAll((t) => t is not None && t.Rarity == TreasureRarity.Starter);
                 _unlockedTreasures = defaultTreasures;
             }
@@ -77,6 +77,19 @@ public class GameData
     public int MapSeed;
 
     /// <summary>
+    /// Event ids that the player has fully experienced. Used by EventDatabase
+    /// to prefer unseen events on future rolls.
+    /// </summary>
+    public List<string> SeenEventIds = new();
+
+    /// <summary>
+    /// ResolvedTypeId of the space the player is entering (e.g. "Battle", "Event").
+    /// Written by BattleButton before scene load; read by LevelSpawner to decide
+    /// whether to run normal encounter spawning or an event-mode branch.
+    /// </summary>
+    public string RecentResolvedTypeId = "";
+
+    /// <summary>
     /// Persisted resolutions for each map node. Populated by LevelsManager on first
     /// load; looked up on subsequent loads to apply stable space appearances/payloads.
     /// </summary>
@@ -97,7 +110,7 @@ public class GameData
     /// </summary>
     public List<Treasure> GetRandomUnownedTreasures(int count)
     {
-        List<Treasure> pool = Resources.LoadAll<Treasure>("ScriptableObjects/Treasure")
+        List<Treasure> pool = GameDatabase.Treasures
             .Where(t => t is not None && t.Rarity != TreasureRarity.Starter && !UnlockedTreasures.Contains(t))
             .ToList();
         Random rng = new();

@@ -17,6 +17,11 @@ public class EnemyHandler : CharacterHandler
 
     [Header("Game State Properties")]
     public bool ShouldStallBeforeTurn;  // If true, doesn't go straight to player turn
+    /// <summary>
+    /// When true the default OnDeath subscription (WinState / TransitionToNextObject) is
+    /// suppressed. Set by event behaviours that own the death outcome themselves.
+    /// </summary>
+    public bool SuppressDefaultDeath = false;
 
     private Tween _hoverTween;
 
@@ -32,6 +37,12 @@ public class EnemyHandler : CharacterHandler
     private void Start()
     {
         BattleManager.Instance.OnEnemyAttack += RenderAttack;
+
+        // Events that own the death outcome set SuppressDefaultDeath = true before
+        // Start runs (via SetCharacterData called before instantiation completes).
+        // In that case we skip wiring the default win/transition callback entirely.
+        if (SuppressDefaultDeath) { return; }
+
         if (_nextBattleObject != null)
         {
             // If there's a "next" object to render, transition to it
@@ -45,7 +56,8 @@ public class EnemyHandler : CharacterHandler
                 TransitionToNextObject();
                 BattleManager.Instance.SetState(new WaitState());
             };
-        } else
+        }
+        else
         {
             // Or else, the player has defeated all enemies in this level
             HealthHandler.OnDeath += () =>
