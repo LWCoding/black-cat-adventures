@@ -1,16 +1,23 @@
+using DG.Tweening;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Airborne", menuName = "Status Effects/Airborne")]
 public class Airborne : StatusEffect
 {
 
+    private CharacterHandler _handler;
+    private Sequence _spriteToggle;
+
     public override void ApplyEffect(CharacterHandler handler, int amplifier)
     {
         CurrAmplifier = amplifier;
         if (handler is not EnemyHandler enemy) { return; }
+        _handler = handler;
         WordPreview.Instance.OnLetterTilesChanged += AirborneEffect;
-        AirborneEffect();           // set modifier immediately so the current word is evaluated
+        AirborneEffect();
         enemy.SetHovering(true);
+        enemy.HealthHandler.OnDeath += Land;
+        StartSpriteToggle(enemy);
     }
 
     public override bool UpdateEffect(CharacterHandler handler)
@@ -18,15 +25,50 @@ public class Airborne : StatusEffect
         CurrAmplifier--;
         if (CurrAmplifier == 0)
         {
-            // Reset modifier to 1 on expiry (avoids the lingering-modifier bug Waterlogged has)
             DamageCalculator.RegisterScaledModifier("airborne", 1f);
-            if (handler is EnemyHandler enemy)
-            {
-                WordPreview.Instance.OnLetterTilesChanged -= AirborneEffect;
-                enemy.SetHovering(false);
-            }
+            Land();
         }
         return CurrAmplifier == 0;
+    }
+
+    /// <summary>
+    /// Indefinitely flips between the idle and (optional) airborne sprite every 0.75s.
+    /// No-op if the character has no AirborneSprite assigned.
+    /// </summary>
+    private void StartSpriteToggle(EnemyHandler enemy)
+    {
+        Sprite airborne = enemy.CharData.AirborneSprite.Sprite;
+        if (airborne == null) { return; }
+        Sprite idle = enemy.CharData.AliveSprite.Sprite;
+        bool showingAirborne = false;
+        _spriteToggle = DOTween.Sequence()
+            .AppendInterval(0.75f)
+            .AppendCallback(() =>
+            {
+                showingAirborne = !showingAirborne;
+                enemy.SetSpriteImage(showingAirborne ? airborne : idle);
+            })
+            .SetLoops(-1);
+    }
+
+    /// <summary>
+    /// Single cleanup path: runs when Airborne expires (amplifier hits zero) or the enemy dies.
+    /// Stops the toggle loop, unsubscribes, lands, and returns to the idle sprite (unless dead).
+    /// Idempotent, so it is safe if both triggers fire.
+    /// </summary>
+    private void Land()
+    {
+        if (_handler is not EnemyHandler enemy) { return; }
+        _spriteToggle?.Kill();
+        _spriteToggle = null;
+        _handler = null;
+        WordPreview.Instance.OnLetterTilesChanged -= AirborneEffect;
+        enemy.HealthHandler.OnDeath -= Land;
+        enemy.SetHovering(false);
+        if (!enemy.HealthHandler.IsDead())
+        {
+            enemy.SetSpriteImage(enemy.CharData.AliveSprite.Sprite);
+        }
     }
 
     private void AirborneEffect()

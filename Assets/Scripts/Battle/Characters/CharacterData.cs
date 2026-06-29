@@ -19,5 +19,8 @@ public abstract class CharacterData : ScriptableObject
     public SpriteInfo AttackSprite;
     public SpriteInfo DeadSprite;
     public Vector2 SpriteScale = new(1, 1);
+    [Header("Optional")]
+    [Tooltip("Optional: periodically swapped with the idle sprite while Airborne. Leave empty for no toggle.")]
+    public SpriteInfo AirborneSprite;
 
 }

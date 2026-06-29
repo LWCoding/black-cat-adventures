@@ -94,6 +94,16 @@ public abstract class CharacterHandler : MonoBehaviour
         _spriteRenderer.transform.localPosition = (Vector3)newSprite.Offset;
     }
 
+    /// <summary>
+    /// Swaps only the displayed sprite image, leaving the transform/offset untouched
+    /// so it composes with position-based animations (e.g. the Airborne hover bob).
+    /// </summary>
+    public void SetSpriteImage(Sprite sprite)
+    {
+        if (sprite == null) { return; }
+        _spriteRenderer.sprite = sprite;
+    }
+
     protected abstract void RenderAttack();
     protected abstract IEnumerator RenderAttackCoroutine(Action codeToRunAfter);
 

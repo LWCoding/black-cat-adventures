@@ -14,15 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingHealth: 100
   AliveSprite:
-    Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Sprite: {fileID: 21300000, guid: d038f38c984ff3c4b9e34f2334e1067c, type: 3}
+    Offset: {x: 0, y: -1.2}
   AttackSprite:
-    Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Sprite: {fileID: 21300000, guid: d038f38c984ff3c4b9e34f2334e1067c, type: 3}
+    Offset: {x: 0, y: -1.2}
   DeadSprite:
-    Sprite: {fileID: 21300000, guid: a98949ac6b7a94d43b5b39a854fcc574, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Sprite: {fileID: 21300000, guid: f9776d4d2d7e1e14ab0300483f5c0568, type: 3}
+    Offset: {x: 0, y: -1.2}
   SpriteScale: {x: 0.9, y: 0.9}
+  AirborneSprite:
+    Sprite: {fileID: 21300000, guid: 0488d103e4b64a446a0637160d0411b0, type: 3}
+    Offset: {x: 0, y: -1.2}
   EnemyDescription: Called yellow, but he's clearly orange.
   Attacks:
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
@@ -33,6 +36,9 @@ MonoBehaviour:
     InflictedStatuses: []
     BoardEffects: []
     AvoidIfSelfHasStatus: {fileID: 0}
+    AvoidIfTargetHasStatus: {fileID: 0}
+    ProjectileSprite: {fileID: 0}
+    ProjectileSpeed: 0
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Gust
     _attackDescription: Flies into the air, becoming Airborne.
@@ -44,6 +50,9 @@ MonoBehaviour:
       Amplifier: 2
     BoardEffects: []
     AvoidIfSelfHasStatus: {fileID: 11400000, guid: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, type: 2}
+    AvoidIfTargetHasStatus: {fileID: 0}
+    ProjectileSprite: {fileID: 0}
+    ProjectileSpeed: 0
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Batter Up
     _attackDescription: Swing! Deals %d damage and locks 2 tiles.
@@ -54,3 +63,6 @@ MonoBehaviour:
     - Effect: {fileID: 11400000, guid: 27a79008c9b04eb3b40db459f4bdff9c, type: 2}
       Amplifier: 2
     AvoidIfSelfHasStatus: {fileID: 0}
+    AvoidIfTargetHasStatus: {fileID: 0}
+    ProjectileSprite: {fileID: 0}
+    ProjectileSpeed: 0
