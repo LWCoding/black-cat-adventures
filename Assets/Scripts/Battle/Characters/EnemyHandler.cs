@@ -83,12 +83,12 @@ public class EnemyHandler : CharacterHandler
         // Filter out attacks the enemy should avoid while it or the player already has a certain status
         List<EnemyAttack> usable = possibleAttacks.FindAll(a =>
         {
-            if (a.AvoidIfSelfHasStatus != null && StatusHandler.HasStatus(a.AvoidIfSelfHasStatus.Name))
+            if (a.AvoidIfSelfHasStatus != null && StatusHandler.HasStatus(a.AvoidIfSelfHasStatus.Type))
             {
                 return false;
             }
             if (a.AvoidIfTargetHasStatus != null
-                && BattleManager.Instance.PlayerHandler.StatusHandler.HasStatus(a.AvoidIfTargetHasStatus.Name))
+                && BattleManager.Instance.PlayerHandler.StatusHandler.HasStatus(a.AvoidIfTargetHasStatus.Type))
             {
                 return false;
             }

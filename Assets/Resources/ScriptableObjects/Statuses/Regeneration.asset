@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d005fd853567643b3c11fc40e0396f, type: 3}
   m_Name: Regeneration
   m_EditorClassIdentifier: 
+  Type: 1
   Name: Regeneration
   Description: Every turn, heal health equal to turn count, capped at 3.
   Icon: {fileID: 21300000, guid: 92ac50f76d0692547b36c9edefda0fd6, type: 3}

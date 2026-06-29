@@ -17,12 +17,14 @@ public class ShuffleButton : MonoBehaviour
 
     private PointerCursorOnHover _pointerCursorOnHover;
     private bool _isInteractable = false;
+    private string _baseLabel;
 
     public static Action OnClickButton = null;
 
     private void Awake()
     {
         _pointerCursorOnHover = GetComponent<PointerCursorOnHover>();
+        _baseLabel = _letterText.text.TrimEnd();
     }
 
     private void Start()
@@ -38,12 +40,14 @@ public class ShuffleButton : MonoBehaviour
             if (state is PlayerTurnState)
             {
                 ToggleInteractability(true);
+                RefreshLabel();
             }
             else
             {
                 ToggleInteractability(false);
             }
         };
+        RefreshLabel();
     }
 
     /// <summary>
@@ -63,6 +67,11 @@ public class ShuffleButton : MonoBehaviour
         _pointerCursorOnHover.IsEnabled = isInteractable;
     }
 
+    private void RefreshLabel()
+    {
+        _letterText.text = CreditCard.IsShuffleFree() ? _baseLabel + " (Free)" : _baseLabel;
+    }
+
     private void OnMouseDown()
     {
         TryShuffleBoard();
@@ -72,15 +81,17 @@ public class ShuffleButton : MonoBehaviour
     {
         if (!_isInteractable) { return; }  // If not interactable, don't do anything
         if (BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }
+        bool isFree = CreditCard.ConsumeFreeShuffle();
         OnClickButton?.Invoke();
-        StartCoroutine(ShuffleGridCoroutine());
+        StartCoroutine(ShuffleGridCoroutine(isFree));
         AudioManager.Instance.PlayOneShot(_shuffleSFX);
     }
 
     /// <summary>
     /// Shift state to waiting, shuffle grid animation, and then shift to enemy turn.
+    /// If the shuffle is free (Credit Card), return to player turn instead.
     /// </summary>
-    private IEnumerator ShuffleGridCoroutine()
+    private IEnumerator ShuffleGridCoroutine(bool isFree)
     {
         // Make sure all tiles in the preview are erased
         WordPreview.Instance.EraseTiles();
@@ -92,8 +103,16 @@ public class ShuffleButton : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         yield return new WaitForSeconds(1);
-        // Shift turn to enemy
-        BattleManager.Instance.SetState(new EnemyTurnState());
+        if (isFree)
+        {
+            // Free shuffle: return to player turn without triggering the enemy
+            BattleManager.Instance.SetState(new PlayerTurnState(tickStatuses: false));
+        }
+        else
+        {
+            // Shift turn to enemy
+            BattleManager.Instance.SetState(new EnemyTurnState());
+        }
     }
 
 }

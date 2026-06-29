@@ -200,4 +200,34 @@ public class WordGrid : Singleton<WordGrid>
         }
     }
 
+    /// <summary>
+    /// Ensures every letter in <paramref name="required"/> appears at least once on the
+    /// board. Missing vowels are injected into unlocked non-wild tiles that don't already
+    /// carry one of the required letters.
+    /// </summary>
+    public void EnsureLettersPresent(string[] required)
+    {
+        var present = new System.Collections.Generic.HashSet<string>();
+        foreach (var lt in _letterTiles) { present.Add(lt.GetLetters().ToUpper()); }
+        var missing = new System.Collections.Generic.List<string>();
+        foreach (var r in required) { if (!present.Contains(r)) { missing.Add(r); } }
+        if (missing.Count == 0) { return; }
+        var candidates = new System.Collections.Generic.List<LetterTile>();
+        var requiredSet = new System.Collections.Generic.HashSet<string>(required);
+        foreach (var lt in _letterTiles)
+        {
+            if (!lt.Tile.IsLocked
+                && lt.Tile.CurrTileType.TileTypeName != TileTypeName.WILD
+                && !requiredSet.Contains(lt.GetLetters().ToUpper()))
+            {
+                candidates.Add(lt);
+            }
+        }
+        Shuffle(candidates);
+        for (int i = 0; i < missing.Count && i < candidates.Count; i++)
+        {
+            candidates[i].SetTileText(missing[i]);
+        }
+    }
+
 }

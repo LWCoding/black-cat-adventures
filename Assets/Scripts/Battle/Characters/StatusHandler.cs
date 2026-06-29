@@ -36,7 +36,7 @@ public class StatusHandler : MonoBehaviour
     public void GainStatusEffect(StatusEffect status, int amplifier)
     {
         OnStatusApplied?.Invoke();
-        int existingStatusIdx = _effects.FindIndex((aStatus) => aStatus.Name == status.Name);
+        int existingStatusIdx = _effects.FindIndex((aStatus) => aStatus.Type == status.Type);
         StatusEffect statusCopy = Instantiate(status);  // Make new status effect object
         if (existingStatusIdx < 0)
         {
@@ -104,9 +104,9 @@ public class StatusHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns true if this character currently has a status effect with the given name.
+    /// Returns true if this character currently has a status effect of the given type.
     /// </summary>
-    public bool HasStatus(string name) => _effects.Exists(e => e.Name == name);
+    public bool HasStatus(StatusEffectType type) => _effects.Exists(e => e.Type == type);
 
     /// <summary>
     /// Toggle the visibility of the status effects.

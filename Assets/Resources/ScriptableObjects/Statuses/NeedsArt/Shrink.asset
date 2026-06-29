@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c7d6e5f4a392817160504938271601, type: 3}
   m_Name: Shrink
   m_EditorClassIdentifier: 
+  Type: 5
   Name: Shrink
   Description: You deal 3 less damage.
   Icon: {fileID: 21300000, guid: 56611bd15b94732499231d9b57258700, type: 3}

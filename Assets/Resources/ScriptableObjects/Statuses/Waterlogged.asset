@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee2d1ce305061b4e8740017d5760ad2, type: 3}
   m_Name: Waterlogged
   m_EditorClassIdentifier: 
+  Type: 4
   Name: Waterlogged
   Description: 3- and 4-letter words deal half damage.
   Icon: {fileID: 21300000, guid: fca3b637733142344b163aea41e78c83, type: 3}
