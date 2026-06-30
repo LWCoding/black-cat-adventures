@@ -145,6 +145,12 @@ public class OptionEvent : EventBehaviour
     }
 
     /// <summary>
+    /// A single treasure name wrapped in its rarity colour.
+    /// </summary>
+    private static string FormatTreasureName(Treasure treasure)
+        => $"<color=#{TreasureRarityInfo.GetHexColor(treasure.Rarity)}>{treasure.TreasureName}</color>";
+
+    /// <summary>
     /// Joins treasure names into a readable, rarity-coloured list:
     /// "A", "A and B", or "A, B, and C".
     /// </summary>
@@ -153,7 +159,7 @@ public class OptionEvent : EventBehaviour
         List<string> names = new();
         foreach (Treasure t in treasures)
         {
-            names.Add($"<color=#{TreasureRarityInfo.GetHexColor(t.Rarity)}>{t.TreasureName}</color>");
+            names.Add(FormatTreasureName(t));
         }
         if (names.Count == 1) { return names[0]; }
         if (names.Count == 2) { return $"{names[0]} and {names[1]}"; }
@@ -166,11 +172,11 @@ public class OptionEvent : EventBehaviour
         string text;
         if (gained != null && discarded != null)
         {
-            text = string.Format(option.ResultText, discarded.TreasureName, gained.TreasureName);
+            text = string.Format(option.ResultText, FormatTreasureName(discarded), FormatTreasureName(gained));
         }
         else if (gained != null)
         {
-            text = $"You gained {gained.TreasureName}.";
+            text = $"You gained {FormatTreasureName(gained)}.";
         }
         else
         {
@@ -183,7 +189,7 @@ public class OptionEvent : EventBehaviour
     {
         Treasure gained = EventOutcomes.GrantTreasureScrambleNextBattle();
         string text = gained != null
-            ? string.Format(option.ResultText, gained.TreasureName)
+            ? string.Format(option.ResultText, FormatTreasureName(gained))
             : option.EmptyPoolText;
         ShowResultAndProceed(text, option);
     }

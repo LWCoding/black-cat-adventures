@@ -111,11 +111,12 @@ public class GameData
 
     /// <summary>
     /// Removes and returns one random owned treasure (any rarity, including starters,
-    /// but excluding the None placeholder). Returns null if no eligible treasure exists.
+    /// but excluding the None placeholder and the optional <paramref name="exclude"/>
+    /// treasure). Returns null if no eligible treasure exists.
     /// </summary>
-    public Treasure DiscardRandomTreasure(Random rng)
+    public Treasure DiscardRandomTreasure(Random rng, Treasure exclude = null)
     {
-        List<Treasure> eligible = UnlockedTreasures.FindAll(t => t is not None);
+        List<Treasure> eligible = UnlockedTreasures.FindAll(t => t is not None && t != exclude);
         if (eligible.Count == 0) { return null; }
         Treasure chosen = eligible[rng.Next(eligible.Count)];
         _unlockedTreasures.Remove(chosen);

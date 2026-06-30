@@ -51,9 +51,10 @@ public static class EventOutcomes
     }
 
     /// <summary>
-    /// Wishing Well outcome: grants one random unowned treasure (drawn first so it
-    /// cannot be immediately discarded), then removes one random owned treasure.
-    /// Returns (discarded, gained). Either may be null if the respective pool is empty.
+    /// Wishing Well outcome: grants one random unowned treasure, then removes one
+    /// random owned treasure — explicitly excluding the just-gained one so the player
+    /// never discards and re-gains the same treasure. Returns (discarded, gained);
+    /// either may be null if the respective pool is empty.
     /// </summary>
     public static (Treasure discarded, Treasure gained) SwapRandomTreasure()
     {
@@ -61,7 +62,7 @@ public static class EventOutcomes
         Treasure gainedTreasure = gained.Count > 0 ? gained[0] : null;
 
         System.Random rng = new();
-        Treasure discarded = GameManager.GameData.DiscardRandomTreasure(rng);
+        Treasure discarded = GameManager.GameData.DiscardRandomTreasure(rng, gainedTreasure);
         return (discarded, gainedTreasure);
     }
 
