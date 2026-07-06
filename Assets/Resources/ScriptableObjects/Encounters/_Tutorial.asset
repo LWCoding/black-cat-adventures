@@ -42,20 +42,12 @@ MonoBehaviour:
       Duration: 2
       Speaker: 1
       ShouldStallState: 0
-    - Text: I'm gonna show you a world of pain!
-      Duration: 2
-      Speaker: 1
-      ShouldStallState: 0
     ShouldStallBeforeTurn: 0
     TimeToNextObject: 1.3
     SpawnOffset: {x: 0, y: 0}
   - EnemyData: {fileID: 11400000, guid: b15e60c37da61264ab419c604beac0ac, type: 2}
     DialogueToPlayOnMeet:
     - Text: Nyeheh, fresh meat!
-      Duration: 2
-      Speaker: 1
-      ShouldStallState: 0
-    - Text: I'm gonna show you a world of pain!
       Duration: 2
       Speaker: 1
       ShouldStallState: 0
