@@ -15,13 +15,13 @@ MonoBehaviour:
   StartingHealth: 40
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 91f30a03e98e4423b95e32f812b754c9, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Offset: {x: 0.6, y: -1.5}
   AttackSprite:
     Sprite: {fileID: 21300000, guid: 91f30a03e98e4423b95e32f812b754c9, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Offset: {x: 0.6, y: -1.5}
   DeadSprite:
     Sprite: {fileID: 21300000, guid: c2706ae0876874b8c86cd17bedcd2474, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Offset: {x: 0.6, y: -1.5}
   SpriteScale: {x: 0.9, y: 0.9}
   AirborneSprite:
     Sprite: {fileID: 0}
