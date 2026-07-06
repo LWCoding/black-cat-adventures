@@ -145,12 +145,6 @@ public class OptionEvent : EventBehaviour
     }
 
     /// <summary>
-    /// A single treasure name wrapped in its rarity colour.
-    /// </summary>
-    private static string FormatTreasureName(Treasure treasure)
-        => $"<color=#{TreasureRarityInfo.GetHexColor(treasure.Rarity)}>{treasure.TreasureName}</color>";
-
-    /// <summary>
     /// Joins treasure names into a readable, rarity-coloured list:
     /// "A", "A and B", or "A, B, and C".
     /// </summary>
@@ -159,7 +153,7 @@ public class OptionEvent : EventBehaviour
         List<string> names = new();
         foreach (Treasure t in treasures)
         {
-            names.Add(FormatTreasureName(t));
+            names.Add(t.ColoredName);
         }
         if (names.Count == 1) { return names[0]; }
         if (names.Count == 2) { return $"{names[0]} and {names[1]}"; }
@@ -172,11 +166,11 @@ public class OptionEvent : EventBehaviour
         string text;
         if (gained != null && discarded != null)
         {
-            text = string.Format(option.ResultText, FormatTreasureName(discarded), FormatTreasureName(gained));
+            text = string.Format(option.ResultText, discarded.ColoredName, gained.ColoredName);
         }
         else if (gained != null)
         {
-            text = $"You gained {FormatTreasureName(gained)}.";
+            text = $"You gained {gained.ColoredName}.";
         }
         else
         {
@@ -189,7 +183,7 @@ public class OptionEvent : EventBehaviour
     {
         Treasure gained = EventOutcomes.GrantTreasureScrambleNextBattle();
         string text = gained != null
-            ? string.Format(option.ResultText, FormatTreasureName(gained))
+            ? string.Format(option.ResultText, gained.ColoredName)
             : option.EmptyPoolText;
         ShowResultAndProceed(text, option);
     }
@@ -215,8 +209,8 @@ public class OptionEvent : EventBehaviour
             Treasure captured = treasure;
             EventOption capturedOption = option;
             string label = string.IsNullOrEmpty(captured.TreasureDescription)
-                ? captured.TreasureName
-                : $"{captured.TreasureName}\n<size=75%><color=#cfd2ff>{captured.TreasureDescription}</color></size>";
+                ? captured.ColoredName
+                : $"{captured.ColoredName}\n<size=75%><color=#cfd2ff>{captured.TreasureDescription}</color></size>";
             SpawnButton(container, prefab, label, () => OnTreasurePicked(captured, capturedOption));
         }
     }
@@ -230,7 +224,7 @@ public class OptionEvent : EventBehaviour
         if (container != null) { ClearContainer(container); }
 
         GameManager.GameData.UnlockedTreasures.Add(chosen);
-        ShowResultAndProceed($"You claim {chosen.TreasureName}.", option);
+        ShowResultAndProceed($"You claim {chosen.ColoredName}.", option);
     }
 
     // ─── Result + manual proceed ─────────────────────────────────────────────
