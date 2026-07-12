@@ -9,6 +9,7 @@ public class DevToolsManager : Singleton<DevToolsManager>
 {
     private EnemyData[] _enemyLibrary;
     private int _libraryIndex;
+    private bool _showingDeadSpritePreview;
 
     private EnemyData[] EnemyLibrary
     {
@@ -33,6 +34,10 @@ public class DevToolsManager : Singleton<DevToolsManager>
         if (Input.GetKeyDown(KeyCode.F7))
         {
             SkipCurrentLevel();
+        }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            ToggleSpritePreview();
         }
         if (Input.GetKeyDown(KeyCode.F5))
         {
@@ -83,6 +88,20 @@ public class DevToolsManager : Singleton<DevToolsManager>
         InventoryManager.Instance?.RefreshFromGameData();
     }
 
+    // Debug: toggles the current enemy's displayed sprite between its alive and dead
+    // art without touching any game state (health, AI, status effects, etc.).
+    private void ToggleSpritePreview()
+    {
+        EnemyHandler enemy = BattleManager.Instance?.CurrEnemyHandler;
+        if (enemy == null) { return; }
+
+        _showingDeadSpritePreview = !_showingDeadSpritePreview;
+        SpriteInfo preview = _showingDeadSpritePreview
+            ? enemy.CharData.DeadSprite
+            : enemy.CharData.AliveSprite;
+        enemy.SetSpritePublic(preview);
+    }
+
     // Cheat: replaces the current enemy's data with the next/previous entry in the
     // enemy library (alphabetical order), reloading sprite, attacks, and health.
     private void CycleEnemy(int direction)
@@ -100,6 +119,7 @@ public class DevToolsManager : Singleton<DevToolsManager>
         _libraryIndex = ((_libraryIndex + direction) % len + len) % len;
 
         EnemyData next = lib[_libraryIndex];
+        _showingDeadSpritePreview = false;
         enemy.SetCharacterData(next);
         EnemyInfoBox.Instance?.SetInfo(next);
     }
