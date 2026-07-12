@@ -21,7 +21,7 @@ MonoBehaviour:
     Offset: {x: 0.6, y: -1.4}
   DeadSprite:
     Sprite: {fileID: 21300000, guid: c2706ae0876874b8c86cd17bedcd2474, type: 3}
-    Offset: {x: 0.6, y: -1.4}
+    Offset: {x: 0.8, y: -1.8}
   SpriteScale: {x: 0.9, y: 0.9}
   AirborneSprite:
     Sprite: {fileID: 0}
