@@ -20,10 +20,6 @@ MonoBehaviour:
       Duration: 2
       Speaker: 1
       ShouldStallState: 1
-    - Text: I'm on the hunt for a very dangerous criminal.
-      Duration: 2
-      Speaker: 1
-      ShouldStallState: 0
     ShouldStallBeforeTurn: 0
     TimeToNextObject: 1.3
     SpawnOffset: {x: 0, y: 0}

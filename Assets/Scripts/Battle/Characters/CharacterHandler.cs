@@ -69,7 +69,16 @@ public abstract class CharacterHandler : MonoBehaviour
         {
             Debug.LogError("CharacterHandler was not supplied valid information to initialize enemy!", this);
         }
-        _spriteRenderer.transform.localScale = charInfo.SpriteScale;
+        Vector3 targetScale = new Vector3(charInfo.SpriteScale.x, charInfo.SpriteScale.y, 1f);
+        IdleAnimation idleAnim = _spriteRenderer.GetComponent<IdleAnimation>();
+        if (idleAnim != null)
+        {
+            idleAnim.SetBaseScale(targetScale);
+        }
+        else
+        {
+            _spriteRenderer.transform.localScale = targetScale;
+        }
         HealthHandler.InitializeHealth(charInfo.StartingHealth);  // Initialize health
         SetSprite(charInfo.AliveSprite);
     }
@@ -103,6 +112,12 @@ public abstract class CharacterHandler : MonoBehaviour
         if (sprite == null) { return; }
         _spriteRenderer.sprite = sprite;
     }
+
+    /// <summary>
+    /// Public entry point for SetSprite, intended for debug/editor tooling that
+    /// needs to swap sprites without subclassing CharacterHandler.
+    /// </summary>
+    public void SetSpritePublic(SpriteInfo spriteInfo) => SetSprite(spriteInfo);
 
     protected abstract void RenderAttack();
     protected abstract IEnumerator RenderAttackCoroutine(Action codeToRunAfter);

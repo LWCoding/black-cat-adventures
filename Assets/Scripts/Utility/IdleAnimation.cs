@@ -123,6 +123,35 @@ public class IdleAnimation : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the base scale used by all animations. If the component is already
+    /// animating, the squash-stretch and scale-pulse tweens are restarted from the
+    /// new base so that the updated CharacterData.SpriteScale is respected immediately
+    /// (e.g. after F4/F5 enemy cycling in the editor).
+    /// </summary>
+    public void SetBaseScale(Vector3 baseScale)
+    {
+        _baseScale = baseScale;
+        transform.localScale = baseScale;
+
+        if (!_started || _stopped) { return; }
+
+        // Restart scale-dependent tweens around the new base.
+        if (_enableSquashStretch)
+        {
+            _squashStretchTween?.Kill();
+            _squashStretchTween = null;
+            PlaySquashStretch();
+        }
+
+        if (_enableScalePulse)
+        {
+            _scaleTween?.Kill();
+            _scaleTween = null;
+            PlayScalePulse();
+        }
+    }
+
     public void Stop(bool resetTransforms = true)
     {
         _stopped = true;

@@ -60,6 +60,7 @@ public class BattleManager : Singleton<BattleManager>
         {
             SetState(new PlayerTurnState()); // Start off as player turn
         }
+        CurrEnemyHandler.ApplyStartingStatuses();
         SetNewEnemy(CurrEnemyHandler);
     }
 
@@ -130,6 +131,7 @@ public class BattleManager : Singleton<BattleManager>
         OnNewEnemySet?.Invoke(newEnemyHandler);
         CurrEnemyHandler = newEnemyHandler;
         _enemyInfoBox.SetInfo((EnemyData)(newEnemyHandler.CharData));
+        newEnemyHandler.StatusHandler.RevealStatusIcons();
         // If the player is dead, stop here.
         if (CurrentState is LoseState) { return; }
         // If there's any dialogue to play, play it!

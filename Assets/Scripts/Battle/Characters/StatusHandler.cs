@@ -32,8 +32,9 @@ public class StatusHandler : MonoBehaviour
     /// increases the amplifier instead.
     /// 
     /// When a character gains an effect, instantiate a prefab to show it.
+    /// Pass hideIcon: true to start the icon fully transparent (call RevealStatusIcons later to fade it in).
     /// </summary>
-    public void GainStatusEffect(StatusEffect status, int amplifier)
+    public void GainStatusEffect(StatusEffect status, int amplifier, bool hideIcon = false)
     {
         OnStatusApplied?.Invoke();
         int existingStatusIdx = _effects.FindIndex((aStatus) => aStatus.Type == status.Type);
@@ -41,8 +42,10 @@ public class StatusHandler : MonoBehaviour
         if (existingStatusIdx < 0)
         {
             GameObject statusObj = Instantiate(_statusPrefab, _statusParentTransform);
-            statusObj.GetComponent<StatusObject>().UpdateStatusInfo(statusCopy);
-            _statusObjects.Add(statusObj.GetComponent<StatusObject>());
+            StatusObject statusObject = statusObj.GetComponent<StatusObject>();
+            statusObject.UpdateStatusInfo(statusCopy);
+            if (hideIcon) { statusObject.SetHiddenForIntro(); }
+            _statusObjects.Add(statusObject);
             _effects.Add(statusCopy);  // Make new status effect object
             statusCopy.ApplyEffect(_characterHandler, amplifier);
         }
@@ -51,6 +54,17 @@ public class StatusHandler : MonoBehaviour
             _effects[existingStatusIdx].CurrAmplifier += amplifier;
         }
         RerenderStatusIcons();
+    }
+
+    /// <summary>
+    /// Fades in all status icons that were hidden for an intro animation.
+    /// </summary>
+    public void RevealStatusIcons(float duration = 0.4f)
+    {
+        foreach (StatusObject statusObject in _statusObjects)
+        {
+            statusObject.RevealForIntro(duration);
+        }
     }
 
     /// <summary>

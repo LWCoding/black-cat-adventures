@@ -15,13 +15,13 @@ MonoBehaviour:
   NormalEntries:
   - Encounter: {fileID: 11400000, guid: 57cc9a0bd583d55cc3722ba19207cf2d, type: 2}
     Weight: 1
-    MinEncountersCompleted: 0
+    MinEncountersCompleted: 2
   - Encounter: {fileID: 11400000, guid: 4d247c94da8e639133615a5ee52064b1, type: 2}
     Weight: 1
-    MinEncountersCompleted: 0
+    MinEncountersCompleted: 2
   - Encounter: {fileID: 11400000, guid: e6e98e20cafc40aabb6916ae43a36271, type: 2}
     Weight: 1
-    MinEncountersCompleted: 2
+    MinEncountersCompleted: 0
   - Encounter: {fileID: 11400000, guid: ae3c5598b609461baadfe9983fb0afee, type: 2}
     Weight: 1
     MinEncountersCompleted: 2

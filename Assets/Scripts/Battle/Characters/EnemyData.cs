@@ -32,6 +32,13 @@ public struct EnemyAttack
 
 }
 
+[System.Serializable]
+public struct StartingStatus
+{
+    public StatusEffect Status;
+    public int Amplifier;
+}
+
 [CreateAssetMenu(fileName = "New Enemy Data", menuName = "Enemy")]
 public class EnemyData : CharacterData
 {
@@ -39,5 +46,8 @@ public class EnemyData : CharacterData
     [Header("Enemy-Specific Information")]
     [TextArea(2, 3)] public string EnemyDescription;
     public List<EnemyAttack> Attacks = new();
+    [Header("Starting Statuses")]
+    [Tooltip("Status effects applied to this enemy when it enters the battlefield.")]
+    public List<StartingStatus> StartingStatuses = new();
 
 }

@@ -34,6 +34,23 @@ public class EnemyHandler : CharacterHandler
 
     public void SetTimeToNextObject(float timeToNextObject) => _timeToNextObject = timeToNextObject;
 
+    private bool _startingStatusesApplied;
+
+    /// <summary>
+    /// Applies any starting statuses defined on this enemy's EnemyData with icons hidden.
+    /// Idempotent — safe to call multiple times.
+    /// </summary>
+    public void ApplyStartingStatuses()
+    {
+        if (_startingStatusesApplied) { return; }
+        _startingStatusesApplied = true;
+        foreach (StartingStatus s in ((EnemyData)CharData).StartingStatuses)
+        {
+            if (s.Status == null) { continue; }
+            StatusHandler.GainStatusEffect(s.Status, s.Amplifier, hideIcon: true);
+        }
+    }
+
     private void Start()
     {
         BattleManager.Instance.OnEnemyAttack += RenderAttack;
@@ -244,6 +261,10 @@ public class EnemyHandler : CharacterHandler
     private IEnumerator TransitionToNextObjectCoroutine()
     {
         _nextBattleObject.SetActive(true);
+        if (_nextBattleObject.TryGetComponent(out EnemyHandler nextEnemy))
+        {
+            nextEnemy.ApplyStartingStatuses();
+        }
         yield return new WaitForSeconds(0.1f);
         float currTime = 0f;
         float timeToWait = _timeToNextObject;

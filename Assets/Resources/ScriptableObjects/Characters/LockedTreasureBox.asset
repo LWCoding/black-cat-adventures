@@ -15,17 +15,18 @@ MonoBehaviour:
   StartingHealth: 50
   AliveSprite:
     Sprite: {fileID: 21300000, guid: 380eac950d73e44c2bb1ffecf2a41ee0, type: 3}
-    Offset: {x: 0, y: -0.4}
+    Offset: {x: 0, y: -0.3}
   AttackSprite:
     Sprite: {fileID: 21300000, guid: 380eac950d73e44c2bb1ffecf2a41ee0, type: 3}
-    Offset: {x: 0, y: -0.4}
+    Offset: {x: 0, y: -0.3}
   DeadSprite:
     Sprite: {fileID: 21300000, guid: 6751d14bd9e8842cfbd6cf5fb4511d18, type: 3}
-    Offset: {x: 0, y: -0.4}
-  SpriteScale: {x: 1.2, y: 1.2}
+    Offset: {x: 0, y: -0.3}
+  SpriteScale: {x: 1.3, y: 1.3}
   AirborneSprite:
     Sprite: {fileID: 0}
     Offset: {x: 0, y: 0}
   EnemyDescription: A sturdy locked treasure box. Defeat it within 3 turns to claim
     the treasure inside!
   Attacks: []
+  StartingStatuses: []
