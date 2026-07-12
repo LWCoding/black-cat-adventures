@@ -10,20 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf72fda75ee21d9469e20180c8adc802, type: 3}
-  m_Name: Witch
+  m_Name: Frieren
   m_EditorClassIdentifier: 
   StartingHealth: 50
   AliveSprite:
-    Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
+    Sprite: {fileID: 21300000, guid: 82c02c76628eccc4fa4ff817ef075905, type: 3}
     Offset: {x: 0.6, y: -1.2}
   AttackSprite:
-    Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
+    Sprite: {fileID: 21300000, guid: 82c02c76628eccc4fa4ff817ef075905, type: 3}
     Offset: {x: 0.6, y: -1.2}
   DeadSprite:
-    Sprite: {fileID: 21300000, guid: a98949ac6b7a94d43b5b39a854fcc574, type: 3}
+    Sprite: {fileID: 21300000, guid: b6adeb75027646a428050ef3a2ccab12, type: 3}
     Offset: {x: 0.6, y: -1.2}
   SpriteScale: {x: 0.9, y: 0.9}
-  EnemyDescription: Brews a potion for every occasion. Most taste like raw fish.
+  AirborneSprite:
+    Sprite: {fileID: 0}
+    Offset: {x: 0, y: 0}
+  EnemyDescription: You're in her way.
   Attacks:
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Broom Swipe
