@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -13,6 +14,12 @@ public class TreasureItem : MonoBehaviour
     [SerializeField] private TextMeshPro _tooltipText;
     [SerializeField] private GameObject _keybindIndicator;
     [SerializeField] private TextMeshPro _keybindText;
+
+    [Header("Selection Glow")]
+    [Tooltip("Background sprite behind the keybind text that glows while this treasure is armed.")]
+    [SerializeField] private SpriteRenderer _selectionGlowRenderer;
+    [SerializeField] private Color _selectionGlowColor = new Color(1f, 0.85f, 0.2f, 1f);
+    [SerializeField] private float _selectionGlowFadeDuration = 0.2f;
 
     private Treasure _treasureData;
     public Treasure TreasureData
@@ -30,11 +37,24 @@ public class TreasureItem : MonoBehaviour
     private bool _isArmed;
     private Animator _animator;
     private TooltipOnHover _tooltip;
+    private Color _glowOriginalColor;
+    private bool _cachedGlowColor;
+    private Tween _glowTween;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _tooltip = GetComponent<TooltipOnHover>();
+        CacheGlowColor();
+    }
+
+    private void CacheGlowColor()
+    {
+        if (_selectionGlowRenderer != null && !_cachedGlowColor)
+        {
+            _glowOriginalColor = _selectionGlowRenderer.color;
+            _cachedGlowColor = true;
+        }
     }
 
     /// <summary>
@@ -48,6 +68,8 @@ public class TreasureItem : MonoBehaviour
         _isArmed = false;
         _iconRenderer.sprite = TreasureData.TreasureIcon;
         SetIconAlpha(1f);
+        CacheGlowColor();
+        ResetGlow();
         _tooltipText.text = "<b><color=#" + TreasureRarityInfo.GetHexColor(TreasureData.Rarity) + ">" + TreasureData.TreasureName + "</color></b>:\n" + TreasureData.TreasureDescription;
 
         // Empty slots (None placeholder) should not reveal a tooltip on hover.
@@ -91,20 +113,36 @@ public class TreasureItem : MonoBehaviour
         && _chargesRemaining > 0
         && active.CanTrigger();
 
-    /// <summary>Arms this slot: plays the Selected animation and holds it until resolved or cancelled.</summary>
+    /// <summary>Arms this slot: plays the Selected animation, glows the badge, and holds until resolved or cancelled.</summary>
     public void Arm()
     {
         _isArmed = true;
         if (_animator == null) { _animator = GetComponent<Animator>(); }
         _animator.Play("Selected");
+        GlowTo(_selectionGlowColor);
     }
 
-    /// <summary>Disarms this slot: plays the Unselected animation and clears the armed flag.</summary>
+    /// <summary>Disarms this slot: plays the Unselected animation, fades the glow back, and clears the armed flag.</summary>
     public void Disarm()
     {
         _isArmed = false;
         if (_animator == null) { _animator = GetComponent<Animator>(); }
         _animator.Play("Unselected");
+        GlowTo(_glowOriginalColor);
+    }
+
+    private void GlowTo(Color target)
+    {
+        if (_selectionGlowRenderer == null) { return; }
+        _glowTween?.Kill();
+        _glowTween = _selectionGlowRenderer.DOColor(target, _selectionGlowFadeDuration);
+    }
+
+    private void ResetGlow()
+    {
+        if (_selectionGlowRenderer == null) { return; }
+        _glowTween?.Kill();
+        _selectionGlowRenderer.color = _glowOriginalColor;
     }
 
     /// <summary>
@@ -120,6 +158,21 @@ public class TreasureItem : MonoBehaviour
             {
                 _keybindIndicator.SetActive(false);
             }
+        }
+    }
+
+    /// <summary>
+    /// Restores this slot's charges to full (called when a new enemy appears, so active
+    /// treasures refresh once per enemy). No-op for passive/None slots.
+    /// </summary>
+    public void RefreshCharges()
+    {
+        if (_treasureData is not ActiveTreasure active) { return; }
+        _chargesRemaining = active.MaxCharges;
+        SetIconAlpha(1f);
+        if (_keybindIndicator != null)
+        {
+            _keybindIndicator.SetActive(true);
         }
     }
 

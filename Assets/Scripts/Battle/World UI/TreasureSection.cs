@@ -18,13 +18,13 @@ public class TreasureSection : Singleton<TreasureSection>
     /// </summary>
     public static readonly KeyCode[] SlotKeyCodes =
     {
-        KeyCode.LeftBracket, KeyCode.RightBracket, KeyCode.Backslash, KeyCode.Semicolon, KeyCode.Quote,
+        KeyCode.F1, KeyCode.F2, KeyCode.F3, KeyCode.F4, KeyCode.F5,
     };
 
     /// <summary>Display labels for each slot's keybind, matching <see cref="SlotKeyCodes"/> by index.</summary>
     public static readonly string[] SlotKeyLabels =
     {
-        "[", "]", "\\", ";", "'",
+        "F1", "F2", "F3", "F4", "F5",
     };
 
     public Action OnTreasureSelected = null;
@@ -45,6 +45,18 @@ public class TreasureSection : Singleton<TreasureSection>
                 CancelTargeting();
             }
         };
+        // Active treasures refresh their charges once per enemy.
+        BattleManager.Instance.OnNewEnemySet += (_) => RefreshAllCharges();
+    }
+
+    /// <summary>Cancels any pending targeting and restores every slot's charges to full.</summary>
+    private void RefreshAllCharges()
+    {
+        CancelTargeting();
+        foreach (TreasureItem item in _treasureObjects)
+        {
+            item.RefreshCharges();
+        }
     }
 
     private void Start()

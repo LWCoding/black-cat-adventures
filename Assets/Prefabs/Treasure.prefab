@@ -245,6 +245,9 @@ MonoBehaviour:
   _tooltipText: {fileID: 3074753818444398626}
   _keybindIndicator: {fileID: 6190976815942273739}
   _keybindText: {fileID: 5115271097535582694}
+  _selectionGlowRenderer: {fileID: 4892263164182233709}
+  _selectionGlowColor: {r: 1, g: 0.85, b: 0.2, a: 1}
+  _selectionGlowFadeDuration: 0.2
 --- !u!114 &236595317212413421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +363,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.08}
+  m_AnchoredPosition: {x: 0, y: -0.05}
   m_SizeDelta: {x: 201, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &7207538613964109562
@@ -425,7 +428,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: B
+  m_text: F1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ff51099e4916441ec8fb09647619caeb, type: 2}
   m_sharedMaterial: {fileID: 7075505013188916467, guid: ff51099e4916441ec8fb09647619caeb, type: 2}
@@ -452,8 +455,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 4
-  m_fontSizeBase: 4
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

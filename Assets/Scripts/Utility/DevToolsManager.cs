@@ -27,6 +27,10 @@ public class DevToolsManager : Singleton<DevToolsManager>
 
     private void Update()
     {
+        // Dev cheats require Shift held so they don't collide with in-game F-key binds
+        // (e.g. treasure slots on F1-F5).
+        if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift)) { return; }
+
         if (Input.GetKeyDown(KeyCode.F9))
         {
             KillCurrentEnemy();
