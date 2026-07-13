@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class BypassIntro : MonoBehaviour
 {
@@ -13,7 +12,8 @@ public class BypassIntro : MonoBehaviour
         if (!IsActive) { return; }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("Map");
+            // Skipping the intro on a new run drops straight into the tutorial battle.
+            GameManager.EnterFirstTutorialBattle();
         }
     }
 

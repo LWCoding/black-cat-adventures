@@ -1,7 +1,6 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class IntroCutscene : MonoBehaviour
@@ -55,6 +54,7 @@ public class IntroCutscene : MonoBehaviour
         yield return new WaitForEndOfFrame();
         yield return new WaitWhile(() => _cutsceneAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
 
-        SceneManager.LoadScene("Map");
+        // New runs begin in the tutorial battle rather than on the map.
+        GameManager.EnterFirstTutorialBattle();
     }
 }
