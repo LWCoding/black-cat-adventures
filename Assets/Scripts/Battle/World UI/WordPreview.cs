@@ -272,6 +272,26 @@ public class WordPreview : Singleton<WordPreview>
     }
 
     /// <summary>
+    /// Refreshes the preview clone (if any) backing the grid tile at
+    /// <paramref name="tileIndex"/>, so a tile whose letter was mutated externally
+    /// (e.g. by an active treasure) shows the new glyph in the word preview.
+    /// Grid and preview share the same Tile object, so this only re-renders the clone.
+    /// Fires OnLetterTilesChanged when a matching preview tile was updated so damage/
+    /// feedback recompute. Returns true if a preview clone was refreshed.
+    /// </summary>
+    public bool RefreshTileByIndex(int tileIndex)
+    {
+        int idx = _currTiles.FindIndex((t) => t.TileIndex == tileIndex);
+        if (idx == -1) { return false; }
+        if (idx < _previewLetterTiles.Count)
+        {
+            _previewLetterTiles[idx].GetComponent<LetterTile>().InitializeTile(_currTiles[idx]);
+        }
+        OnLetterTilesChanged?.Invoke();
+        return true;
+    }
+
+    /// <summary>
     /// Makes all of the preview tiles from a specific index toggle
     /// visibility. Returns early if no preview tiles are found.
     /// </summary>
