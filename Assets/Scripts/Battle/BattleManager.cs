@@ -96,6 +96,24 @@ public class BattleManager : Singleton<BattleManager>
         {
             _shuffleButton.TryShuffleBoard();
         }
+
+        // Keys 1-5 trigger the corresponding equipped treasure slot.
+        if (TreasureSection.Instance != null)
+        {
+            for (int i = 0; i < GameData.MaxEquippedTreasures; i++)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+                {
+                    TreasureSection.Instance.TryTriggerSlot(i);
+                }
+            }
+
+            // Escape cancels active treasure targeting.
+            if (Input.GetKeyDown(KeyCode.Escape) && TreasureSection.Instance.IsAwaitingTarget)
+            {
+                TreasureSection.Instance.CancelTargeting();
+            }
+        }
     }
 
     void OnGUI()

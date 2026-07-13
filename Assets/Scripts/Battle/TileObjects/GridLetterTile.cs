@@ -47,6 +47,13 @@ public class GridLetterTile : LetterTile
 
     private void OnMouseDown()
     {
+        // If a treasure is awaiting a tile target, forward the click to it instead of
+        // adding this tile to the word.
+        if (TreasureSection.Instance != null && TreasureSection.Instance.IsAwaitingTarget)
+        {
+            TreasureSection.Instance.HandleTileTargeted(this);
+            return;
+        }
         TrySelectTile();
     }
 

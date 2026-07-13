@@ -5,20 +5,31 @@ description: Scaffolds a new treasure for the Black Cat Adventures Unity project
 
 # Adding a new treasure
 
-Unlike enemies, a treasure's effect is **custom C#**, not just data — `Treasure` (`Assets/Scripts/Battle/Treasures/Treasure.cs`) is abstract and every concrete treasure overrides `ActivateTreasure()`. There is no per-treasure prefab — `TreasureItem` instantiates straight from the ScriptableObject at battle start, so once the script + asset exist, the treasure is fully functional with no scene wiring required.
+Unlike enemies, a treasure's effect is **custom C#**, not just data. There are two archetypes:
+
+- **Passive** treasures extend `Treasure` (`Assets/Scripts/Battle/Treasures/Treasure.cs`) and override `ActivateTreasure()`. Their effect registers once at battle start and runs automatically thereafter.
+- **Active** treasures extend `ActiveTreasure` (`Assets/Scripts/Battle/Treasures/ActiveTreasure.cs`) and are triggered by the player during their turn (keybinds 1-5 mapped to equipped slots, or by clicking the treasure). Triggering can resolve instantly or arm the treasure to wait for the player to click a target letter tile.
+
+There is no per-treasure prefab — `TreasureItem` instantiates straight from the ScriptableObject at battle start, so once the script + asset exist, the treasure is fully functional with no scene wiring required. The keybind badge, "armed" highlight, charge tracking, and tile-targeting flow are all handled automatically by `TreasureItem`/`TreasureSection` for any `ActiveTreasure`.
 
 ## 0. Gather requirements first
 
 Before writing anything, get from the user:
 - **Name** (also the C# class name with no spaces, e.g. `LuckyCatPaw`)
 - **Description** shown in the tooltip
+- **Active or passive?** — Ask the user (or infer from the described effect) whether this treasure has an **active ability** the player triggers, or a **passive effect** that just runs on its own:
+  - **Passive** — always-on or automatically-reacting effects (flat/conditional damage bonuses, board setup, status on submit, etc.). Extends `Treasure`. This is the default for most treasures.
+  - **Active** — the player must press its keybind (1-5) or click it to use it. Extends `ActiveTreasure`. Signals include: "the player can activate it", "press to use", "once per battle/turn", "choose/target a tile", or any effect that shouldn't happen automatically.
+  - If active, also gather:
+    - **Charges** — how many times it can be used per battle (`MaxCharges`, default `1`).
+    - **Needs a target tile?** — does using it require the player to then click a letter tile in the grid/preview (`RequiresTileTarget`)? If the effect is instant (no tile pick), set this to `false` and do the work in `OnTrigger()`.
 - **The effect**, in plain language — what does it actually do mechanically?
 - **Rarity** — Starter=0, Common=1, Rare=2, SuperRare=3, Legendary=4. Ask if unsure; most new treasures are Common (1) or Rare (2). Starter (0) is reserved for the treasure granted at game start.
 - **Icon sprite** — which PNG under `Assets/Images/Treasure/` to use. Confirm it exists (`Glob Assets/Images/**/*<keyword>*`). If none exists yet, use the QuestionMark placeholder (GUID `d2feab8db485d734b91b7ab6b1ece18e`) and place the asset in the `NeedsArt/` subfolder.
 
 ## 1. Find the closest existing pattern
 
-Read 2–3 existing treasures under `Assets/Scripts/Battle/Treasures/` and match the described effect to the closest hook:
+If the treasure is **active**, skip to [section 1a](#1a-active-treasures). Otherwise, for **passive** treasures, read 2–3 existing treasures under `Assets/Scripts/Battle/Treasures/` and match the described effect to the closest hook:
 
 | Effect shape | Pattern to copy | Example |
 |---|---|---|
@@ -32,9 +43,37 @@ Read 2–3 existing treasures under `Assets/Scripts/Battle/Treasures/` and match
 
 `DamageCalculator.RegisterFlatModifier(key, amount, addOntoPreexistingValue=false)` and `RegisterScaledModifier(key, amount, multiplyByPreexistingValue=false)` both take a unique string `key` — use a short lowercase key derived from the treasure name (e.g. `"luckycatpaw"`). Re-registering the same key each word-change **overwrites** the previous value, which is how the "reset to 0 when condition no longer holds" pattern works in `ProfanityTape`/`MagicSevenBall` — copy that shape for conditional effects.
 
+### 1a. Active treasures
+
+Active treasures extend `ActiveTreasure` (not `Treasure`). You do **not** override `ActivateTreasure()` (it's sealed); instead override the hooks you need:
+
+| Hook | When it runs | Return value |
+|---|---|---|
+| `bool OnTrigger()` | The instant the player presses the keybind or clicks the treasure. | `true` = effect resolved now, spend a charge immediately. `false` = stay "armed" and wait for the player to click a tile. Default returns `!RequiresTileTarget`. |
+| `bool OnTileTargeted(LetterTile tile)` | The player clicks a grid/preview tile while the treasure is armed. | `true` = target valid, spend charge and disarm. `false` = keep waiting for another click. |
+| `bool CanTrigger()` | Extra gating checked before arming (beyond charges + player turn). | `false` blocks triggering, e.g. "only when a word is staged". Default `true`. |
+| `void RegisterPassiveEffects()` | Battle start (like a passive treasure's `ActivateTreasure`). | Optional passive hooks that coexist with the active ability. Default does nothing. |
+
+`MaxCharges` (uses per battle) and `RequiresTileTarget` are inspector fields set on the `.asset`, not in code. Charges, the keybind badge, the armed highlight, and Escape-to-cancel are all handled automatically — the subclass only implements the effect.
+
+Two common shapes:
+- **Targeted** (default): leave `RequiresTileTarget: 1`, do the work in `OnTileTargeted`. Example — `Elixir.cs` turns the clicked tile into an "E":
+  ```csharp
+  public override bool OnTileTargeted(LetterTile tile)
+  {
+      if (tile == null || tile.Tile == null) { return false; }
+      tile.Tile.Letters = "E";
+      tile.InitializeTile(tile.Tile);
+      return true;
+  }
+  ```
+- **Instant** (no target): set `RequiresTileTarget: 0` in the asset, do the work in `OnTrigger()` and `return true`.
+
 ## 2. Write the C# script
 
 Path: `Assets/Scripts/Battle/Treasures/<TreasureName>.cs`
+
+**Passive treasure:**
 
 ```csharp
 using System.Collections;
@@ -48,6 +87,27 @@ public class <TreasureName> : Treasure
     public override void ActivateTreasure()
     {
         // effect goes here
+    }
+
+}
+```
+
+**Active treasure:**
+
+```csharp
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "<Treasure Name>", menuName = "Treasures/<Treasure Name>")]
+public class <TreasureName> : ActiveTreasure
+{
+
+    // For a targeted treasure, implement the effect on the clicked tile:
+    public override bool OnTileTargeted(LetterTile tile)
+    {
+        // effect goes here; return true when the target is valid
+        return true;
     }
 
 }
@@ -96,6 +156,13 @@ MonoBehaviour:
 ```
 
 **`Rarity` values**: Starter=0, Common=1, Rare=2, SuperRare=3, Legendary=4.
+
+**Active treasures** additionally need their two `ActiveTreasure` fields serialized (omitting them makes Unity read `0`/`false`, not the C# defaults):
+
+```yaml
+  MaxCharges: <int>          # uses per battle, e.g. 1
+  RequiresTileTarget: <0|1>  # 1 = arm and wait for a tile click; 0 = instant
+```
 
 ## 6. Let Unity generate the `.asset.meta` too
 
