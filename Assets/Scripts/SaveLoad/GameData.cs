@@ -23,6 +23,7 @@ public class ResolvedSpaceEntry
 [System.Serializable]
 public class GameData
 {
+    public const int MaxEquippedTreasures = 5;
 
     [SerializeField] private List<Treasure> _unlockedTreasures = new();
     public List<Treasure> UnlockedTreasures
@@ -43,9 +44,7 @@ public class GameData
         set => _unlockedTreasures = value;
     }
     public List<Treasure> EquippedTreasures
-    {
-        get => UnlockedTreasures.GetRange(0, 3);
-    }
+        => UnlockedTreasures.GetRange(0, System.Math.Min(MaxEquippedTreasures, UnlockedTreasures.Count));
 
     public List<string> LevelsCompleted = new();
     public string RecentLevelCompleted = "";
