@@ -97,12 +97,12 @@ public class BattleManager : Singleton<BattleManager>
             _shuffleButton.TryShuffleBoard();
         }
 
-        // Keys 1-5 trigger the corresponding equipped treasure slot.
+        // Treasure slot keybinds trigger the corresponding equipped treasure slot.
         if (TreasureSection.Instance != null)
         {
-            for (int i = 0; i < GameData.MaxEquippedTreasures; i++)
+            for (int i = 0; i < TreasureSection.SlotKeyCodes.Length; i++)
             {
-                if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+                if (Input.GetKeyDown(TreasureSection.SlotKeyCodes[i]))
                 {
                     TreasureSection.Instance.TryTriggerSlot(i);
                 }

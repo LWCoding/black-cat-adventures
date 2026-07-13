@@ -12,6 +12,21 @@ public class TreasureSection : Singleton<TreasureSection>
     [Header("Default Treasure Assignment")]
     [SerializeField] private Treasure _noneTreasure;
 
+    /// <summary>
+    /// Keybind for each treasure slot, indexed by slot. Single source of truth shared by
+    /// BattleManager (input) and TreasureItem (on-screen badge). Rebind here to change both.
+    /// </summary>
+    public static readonly KeyCode[] SlotKeyCodes =
+    {
+        KeyCode.LeftBracket, KeyCode.RightBracket, KeyCode.Backslash, KeyCode.Semicolon, KeyCode.Quote,
+    };
+
+    /// <summary>Display labels for each slot's keybind, matching <see cref="SlotKeyCodes"/> by index.</summary>
+    public static readonly string[] SlotKeyLabels =
+    {
+        "[", "]", "\\", ";", "'",
+    };
+
     public Action OnTreasureSelected = null;
     private bool _wasSectionInitialized = false;
 

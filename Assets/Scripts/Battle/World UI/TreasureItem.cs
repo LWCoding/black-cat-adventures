@@ -63,9 +63,9 @@ public class TreasureItem : MonoBehaviour
             if (_keybindIndicator != null)
             {
                 _keybindIndicator.SetActive(true);
-                if (_keybindText != null)
+                if (_keybindText != null && SlotIndex >= 0 && SlotIndex < TreasureSection.SlotKeyLabels.Length)
                 {
-                    _keybindText.text = (SlotIndex + 1).ToString();
+                    _keybindText.text = TreasureSection.SlotKeyLabels[SlotIndex];
                 }
             }
         }
