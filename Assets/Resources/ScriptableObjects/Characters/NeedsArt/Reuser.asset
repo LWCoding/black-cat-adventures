@@ -14,17 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingHealth: 45
   AliveSprite:
-    Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Sprite: {fileID: 21300000, guid: 06acda49267db485bb14754f072d37ca, type: 3}
+    Offset: {x: 0.6, y: -1.35}
   AttackSprite:
-    Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Sprite: {fileID: 21300000, guid: 06acda49267db485bb14754f072d37ca, type: 3}
+    Offset: {x: 0.6, y: -1.35}
   DeadSprite:
-    Sprite: {fileID: 21300000, guid: a98949ac6b7a94d43b5b39a854fcc574, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Sprite: {fileID: 21300000, guid: 0fe3b3cccb8024e81b05fb45aed85ee5, type: 3}
+    Offset: {x: 0.6, y: -1.35}
   SpriteScale: {x: 0.9, y: 0.9}
-  EnemyDescription: 'Protocol: REUSE. Has a habit of hoarding everything it comes
-    across.'
+  AirborneSprite:
+    Sprite: {fileID: 0}
+    Offset: {x: 0, y: 0}
+  EnemyDescription: 'Protocol: REUSE. Commonly told it has a hoarding problem.'
   Attacks:
   - IconSprite: {fileID: 21300000, guid: cacd7b43b99420e499b30f9f24792060, type: 3}
     AttackName: Rinse Cycle
@@ -38,6 +40,8 @@ MonoBehaviour:
     BoardEffects: []
     AvoidIfSelfHasStatus: {fileID: 0}
     AvoidIfTargetHasStatus: {fileID: 0}
+    ProjectileSprite: {fileID: 0}
+    ProjectileSpeed: 0
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Second Hand
     _attackDescription: Hits you not once, but twice. Deals %d damage.
@@ -47,3 +51,6 @@ MonoBehaviour:
     BoardEffects: []
     AvoidIfSelfHasStatus: {fileID: 0}
     AvoidIfTargetHasStatus: {fileID: 0}
+    ProjectileSprite: {fileID: 0}
+    ProjectileSpeed: 0
+  StartingStatuses: []

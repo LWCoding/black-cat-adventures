@@ -14,17 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingHealth: 40
   AliveSprite:
-    Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Sprite: {fileID: 21300000, guid: b1fc2cce337e74d33979ba63d6074293, type: 3}
+    Offset: {x: 0.6, y: -1.3}
   AttackSprite:
-    Sprite: {fileID: 21300000, guid: 142c3cfa06f4c584f90ef067653c4c9b, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Sprite: {fileID: 21300000, guid: b1fc2cce337e74d33979ba63d6074293, type: 3}
+    Offset: {x: 0.6, y: -1.3}
   DeadSprite:
-    Sprite: {fileID: 21300000, guid: a98949ac6b7a94d43b5b39a854fcc574, type: 3}
-    Offset: {x: 0.6, y: -1.2}
+    Sprite: {fileID: 21300000, guid: 5034aab40adc24811af73393c50f0bf0, type: 3}
+    Offset: {x: 0.6, y: -1.3}
   SpriteScale: {x: 0.9, y: 0.9}
-  EnemyDescription: 'Protocol: REDUCE. Finally learned how to add numbers by subtracting
-    negative numbers. It''s pretty proud about that.'
+  AirborneSprite:
+    Sprite: {fileID: 0}
+    Offset: {x: 0, y: 0}
+  EnemyDescription: 'Protocol: REDUCE. Everything in its charging bay is itty-bitty.'
   Attacks:
   - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     AttackName: Waste Reduction
@@ -51,3 +53,4 @@ MonoBehaviour:
     AvoidIfTargetHasStatus: {fileID: 0}
     ProjectileSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
     ProjectileSpeed: 28
+  StartingStatuses: []
