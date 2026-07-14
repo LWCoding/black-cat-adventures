@@ -56,6 +56,12 @@ public class GameData
     public bool HasTutorialCompleted;
 
     /// <summary>
+    /// True once the player has seen the one-time tutorial explaining how
+    /// activateable (ActiveTreasure) treasures work. Never shown again after.
+    /// </summary>
+    public bool HasSeenActiveTreasureTutorial;
+
+    /// <summary>
     /// Stable node ids for each map node the player has beaten. Used for
     /// lock/unlock gating so progression is independent of which encounter
     /// a node happened to roll.

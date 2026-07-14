@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class TreasureSection : Singleton<TreasureSection>
     [SerializeField] private List<TreasureItem> _treasureObjects;
     [Header("Default Treasure Assignment")]
     [SerializeField] private Treasure _noneTreasure;
+    [Header("Active Treasure Tutorial")]
+    [SerializeField] private GameObject _activeTreasureTutorialTooltip;
 
     /// <summary>
     /// Keybind for each treasure slot, indexed by slot. Single source of truth shared by
@@ -29,6 +32,7 @@ public class TreasureSection : Singleton<TreasureSection>
 
     public Action OnTreasureSelected = null;
     private bool _wasSectionInitialized = false;
+    private bool _checkedActiveTutorial = false;
 
     /// <summary>The slot that is currently armed and awaiting a tile target, or null.</summary>
     private TreasureItem _armedItem;
@@ -37,16 +41,54 @@ public class TreasureSection : Singleton<TreasureSection>
     protected override void Awake()
     {
         base.Awake();
-        // Auto-cancel targeting whenever the player's turn ends.
-        BattleManager.Instance.OnStateChanged += (newState) =>
-        {
-            if (newState is not PlayerTurnState)
-            {
-                CancelTargeting();
-            }
-        };
+        _activeTreasureTutorialTooltip?.SetActive(false);
+        // Auto-cancel targeting whenever the player's turn ends, and check whether
+        // to show the active-treasure tutorial on the first player turn.
+        BattleManager.Instance.OnStateChanged += OnStateChanged;
         // Active treasures refresh their charges once per enemy.
         BattleManager.Instance.OnNewEnemySet += (_) => RefreshAllCharges();
+    }
+
+    private void OnDisable()
+    {
+        if (BattleManager.Instance != null)
+        {
+            BattleManager.Instance.OnStateChanged -= OnStateChanged;
+        }
+        SubmitButton.OnClickButton -= HideActiveTreasureTutorial;
+    }
+
+    private void OnStateChanged(State newState)
+    {
+        if (newState is not PlayerTurnState)
+        {
+            CancelTargeting();
+            return;
+        }
+        if (!_checkedActiveTutorial)
+        {
+            _checkedActiveTutorial = true;
+            TryShowActiveTreasureTutorial();
+        }
+    }
+
+    private void TryShowActiveTreasureTutorial()
+    {
+        if (_activeTreasureTutorialTooltip == null) { return; }
+        if (GameManager.GameData.HasSeenActiveTreasureTutorial) { return; }
+        if (!gameObject.activeSelf) { return; }
+        if (!GameManager.GameData.EquippedTreasures.Any(t => t is ActiveTreasure)) { return; }
+
+        _activeTreasureTutorialTooltip.SetActive(true);
+        GameManager.GameData.HasSeenActiveTreasureTutorial = true;
+        SaveManager.SaveGame(GameManager.GameData);
+        SubmitButton.OnClickButton += HideActiveTreasureTutorial;
+    }
+
+    private void HideActiveTreasureTutorial()
+    {
+        _activeTreasureTutorialTooltip?.SetActive(false);
+        SubmitButton.OnClickButton -= HideActiveTreasureTutorial;
     }
 
     /// <summary>Cancels any pending targeting and restores every slot's charges to full.</summary>
@@ -111,6 +153,7 @@ public class TreasureSection : Singleton<TreasureSection>
 
         if (!item.IsTriggerable) { return; }
 
+        HideActiveTreasureTutorial();
         item.Arm();
         OnTreasureSelected?.Invoke();
 
