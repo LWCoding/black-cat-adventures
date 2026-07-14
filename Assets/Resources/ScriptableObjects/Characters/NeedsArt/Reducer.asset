@@ -28,8 +28,8 @@ MonoBehaviour:
     Offset: {x: 0, y: 0}
   EnemyDescription: 'Protocol: REDUCE. Everything in its charging bay is itty-bitty.'
   Attacks:
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
-    AttackName: Waste Reduction
+  - IconSprite: {fileID: 21300000, guid: d603b98a4005e834f849ec0e0fd4afe5, type: 3}
+    AttackName: Compact
     _attackDescription: Shrinks you down.
     Damage: 0
     AnimType: 0

@@ -28,7 +28,7 @@ MonoBehaviour:
     Offset: {x: 0, y: 0}
   EnemyDescription: 'Protocol: RECYCLE. Hates trash talking.'
   Attacks:
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+  - IconSprite: {fileID: 21300000, guid: 8cc90db7e956d0347add421168e25369, type: 3}
     AttackName: Salvage
     _attackDescription: Deals %d damage. Gains Regeneration 3.
     Damage: 2
