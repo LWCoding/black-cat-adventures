@@ -38,6 +38,16 @@ public class TreasureSection : Singleton<TreasureSection>
     private TreasureItem _armedItem;
     public bool IsAwaitingTarget => _armedItem != null;
 
+    /// <summary>
+    /// An instant treasure that has been selected via its keybind and is awaiting a
+    /// confirmation press before it actually triggers, or null. This lets the player
+    /// read its tooltip first instead of accidentally spending a one-shot treasure.
+    /// </summary>
+    private TreasureItem _pendingItem;
+
+    /// <summary>True when a treasure is either armed for targeting or awaiting use-confirmation.</summary>
+    public bool HasActiveSelection => _armedItem != null || _pendingItem != null;
+
     protected override void Awake()
     {
         base.Awake();
@@ -62,7 +72,7 @@ public class TreasureSection : Singleton<TreasureSection>
     {
         if (newState is not PlayerTurnState)
         {
-            CancelTargeting();
+            CancelSelection();
             return;
         }
         if (!_checkedActiveTutorial)
@@ -91,10 +101,10 @@ public class TreasureSection : Singleton<TreasureSection>
         SubmitButton.OnClickButton -= HideActiveTreasureTutorial;
     }
 
-    /// <summary>Cancels any pending targeting and restores every slot's charges to full.</summary>
+    /// <summary>Cancels any pending selection and restores every slot's charges to full.</summary>
     private void RefreshAllCharges()
     {
-        CancelTargeting();
+        CancelSelection();
         foreach (TreasureItem item in _treasureObjects)
         {
             item.RefreshCharges();
@@ -124,12 +134,21 @@ public class TreasureSection : Singleton<TreasureSection>
     }
 
     /// <summary>
-    /// Attempts to trigger the treasure at the given slot index (0-based).
+    /// Attempts to select/trigger the treasure at the given slot index (0-based).
     /// No-ops if it is not the player's turn, the game is paused, the index is
     /// out of range, or the slot is not triggerable.
-    /// Toggling the currently-armed slot cancels targeting instead.
+    ///
+    /// Behaviour depends on the treasure and <paramref name="requireConfirm"/>:
+    /// - Treasures that need a tile target arm and wait for a tile click (toggling the
+    ///   same slot again cancels).
+    /// - Instant treasures with <paramref name="requireConfirm"/> true (keybind use)
+    ///   are selected on the first press (revealing their tooltip) and only triggered
+    ///   on a second press of the same slot, so the player can't accidentally spend a
+    ///   one-shot treasure they only wanted to read.
+    /// - Instant treasures with <paramref name="requireConfirm"/> false (mouse click,
+    ///   which already shows the tooltip on hover) trigger immediately.
     /// </summary>
-    public void TryTriggerSlot(int index)
+    public void TryTriggerSlot(int index, bool requireConfirm = true)
     {
         if (BattleManager.Instance == null) { return; }
         if (BattleManager.Instance.CurrentState is not PlayerTurnState) { return; }
@@ -138,14 +157,14 @@ public class TreasureSection : Singleton<TreasureSection>
 
         TreasureItem item = _treasureObjects[index];
 
-        // Toggle off if the same slot is already armed.
+        // Toggle off if the same slot is already armed for targeting.
         if (_armedItem == item)
         {
             CancelTargeting();
             return;
         }
 
-        // If a different slot is already armed, cancel it first.
+        // If a different slot is already armed for targeting, cancel it first.
         if (_armedItem != null)
         {
             CancelTargeting();
@@ -153,11 +172,76 @@ public class TreasureSection : Singleton<TreasureSection>
 
         if (!item.IsTriggerable) { return; }
 
+        ActiveTreasure active = (ActiveTreasure)item.TreasureData;
+
+        // Treasures that require a follow-up tile selection arm and wait for the click.
+        if (active.RequiresTileTarget)
+        {
+            ClearPendingSelection();
+            HideActiveTreasureTutorial();
+            item.Arm();
+            OnTreasureSelected?.Invoke();
+            bool resolvedImmediately = active.OnTrigger();
+            if (resolvedImmediately)
+            {
+                item.ConsumeCharge();
+                item.Disarm();
+            }
+            else
+            {
+                _armedItem = item;
+            }
+            return;
+        }
+
+        // Instant treasures triggered via keybind: first press selects + reveals the
+        // tooltip, second press of the same slot commits to using it.
+        if (requireConfirm && _pendingItem != item)
+        {
+            SelectPending(item);
+            return;
+        }
+
+        // Either the confirmation press, or a direct (mouse-click) use: trigger now.
+        UseImmediate(item, active);
+    }
+
+    /// <summary>
+    /// Selects an instant treasure for confirmation: highlights it and reveals its
+    /// tooltip without triggering it yet. Switches selection off any previous slot.
+    /// </summary>
+    private void SelectPending(TreasureItem item)
+    {
+        if (_pendingItem != null && _pendingItem != item)
+        {
+            _pendingItem.Disarm();
+            _pendingItem.HideTooltip();
+        }
+        _pendingItem = item;
         HideActiveTreasureTutorial();
         item.Arm();
+        item.ShowTooltip();
+        OnTreasureSelected?.Invoke();
+    }
+
+    /// <summary>
+    /// Triggers an instant treasure now and resets its visuals. Deliberately does not
+    /// call Arm() first, so it never plays Selected then Unselected in the same frame
+    /// (which would leave the slot stuck in its expanded state).
+    /// </summary>
+    private void UseImmediate(TreasureItem item, ActiveTreasure active)
+    {
+        // Clear a different slot's pending selection so it doesn't stay highlighted.
+        if (_pendingItem != null && _pendingItem != item)
+        {
+            _pendingItem.Disarm();
+            _pendingItem.HideTooltip();
+        }
+        _pendingItem = null;
+        item.HideTooltip();
+        HideActiveTreasureTutorial();
         OnTreasureSelected?.Invoke();
 
-        ActiveTreasure active = (ActiveTreasure)item.TreasureData;
         bool resolvedImmediately = active.OnTrigger();
         if (resolvedImmediately)
         {
@@ -166,8 +250,26 @@ public class TreasureSection : Singleton<TreasureSection>
         }
         else
         {
+            // A custom instant treasure chose to wait for a tile after all.
+            item.Arm();
             _armedItem = item;
         }
+    }
+
+    /// <summary>Clears any pending (keybind-selected) treasure, restoring its visuals.</summary>
+    private void ClearPendingSelection()
+    {
+        if (_pendingItem == null) { return; }
+        _pendingItem.Disarm();
+        _pendingItem.HideTooltip();
+        _pendingItem = null;
+    }
+
+    /// <summary>Cancels both targeting and pending use-confirmation selections.</summary>
+    public void CancelSelection()
+    {
+        CancelTargeting();
+        ClearPendingSelection();
     }
 
     /// <summary>

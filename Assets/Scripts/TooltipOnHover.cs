@@ -37,4 +37,29 @@ public class TooltipOnHover : MonoBehaviour
         _objectToShowOnHover.SetActive(false);
     }
 
+    /// <summary>
+    /// Immediately reveals the tooltip, bypassing the hover delay. Used when the
+    /// object is selected another way (e.g. a treasure selected via its keybind).
+    /// </summary>
+    public void ShowTooltip()
+    {
+        if (_waitBeforeShowCoroutine != null)
+        {
+            StopCoroutine(_waitBeforeShowCoroutine);
+            _waitBeforeShowCoroutine = null;
+        }
+        _objectToShowOnHover.SetActive(true);
+    }
+
+    /// <summary>Immediately hides the tooltip.</summary>
+    public void HideTooltip()
+    {
+        if (_waitBeforeShowCoroutine != null)
+        {
+            StopCoroutine(_waitBeforeShowCoroutine);
+            _waitBeforeShowCoroutine = null;
+        }
+        _objectToShowOnHover.SetActive(false);
+    }
+
 }

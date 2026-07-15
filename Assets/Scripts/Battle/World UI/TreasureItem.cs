@@ -180,10 +180,27 @@ public class TreasureItem : MonoBehaviour
     {
         // Empty slots and passive slots don't light up or show tooltips.
         if (_treasureData is None) { return; }
+        // A spent active treasure shouldn't light up as if it were still usable.
+        if (_treasureData is ActiveTreasure && _chargesRemaining <= 0) { return; }
         if (!_isArmed)
         {
             EnableTreasure();
         }
+    }
+
+    /// <summary>
+    /// Reveals this slot's tooltip immediately (used when the slot is selected via its
+    /// keybind, so the player can read the description before committing to use it).
+    /// </summary>
+    public void ShowTooltip()
+    {
+        if (_tooltip != null) { _tooltip.ShowTooltip(); }
+    }
+
+    /// <summary>Hides this slot's tooltip.</summary>
+    public void HideTooltip()
+    {
+        if (_tooltip != null) { _tooltip.HideTooltip(); }
     }
 
     public void OnMouseExit()
@@ -197,7 +214,9 @@ public class TreasureItem : MonoBehaviour
     {
         if (_treasureData is ActiveTreasure && TreasureSection.Instance != null)
         {
-            TreasureSection.Instance.TryTriggerSlot(SlotIndex);
+            // Clicking already reveals the tooltip on hover, so no confirmation press
+            // is needed: use the treasure directly.
+            TreasureSection.Instance.TryTriggerSlot(SlotIndex, requireConfirm: false);
         }
     }
 

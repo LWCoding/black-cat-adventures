@@ -108,10 +108,10 @@ public class BattleManager : Singleton<BattleManager>
                 }
             }
 
-            // Escape cancels active treasure targeting.
-            if (Input.GetKeyDown(KeyCode.Escape) && TreasureSection.Instance.IsAwaitingTarget)
+            // Escape cancels active treasure targeting or a pending use-confirmation.
+            if (Input.GetKeyDown(KeyCode.Escape) && TreasureSection.Instance.HasActiveSelection)
             {
-                TreasureSection.Instance.CancelTargeting();
+                TreasureSection.Instance.CancelSelection();
             }
         }
     }

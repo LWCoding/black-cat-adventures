@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f2ea79e52e903b4da76c07746128458, type: 3}
+  m_Name: Dictionary
+  m_EditorClassIdentifier: 
+  TreasureName: Dictionary
+  TreasureDescription: Replace three random letters with I, N, and G. Useable once
+    per enemy.
+  TreasureIcon: {fileID: 21300000, guid: d2feab8db485d734b91b7ab6b1ece18e, type: 3}
+  Rarity: 2
+  MaxCharges: 1
+  RequiresTileTarget: 0
