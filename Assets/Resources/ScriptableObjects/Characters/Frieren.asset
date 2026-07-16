@@ -28,9 +28,9 @@ MonoBehaviour:
     Offset: {x: 0, y: 0}
   EnemyDescription: You're in her way.
   Attacks:
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
-    AttackName: Broom Swipe
-    _attackDescription: Whoosh! Deals %d damage.
+  - IconSprite: {fileID: 21300000, guid: e5d0c8af7487ff84fb2e1073ef465b14, type: 3}
+    AttackName: Spellcast
+    _attackDescription: Zap! Deals %d damage.
     Damage: 5
     AnimType: 0
     InflictedStatuses: []
@@ -39,8 +39,8 @@ MonoBehaviour:
     AvoidIfTargetHasStatus: {fileID: 0}
     ProjectileSprite: {fileID: 0}
     ProjectileSpeed: 0
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
-    AttackName: Hexing Brew
+  - IconSprite: {fileID: 21300000, guid: 1d268abc44f69904a91878879b0ffb93, type: 3}
+    AttackName: Portal Hex
     _attackDescription: Scrambles three letters and inflicts Waterlogged.
     Damage: 0
     AnimType: 0

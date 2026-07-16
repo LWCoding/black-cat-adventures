@@ -42,7 +42,7 @@ MonoBehaviour:
     AvoidIfTargetHasStatus: {fileID: 0}
     ProjectileSprite: {fileID: 0}
     ProjectileSpeed: 0
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+  - IconSprite: {fileID: 21300000, guid: 9c8f1bf0eed7d0d4f9437554e511004c, type: 3}
     AttackName: Compress
     _attackDescription: Deals %d damage.
     Damage: 4
