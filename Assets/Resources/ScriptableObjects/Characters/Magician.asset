@@ -29,7 +29,7 @@ MonoBehaviour:
   EnemyDescription: Tenured at the academy of jumbling perfectly good words into
     gibberish.
   Attacks:
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+  - IconSprite: {fileID: 21300000, guid: a17fb32bcdbd0884785c0c8dff2b879e, type: 3}
     AttackName: Arcane Bolt
     _attackDescription: Zap! Deals %d damage.
     Damage: 4
@@ -40,8 +40,8 @@ MonoBehaviour:
     AvoidIfTargetHasStatus: {fileID: 0}
     ProjectileSprite: {fileID: 0}
     ProjectileSpeed: 0
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
-    AttackName: Jumble Hex
+  - IconSprite: {fileID: 21300000, guid: 5656440623b46fe408539c33f273f21b, type: 3}
+    AttackName: Explosive Hex
     _attackDescription: Deals %d damage, then Scrambles three letters.
     Damage: 2
     AnimType: 0

@@ -42,7 +42,7 @@ MonoBehaviour:
     AvoidIfTargetHasStatus: {fileID: 11400000, guid: a9f8e7d6c5b4a3928171605049382716, type: 2}
     ProjectileSprite: {fileID: 0}
     ProjectileSpeed: 0
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+  - IconSprite: {fileID: 21300000, guid: cacd7b43b99420e499b30f9f24792060, type: 3}
     AttackName: Junk Shot
     _attackDescription: Fires compressed refuse. Deals %d damage.
     Damage: 3

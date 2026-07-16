@@ -28,9 +28,9 @@ MonoBehaviour:
     Offset: {x: 0, y: 0}
   EnemyDescription: If he doesn't catch this thief, he'll be on traffic duty again.
   Attacks:
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
-    AttackName: Clobber
-    _attackDescription: Whacks you with a baton, dealing %d damage.
+  - IconSprite: {fileID: 21300000, guid: f5bfb00cb99fb55458a58547714703e3, type: 3}
+    AttackName: Shield Bash
+    _attackDescription: Ouch! Deals %d damage.
     Damage: 4
     AnimType: 0
     InflictedStatuses: []
@@ -39,7 +39,7 @@ MonoBehaviour:
     AvoidIfTargetHasStatus: {fileID: 0}
     ProjectileSprite: {fileID: 0}
     ProjectileSpeed: 0
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+  - IconSprite: {fileID: 21300000, guid: 62ecf9b63680f3d4dbff601d7c64b97e, type: 3}
     AttackName: Detain
     _attackDescription: Deals %d damage and locks 2 tiles.
     Damage: 2
@@ -52,7 +52,7 @@ MonoBehaviour:
     AvoidIfTargetHasStatus: {fileID: 0}
     ProjectileSprite: {fileID: 0}
     ProjectileSpeed: 0
-  - IconSprite: {fileID: 21300000, guid: 8aca94e418f9c154d90c4f99a54519ff, type: 3}
+  - IconSprite: {fileID: 21300000, guid: 18c312e29f3414f4ab717a1e8671cc91, type: 3}
     AttackName: Justice!!!
     _attackDescription: Welcome to the Baroness. Locks 4 tiles.
     Damage: 0
